@@ -1,0 +1,1052 @@
+﻿{
+  "user": [
+    {
+      "id": 1,
+      "name": "Ana Martínez",
+      "email": "ana.martinez@email.com",
+      "password": "hashed_password_1",
+      "phone": "+34600123456",
+      "role": "parent",
+      "created_at": "2024-10-01",
+      "updated_at": "2024-10-01"
+    },
+    {
+      "id": 2,
+      "name": "Carlos López",
+      "email": "carlos.lopez@email.com",
+      "password": "hashed_password_2",
+      "phone": "+34600234567",
+      "role": "parent",
+      "created_at": "2024-10-02",
+      "updated_at": "2024-10-02"
+    },
+    {
+      "id": 3,
+      "name": "Elena García",
+      "email": "elena.garcia@email.com",
+      "password": "hashed_password_3",
+      "phone": "+34600345678",
+      "role": "parent",
+      "created_at": "2024-10-03",
+      "updated_at": "2024-10-03"
+    },
+    {
+      "id": 4,
+      "name": "Javier Rodríguez",
+      "email": "javier.rodriguez@email.com",
+      "password": "hashed_password_4",
+      "phone": "+34600456789",
+      "role": "parent",
+      "created_at": "2024-10-04",
+      "updated_at": "2024-10-04"
+    },
+    {
+      "id": 5,
+      "name": "María Sánchez",
+      "email": "maria.sanchez@email.com",
+      "password": "hashed_password_5",
+      "phone": "+34600567890",
+      "role": "parent",
+      "created_at": "2024-10-05",
+      "updated_at": "2024-10-05"
+    },
+    {
+      "id": 6,
+      "name": "Lucía Fernández",
+      "email": "lucia.fernandez@email.com",
+      "password": "hashed_password_6",
+      "phone": "+34600678901",
+      "role": "babysitter",
+      "created_at": "2024-10-06",
+      "updated_at": "2024-10-06"
+    },
+    {
+      "id": 7,
+      "name": "Pablo Gómez",
+      "email": "pablo.gomez@email.com",
+      "password": "hashed_password_7",
+      "phone": "+34600789012",
+      "role": "babysitter",
+      "created_at": "2024-10-07",
+      "updated_at": "2024-10-07"
+    },
+    {
+      "id": 8,
+      "name": "Sofía Torres",
+      "email": "sofia.torres@email.com",
+      "password": "hashed_password_8",
+      "phone": "+34600890123",
+      "role": "babysitter",
+      "created_at": "2024-10-08",
+      "updated_at": "2024-10-08"
+    },
+    {
+      "id": 9,
+      "name": "Daniel Ruiz",
+      "email": "daniel.ruiz@email.com",
+      "password": "hashed_password_9",
+      "phone": "+34600901234",
+      "role": "babysitter",
+      "created_at": "2024-10-09",
+      "updated_at": "2024-10-09"
+    },
+    {
+      "id": 10,
+      "name": "Carmen Moreno",
+      "email": "carmen.moreno@email.com",
+      "password": "hashed_password_10",
+      "phone": "+34600012345",
+      "role": "babysitter",
+      "created_at": "2024-10-10",
+      "updated_at": "2024-10-10"
+    },
+    {
+      "id": 11,
+      "name": "Jorge Pérez",
+      "email": "jorge.perez@email.com",
+      "password": "hashed_password_11",
+      "phone": "+34601123456",
+      "role": "babysitter",
+      "created_at": "2024-10-11",
+      "updated_at": "2024-10-11"
+    },
+    {
+      "id": 12,
+      "name": "Isabel Díaz",
+      "email": "isabel.diaz@email.com",
+      "password": "hashed_password_12",
+      "phone": "+34601234567",
+      "role": "babysitter",
+      "created_at": "2024-10-12",
+      "updated_at": "2024-10-12"
+    },
+    {
+      "id": 13,
+      "name": "Roberto Jiménez",
+      "email": "roberto.jimenez@email.com",
+      "password": "hashed_password_13",
+      "phone": "+34601345678",
+      "role": "parent",
+      "created_at": "2024-10-13",
+      "updated_at": "2024-10-13"
+    },
+    {
+      "id": 14,
+      "name": "Laura González",
+      "email": "laura.gonzalez@email.com",
+      "password": "hashed_password_14",
+      "phone": "+34601456789",
+      "role": "parent",
+      "created_at": "2024-10-14",
+      "updated_at": "2024-10-14"
+    },
+    {
+      "id": 15,
+      "name": "Antonio Navarro",
+      "email": "antonio.navarro@email.com",
+      "password": "hashed_password_15",
+      "phone": "+34601567890",
+      "role": "parent",
+      "created_at": "2024-10-15",
+      "updated_at": "2024-10-15"
+    }
+  ],
+  "parent": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "address": "Calle Principal 123",
+      "city": "Madrid",
+      "children_count": 2,
+      "preferences": "Preferencia por niñeras con experiencia en educación infantil"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "address": "Avenida Central 456",
+      "city": "Barcelona",
+      "children_count": 1,
+      "preferences": "Niñera con conocimientos de primeros auxilios"
+    },
+    {
+      "id": 3,
+      "user_id": 3,
+      "address": "Plaza Mayor 789",
+      "city": "Valencia",
+      "children_count": 3,
+      "preferences": "Preferencia por actividades al aire libre"
+    },
+    {
+      "id": 4,
+      "user_id": 4,
+      "address": "Calle Secundaria 101",
+      "city": "Sevilla",
+      "children_count": 2,
+      "preferences": "Niñera con experiencia en niños con necesidades especiales"
+    },
+    {
+      "id": 5,
+      "user_id": 5,
+      "address": "Paseo del Prado 202",
+      "city": "Madrid",
+      "children_count": 1,
+      "preferences": "Preferencia por actividades educativas"
+    },
+    {
+      "id": 6,
+      "user_id": 13,
+      "address": "Calle Gran Vía 303",
+      "city": "Madrid",
+      "children_count": 2,
+      "preferences": "Niñera con capacidad para cocinar comidas saludables"
+    },
+    {
+      "id": 7,
+      "user_id": 14,
+      "address": "Avenida Diagonal 404",
+      "city": "Barcelona",
+      "children_count": 3,
+      "preferences": "Preferencia por niñeras bilingües"
+    },
+    {
+      "id": 8,
+      "user_id": 15,
+      "address": "Calle Recoletos 505",
+      "city": "Madrid",
+      "children_count": 1,
+      "preferences": "Niñera con experiencia en bebés"
+    },
+    {
+      "id": 9,
+      "user_id": 16,
+      "address": "Avenida del Puerto 606",
+      "city": "Valencia",
+      "children_count": 2,
+      "preferences": "Preferencia por actividades creativas y artísticas"
+    },
+    {
+      "id": 10,
+      "user_id": 17,
+      "address": "Calle Ancha 707",
+      "city": "Sevilla",
+      "children_count": 2,
+      "preferences": "Niñera con vehículo propio"
+    }
+  ],
+  "babysitter": [
+    {
+      "id": 1,
+      "user_id": 6,
+      "description": "Estudiante de educación infantil con 3 años de experiencia cuidando niños",
+      "experience": "3 años",
+      "languages": 2,
+      "rating": 4,
+      "verified": true,
+      "location": "Madrid",
+      "accountBank": "ES12345678901234567890",
+      "bankName": "BBVA",
+      "typeAccountBank": "corriente",
+      "dni": "12345678A"
+    },
+    {
+      "id": 2,
+      "user_id": 7,
+      "description": "Profesor de primaria con amplia experiencia en cuidado infantil",
+      "experience": "5 años",
+      "languages": 3,
+      "rating": 5,
+      "verified": true,
+      "location": "Barcelona",
+      "accountBank": "ES09876543210987654321",
+      "bankName": "Santander",
+      "typeAccountBank": "ahorro",
+      "dni": "87654321B"
+    },
+    {
+      "id": 3,
+      "user_id": 8,
+      "description": "Enfermera pediátrica con conocimientos de primeros auxilios",
+      "experience": "7 años",
+      "languages": 2,
+      "rating": 5,
+      "verified": true,
+      "location": "Valencia",
+      "accountBank": "ES11223344556677889900",
+      "bankName": "CaixaBank",
+      "typeAccountBank": "corriente",
+      "dni": "11223344C"
+    },
+    {
+      "id": 4,
+      "user_id": 9,
+      "description": "Estudiante de psicología con experiencia en niños con necesidades especiales",
+      "experience": "2 años",
+      "languages": 1,
+      "rating": 4,
+      "verified": true,
+      "location": "Sevilla",
+      "accountBank": "ES99887766554433221100",
+      "bankName": "Bankia",
+      "typeAccountBank": "corriente",
+      "dni": "99887766D"
+    },
+    {
+      "id": 5,
+      "user_id": 10,
+      "description": "Monitora de tiempo libre con experiencia en campamentos infantiles",
+      "experience": "4 años",
+      "languages": 2,
+      "rating": 4,
+      "verified": true,
+      "location": "Madrid",
+      "accountBank": "ES13579246810121416180",
+      "bankName": "ING",
+      "typeAccountBank": "corriente",
+      "dni": "13579246E"
+    },
+    {
+      "id": 6,
+      "user_id": 11,
+      "description": "Graduado en magisterio con especialidad en educación infantil",
+      "experience": "6 años",
+      "languages": 3,
+      "rating": 5,
+      "verified": true,
+      "location": "Barcelona",
+      "accountBank": "ES24681357902468135790",
+      "bankName": "Sabadell",
+      "typeAccountBank": "ahorro",
+      "dni": "24681357F"
+    },
+    {
+      "id": 7,
+      "user_id": 12,
+      "description": "Au pair con experiencia internacional en cuidado de niños",
+      "experience": "3 años",
+      "languages": 4,
+      "rating": 4,
+      "verified": true,
+      "location": "Madrid",
+      "accountBank": "ES36925814703692581470",
+      "bankName": "Bankinter",
+      "typeAccountBank": "corriente",
+      "dni": "36925814G"
+    },
+    {
+      "id": 8,
+      "user_id": 18,
+      "description": "Técnico en jardín de infancia con formación en pedagogía Montessori",
+      "experience": "5 años",
+      "languages": 2,
+      "rating": 5,
+      "verified": true,
+      "location": "Valencia",
+      "accountBank": "ES14725836914725836900",
+      "bankName": "BBVA",
+      "typeAccountBank": "corriente",
+      "dni": "14725836H"
+    },
+    {
+      "id": 9,
+      "user_id": 19,
+      "description": "Estudiante de nutrición con experiencia en preparación de dietas infantiles",
+      "experience": "2 años",
+      "languages": 2,
+      "rating": 4,
+      "verified": false,
+      "location": "Sevilla",
+      "accountBank": "ES25836914725836914700",
+      "bankName": "Unicaja",
+      "typeAccountBank": "ahorro",
+      "dni": "25836914I"
+    },
+    {
+      "id": 10,
+      "user_id": 20,
+      "description": "Animador sociocultural especializado en actividades para niños",
+      "experience": "4 años",
+      "languages": 2,
+      "rating": 4,
+      "verified": true,
+      "location": "Madrid",
+      "accountBank": "ES36914725836914725800",
+      "bankName": "Kutxabank",
+      "typeAccountBank": "corriente",
+      "dni": "36914725J"
+    }
+  ],
+  "available": [
+    {
+      "id": 1,
+      "babysitter_id": 1,
+      "start_time": "2024-11-01 09:00:00",
+      "end_time": "2024-11-01 17:00:00",
+      "day": "lunes"
+    },
+    {
+      "id": 2,
+      "babysitter_id": 1,
+      "start_time": "2024-11-02 09:00:00",
+      "end_time": "2024-11-02 17:00:00",
+      "day": "martes"
+    },
+    {
+      "id": 3,
+      "babysitter_id": 2,
+      "start_time": "2024-11-01 14:00:00",
+      "end_time": "2024-11-01 20:00:00",
+      "day": "lunes"
+    },
+    {
+      "id": 4,
+      "babysitter_id": 2,
+      "start_time": "2024-11-03 14:00:00",
+      "end_time": "2024-11-03 20:00:00",
+      "day": "miércoles"
+    },
+    {
+      "id": 5,
+      "babysitter_id": 3,
+      "start_time": "2024-11-04 08:00:00",
+      "end_time": "2024-11-04 16:00:00",
+      "day": "jueves"
+    },
+    {
+      "id": 6,
+      "babysitter_id": 3,
+      "start_time": "2024-11-05 08:00:00",
+      "end_time": "2024-11-05 16:00:00",
+      "day": "viernes"
+    },
+    {
+      "id": 7,
+      "babysitter_id": 4,
+      "start_time": "2024-11-06 10:00:00",
+      "end_time": "2024-11-06 18:00:00",
+      "day": "sábado"
+    },
+    {
+      "id": 8,
+      "babysitter_id": 4,
+      "start_time": "2024-11-07 10:00:00",
+      "end_time": "2024-11-07 18:00:00",
+      "day": "domingo"
+    },
+    {
+      "id": 9,
+      "babysitter_id": 5,
+      "start_time": "2024-11-01 15:00:00",
+      "end_time": "2024-11-01 21:00:00",
+      "day": "lunes"
+    },
+    {
+      "id": 10,
+      "babysitter_id": 5,
+      "start_time": "2024-11-05 15:00:00",
+      "end_time": "2024-11-05 21:00:00",
+      "day": "viernes"
+    }
+  ],
+  "chat_session": [
+    {
+      "id": 1,
+      "created_at": "2024-10-15 10:00:00",
+      "babysitter_id": 1,
+      "parent_id": 1
+    },
+    {
+      "id": 2,
+      "created_at": "2024-10-15 11:30:00",
+      "babysitter_id": 2,
+      "parent_id": 2
+    },
+    {
+      "id": 3,
+      "created_at": "2024-10-15 13:45:00",
+      "babysitter_id": 3,
+      "parent_id": 3
+    },
+    {
+      "id": 4,
+      "created_at": "2024-10-16 09:15:00",
+      "babysitter_id": 4,
+      "parent_id": 4
+    },
+    {
+      "id": 5,
+      "created_at": "2024-10-16 14:30:00",
+      "babysitter_id": 5,
+      "parent_id": 5
+    },
+    {
+      "id": 6,
+      "created_at": "2024-10-17 10:45:00",
+      "babysitter_id": 1,
+      "parent_id": 6
+    },
+    {
+      "id": 7,
+      "created_at": "2024-10-17 16:20:00",
+      "babysitter_id": 2,
+      "parent_id": 7
+    },
+    {
+      "id": 8,
+      "created_at": "2024-10-18 11:10:00",
+      "babysitter_id": 3,
+      "parent_id": 8
+    },
+    {
+      "id": 9,
+      "created_at": "2024-10-18 17:45:00",
+      "babysitter_id": 4,
+      "parent_id": 9
+    },
+    {
+      "id": 10,
+      "created_at": "2024-10-19 12:30:00",
+      "babysitter_id": 5,
+      "parent_id": 10
+    }
+  ],
+  "message": [
+    {
+      "id": 1,
+      "content": "Hola, estoy interesada en contratar sus servicios para el próximo sábado.",
+      "sent_at": "2024-10-15 10:05:00",
+      "is_read": true,
+      "user_id": 1,
+      "chat_sessions_id": 1
+    },
+    {
+      "id": 2,
+      "content": "Hola, claro que sí. Estaré disponible. ¿En qué horario necesitaría mis servicios?",
+      "sent_at": "2024-10-15 10:10:00",
+      "is_read": true,
+      "user_id": 6,
+      "chat_sessions_id": 1
+    },
+    {
+      "id": 3,
+      "content": "Buenos días, necesito una niñera para el domingo por la tarde.",
+      "sent_at": "2024-10-15 11:35:00",
+      "is_read": true,
+      "user_id": 2,
+      "chat_sessions_id": 2
+    },
+    {
+      "id": 4,
+      "content": "Buenos días, sí puedo ayudarle. ¿Cuántos niños necesitan cuidado?",
+      "sent_at": "2024-10-15 11:40:00",
+      "is_read": true,
+      "user_id": 7,
+      "chat_sessions_id": 2
+    },
+    {
+      "id": 5,
+      "content": "Hola, ¿tienes experiencia con niños de 3 años?",
+      "sent_at": "2024-10-15 13:50:00",
+      "is_read": true,
+      "user_id": 3,
+      "chat_sessions_id": 3
+    },
+    {
+      "id": 6,
+      "content": "Hola, sí, tengo amplia experiencia con niños de esa edad. He trabajado en una guardería durante 5 años.",
+      "sent_at": "2024-10-15 13:55:00",
+      "is_read": true,
+      "user_id": 8,
+      "chat_sessions_id": 3
+    },
+    {
+      "id": 7,
+      "content": "Necesito una niñera que pueda ayudar con las tareas escolares.",
+      "sent_at": "2024-10-16 09:20:00",
+      "is_read": true,
+      "user_id": 4,
+      "chat_sessions_id": 4
+    },
+    {
+      "id": 8,
+      "content": "Sí puedo ayudar con tareas escolares. Soy profesor de primaria y tengo experiencia en apoyo escolar.",
+      "sent_at": "2024-10-16 09:25:00",
+      "is_read": true,
+      "user_id": 9,
+      "chat_sessions_id": 4
+    },
+    {
+      "id": 9,
+      "content": "¿Cuáles son tus tarifas por hora?",
+      "sent_at": "2024-10-16 14:35:00",
+      "is_read": true,
+      "user_id": 5,
+      "chat_sessions_id": 5
+    },
+    {
+      "id": 10,
+      "content": "Mi tarifa es de 12€ por hora para un niño, 15€ para dos niños y 18€ para tres niños.",
+      "sent_at": "2024-10-16 14:40:00",
+      "is_read": true,
+      "user_id": 10,
+      "chat_sessions_id": 5
+    },
+    {
+      "id": 11,
+      "content": "¿Puedes cuidar a mis hijos el próximo viernes por la noche?",
+      "sent_at": "2024-10-17 10:50:00",
+      "is_read": false,
+      "user_id": 13,
+      "chat_sessions_id": 6
+    },
+    {
+      "id": 12,
+      "content": "Sí, estoy disponible el viernes por la noche. ¿A qué hora necesitarías que llegue?",
+      "sent_at": "2024-10-17 10:55:00",
+      "is_read": false,
+      "user_id": 6,
+      "chat_sessions_id": 6
+    }
+  ],
+  "reservation": [
+    {
+      "id": 1,
+      "start_time": "2024-11-05 10:00:00",
+      "end_time": "2024-11-05 14:00:00",
+      "status": "confirmada",
+      "created_at": "2024-10-20 09:30:00",
+      "notifications_id": 1,
+      "parent_id": 1,
+      "babysitter_id": 1
+    },
+    {
+      "id": 2,
+      "start_time": "2024-11-06 15:00:00",
+      "end_time": "2024-11-06 19:00:00",
+      "status": "confirmada",
+      "created_at": "2024-10-20 11:45:00",
+      "notifications_id": 2,
+      "parent_id": 2,
+      "babysitter_id": 2
+    },
+    {
+      "id": 3,
+      "start_time": "2024-11-07 09:00:00",
+      "end_time": "2024-11-07 13:00:00",
+      "status": "pendiente",
+      "created_at": "2024-10-21 08:15:00",
+      "notifications_id": 3,
+      "parent_id": 3,
+      "babysitter_id": 3
+    },
+    {
+      "id": 4,
+      "start_time": "2024-11-08 18:00:00",
+      "end_time": "2024-11-08 22:00:00",
+      "status": "pendiente",
+      "created_at": "2024-10-21 14:30:00",
+      "notifications_id": 4,
+      "parent_id": 4,
+      "babysitter_id": 4
+    },
+    {
+      "id": 5,
+      "start_time": "2024-11-09 10:00:00",
+      "end_time": "2024-11-09 18:00:00",
+      "status": "confirmada",
+      "created_at": "2024-10-22 10:00:00",
+      "notifications_id": 5,
+      "parent_id": 5,
+      "babysitter_id": 5
+    },
+    {
+      "id": 6,
+      "start_time": "2024-11-10 14:00:00",
+      "end_time": "2024-11-10 20:00:00",
+      "status": "cancelada",
+      "created_at": "2024-10-22 16:45:00",
+      "notifications_id": 6,
+      "parent_id": 6,
+      "babysitter_id": 1
+    },
+    {
+      "id": 7,
+      "start_time": "2024-11-11 09:00:00",
+      "end_time": "2024-11-11 17:00:00",
+      "status": "confirmada",
+      "created_at": "2024-10-23 09:30:00",
+      "notifications_id": 7,
+      "parent_id": 7,
+      "babysitter_id": 2
+    },
+    {
+      "id": 8,
+      "start_time": "2024-11-12 13:00:00",
+      "end_time": "2024-11-12 19:00:00",
+      "status": "pendiente",
+      "created_at": "2024-10-23 15:20:00",
+      "notifications_id": 8,
+      "parent_id": 8,
+      "babysitter_id": 3
+    },
+    {
+      "id": 9,
+      "start_time": "2024-11-13 08:00:00",
+      "end_time": "2024-11-13 16:00:00",
+      "status": "confirmada",
+      "created_at": "2024-10-24 11:10:00",
+      "notifications_id": 9,
+      "parent_id": 9,
+      "babysitter_id": 4
+    },
+    {
+      "id": 10,
+      "start_time": "2024-11-14 14:00:00",
+      "end_time": "2024-11-14 22:00:00",
+      "status": "confirmada",
+      "created_at": "2024-10-24 17:45:00",
+      "notifications_id": 10,
+      "parent_id": 10,
+      "babysitter_id": 5
+    }
+  ],
+  "notification": [
+    {
+      "id": 1,
+      "message": "Nueva reserva confirmada para el 5 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-20 09:35:00",
+      "is_read": true,
+      "user_id": 6,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 2,
+      "message": "Nueva reserva confirmada para el 6 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-20 11:50:00",
+      "is_read": true,
+      "user_id": 7,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 3,
+      "message": "Nueva solicitud de reserva para el 7 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-21 08:20:00",
+      "is_read": true,
+      "user_id": 8,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 4,
+      "message": "Nueva solicitud de reserva para el 8 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-21 14:35:00",
+      "is_read": false,
+      "user_id": 9,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 5,
+      "message": "Nueva reserva confirmada para el 9 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-22 10:05:00",
+      "is_read": true,
+      "user_id": 10,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 6,
+      "message": "Reserva cancelada para el 10 de noviembre",
+      "type": "cancelación",
+      "created_at": "2024-10-22 16:50:00",
+      "is_read": true,
+      "user_id": 6,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 7,
+      "message": "Nueva reserva confirmada para el 11 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-23 09:35:00",
+      "is_read": true,
+      "user_id": 7,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 8,
+      "message": "Nueva solicitud de reserva para el 12 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-23 15:25:00",
+      "is_read": false,
+      "user_id": 8,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 9,
+      "message": "Nueva reserva confirmada para el 13 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-24 11:15:00",
+      "is_read": true,
+      "user_id": 9,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 10,
+      "message": "Nueva reserva confirmada para el 14 de noviembre",
+      "type": "reserva",
+      "created_at": "2024-10-24 17:50:00",
+      "is_read": false,
+      "user_id": 10,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 11,
+      "message": "Has recibido un nuevo mensaje",
+      "type": "mensaje",
+      "created_at": "2024-10-17 10:55:00",
+      "is_read": true,
+      "user_id": 13,
+      "message_id": 12,
+      "review_id": null,
+      "payment_id": null
+    },
+    {
+      "id": 12,
+      "message": "Has recibido una nueva reseña",
+      "type": "reseña",
+      "created_at": "2024-10-26 14:30:00",
+      "is_read": false,
+      "user_id": 6,
+      "message_id": null,
+      "review_id": 1,
+      "payment_id": null
+    },
+    {
+      "id": 13,
+      "message": "Pago confirmado para la reserva del 5 de noviembre",
+      "type": "pago",
+      "created_at": "2024-10-20 10:00:00",
+      "is_read": true,
+      "user_id": 1,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": 1
+    },
+    {
+      "id": 14,
+      "message": "Pago confirmado para la reserva del 6 de noviembre",
+      "type": "pago",
+      "created_at": "2024-10-20 12:15:00",
+      "is_read": true,
+      "user_id": 2,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": 2
+    },
+    {
+      "id": 15,
+      "message": "Pago confirmado para la reserva del 9 de noviembre",
+      "type": "pago",
+      "created_at": "2024-10-22 10:30:00",
+      "is_read": true,
+      "user_id": 5,
+      "message_id": null,
+      "review_id": null,
+      "payment_id": 5
+    }
+  ],
+  "payment": [
+    {
+      "id": 1,
+      "amount": 48.00,
+      "method": "tarjeta",
+      "status": "completado",
+      "created_at": "2024-10-20 09:45:00",
+      "reservations_id": 1,
+      "parent_id": 1
+    },
+    {
+      "id": 2,
+      "amount": 48.00,
+      "method": "tarjeta",
+      "status": "completado",
+      "created_at": "2024-10-20 12:00:00",
+      "reservations_id": 2,
+      "parent_id": 2
+    },
+    {
+      "id": 3,
+      "amount": 48.00,
+      "method": "paypal",
+      "status": "pendiente",
+      "created_at": "2024-10-21 08:30:00",
+      "reservations_id": 3,
+      "parent_id": 3
+    },
+    {
+      "id": 4,
+      "amount": 48.00,
+      "method": "transferencia",
+      "status": "pendiente",
+      "created_at": "2024-10-21 14:45:00",
+      "reservations_id": 4,
+      "parent_id": 4
+    },
+    {
+      "id": 5,
+      "amount": 96.00,
+      "method": "tarjeta",
+      "status": "completado",
+      "created_at": "2024-10-22 10:15:00",
+      "reservations_id": 5,
+      "parent_id": 5
+    },
+    {
+      "id": 6,
+      "amount": 72.00,
+      "method": "paypal",
+      "status": "reembolsado",
+      "created_at": "2024-10-22 17:00:00",
+      "reservations_id": 6,
+      "parent_id": 6
+    },
+    {
+      "id": 7,
+      "amount": 96.00,
+      "method": "tarjeta",
+      "status": "completado",
+      "created_at": "2024-10-23 09:45:00",
+      "reservations_id": 7,
+      "parent_id": 7
+    },
+    {
+      "id": 8,
+      "amount": 72.00,
+      "method": "transferencia",
+      "status": "pendiente",
+      "created_at": "2024-10-23 15:35:00",
+      "reservations_id": 8,
+      "parent_id": 8
+    },
+    {
+      "id": 9,
+      "amount": 96.00,
+      "method": "tarjeta",
+      "status": "completado",
+      "created_at": "2024-10-24 11:25:00",
+      "reservations_id": 9,
+      "parent_id": 9
+    },
+    {
+      "id": 10,
+      "amount": 96.00,
+      "method": "paypal",
+      "status": "completado",
+      "created_at": "2024-10-24 18:00:00",
+      "reservations_id": 10,
+      "parent_id": 10
+    }
+  ],
+  "review": [
+    {
+      "id": 1,
+      "rating": 5,
+      "comment": "Excelente servicio, muy puntual y los niños quedaron encantados.",
+      "created_at": "2024-10-26 14:15:00",
+      "parent_id": 1,
+      "reservations_id": 1
+    },
+    {
+      "id": 2,
+      "rating": 4,
+      "comment": "Muy buen servicio, aunque llegó un poco tarde.",
+      "created_at": "2024-10-26 16:30:00",
+      "parent_id": 2,
+      "reservations_id": 2
+    },
+    {
+      "id": 3,
+      "rating": 5,
+      "comment": "Increíble trato con los niños, muy profesional.",
+      "created_at": "2024-10-27 10:45:00",
+      "parent_id": 5,
+      "reservations_id": 5
+    },
+    {
+      "id": 4,
+      "rating": 5,
+      "comment": "Muy recomendable, los niños se divirtieron mucho.",
+      "created_at": "2024-10-27 18:20:00",
+      "parent_id": 7,
+      "reservations_id": 7
+    },
+    {
+      "id": 5,
+      "rating": 4,
+      "comment": "Buen trato con los niños, pero podría mejorar en puntualidad.",
+      "created_at": "2024-10-28 09:30:00",
+      "parent_id": 9,
+      "reservations_id": 9
+    },
+    {
+      "id": 6,
+      "rating": 5,
+      "comment": "Excelente experiencia, muy profesional y cariñosa con los niños.",
+      "created_at": "2024-10-28 14:45:00",
+      "parent_id": 10,
+      "reservations_id": 10
+    },
+    {
+      "id": 7,
+      "rating": 3,
+      "comment": "Servicio aceptable, pero faltó más interacción con los niños.",
+      "created_at": "2024-10-29 11:15:00",
+      "parent_id": 3,
+      "reservations_id": 3
+    },
+    {
+      "id": 8,
+      "rating": 4,
+      "comment": "Buena experiencia en general, los niños quedaron contentos.",
+      "created_at": "2024-10-29 17:30:00",
+      "parent_id": 4,
+      "reservations_id": 4
+    },
+    {
+      "id": 9,
+      "rating": 5,
+      "comment": "Excelente niñera, muy atenta y puntual.",
+      "created_at": "2024-10-30 10:00:00",
+      "parent_id": 6,
+      "reservations_id": 6
+    },
+    {
+      "id": 10,
+      "rating": 4,
+      "comment": "Buen servicio, los niños disfrutaron mucho.",
+      "created_at": "2024-10-30 15:45:00",
+      "parent_id": 8,
+      "reservations_id": 8
+    }]
+}
