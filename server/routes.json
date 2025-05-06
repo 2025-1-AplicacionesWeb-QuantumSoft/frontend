@@ -1,3 +1,4 @@
 {
-  "/api/v1/*": "/$1"
+  "/api/v1/user": "/user$1",
+  "/api/v1/babysitter*": "/babysitter$1"
 }

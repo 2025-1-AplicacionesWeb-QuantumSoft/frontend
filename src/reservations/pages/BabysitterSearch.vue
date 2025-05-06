@@ -2,17 +2,25 @@
 import Sidebar from '@/public/Sidebar.vue'
 import FiltersBar from '@/reservations/components/FiltersBar.vue'
 import BabysitterCard from '@/reservations/components/BabysitterCard.vue'
-import data from '@/data.json'
+import {getBabysitters} from "@/reservations/service/reservation.service.js";
 
-import { ref, computed } from 'vue'
+import {ref, computed, onMounted} from 'vue'
 
-const babysitters = ref(data.babysitter)
+const babysitters = ref([])
 const selectedLocation = ref(null)
 const selectedRating = ref(null)
 
 const locations = ['Lima', 'Cusco', 'Arequipa']
 const ratings = [5, 4, 3, 2]
 
+onMounted(async () => {
+  try {
+    const response = await getBabysitters()
+    babysitters.value = response.data
+  } catch (error) {
+    console.error('Error al obtener reservas:', error)
+  }
+})
 const setLocation = (loc) => (selectedLocation.value = loc)
 const setRating = (rate) => (selectedRating.value = rate)
 const resetFilters = () => {
@@ -30,7 +38,6 @@ const filteredBabysitters = computed(() => {
 
 <template>
   <div class="container flex">
-    <Sidebar />
 
     <div class="flex-1 p-4">
       <FiltersBar
