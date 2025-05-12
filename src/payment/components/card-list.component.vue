@@ -15,7 +15,7 @@
     methods:{
       fetchCards() {
         this.paymentApiService
-            .getCardsByUserId(this.userId, this.userType)
+            .getPaymentByUserId(this.userId, this.userType)
             .then(response => {
               this.cards = response;
             })

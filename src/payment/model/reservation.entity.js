@@ -1,3 +1,6 @@
+import {Parent} from "@/payment/model/parent.entity.js";
+import {Babysitter} from "@/payment/model/babysitter.entity.js";
+
 export class Reservation {
     constructor({
         id="",
@@ -13,7 +16,6 @@ export class Reservation {
         this.status=status;
         this.created_at=created_at;
         this.notifications_id=notifications_id;
-        this.parent_id=parent_id;
         this.parent_id=parent_id;
         this.babysitter_id=babysitter_id;
     }

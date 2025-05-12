@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import reservationRoutes from '@/reservations/routes.js'
 import Layout from '@/shared/Layout.component.vue'
+import PaymentHistory from "@/payment/pages/payment-history.page.vue";
 
 
 const routes = [
@@ -8,9 +9,7 @@ const routes = [
         path: '/',
         component: Layout,
         children: [
-            ...reservationRoutes,
-            //demas rutas de bounded context
-            //se pone por cada bounded context
+            {path:"/payment", name:"payment", component: PaymentHistory, meta: {title: 'Payment History'}},
         ]
     }
 ]

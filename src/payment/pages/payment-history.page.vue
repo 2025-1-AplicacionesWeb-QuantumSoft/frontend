@@ -1,7 +1,8 @@
 <script>
 
   import {PaymentApiService} from "@/payment/services/payment-api.service.js";
-  import {onMounted} from "vue";
+  import {onMounted, ref} from "vue";
+  import {useRouter} from "vue-router";
 
   export default {
     name: "payment-history",
@@ -15,6 +16,7 @@
 
       onMounted(async () => {
         const res = await paymentApiService.getPaymentByUserId(user.id);
+        console.log("Datos recibidos:", res);
         paymentListData.value = res;
       });
 
@@ -50,27 +52,27 @@
 
       <pv-column header="Created at">
         <template #body="slotProps">
-          {{ formatDate(slotProps.data.createdAt) }}
+          {{ formatDate(slotProps.data.created_at) }}
         </template>
       </pv-column>
 
       <pv-column header="Amount">
         <template #body="slotProps">
-          S/ {{ slotProps.data.reservation.totalAmount.toFixed(2) }}
+          S/ {{ slotProps.data.amount?.toFixed(2) ?? '0.00' }}
         </template>
       </pv-column>
 
-      <pv-column :header="user.role === 'tutor' ? `Caregiver's name` : `Tutor's name`">
+      <pv-column :header="user.role === 'parent' ? `Babysitter's name` : `Parent's name`">
         <template #body="slotProps">
-          {{ user.role === 'tutor'
-            ? slotProps.data.reservation.caregiver?.completeName?.completeName
-            : slotProps.data.reservation.tutorId }}
+          {{ user.role === 'parent'
+            ? slotProps.data.reservation?.babysitter_id?.name ?? 'N/A'
+            : slotProps.data.reservation?.parent_id ?? 'N/A' }}
         </template>
       </pv-column>
 
       <pv-column header="Card number">
         <template #body="slotProps">
-          {{ slotProps.data.card?.cardNumber }}
+          {{ slotProps.data.paymentMethod?.cardId ?? 'N/A' }}
         </template>
       </pv-column>
     </pv-dataTable>
