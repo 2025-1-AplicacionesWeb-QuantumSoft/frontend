@@ -9,7 +9,8 @@ const routes = [
         component: Layout,
         children: [
             ...reservationRoutes,
-
+            //demas rutas de bounded context
+            //se pone por cada bounded context
         ]
     }
 ]

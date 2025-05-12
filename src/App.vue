@@ -6,15 +6,18 @@ import PaymentHistory from "@/payment/watchs/payment-history.watch.vue";
 </script>
 
 <template>
+
+  <main class="container">
+  <router-view/>
   <header>
 
   </header>
-
-  <main>
-    <payment-history></payment-history>
   </main>
+
 </template>
 
 <style scoped>
-
+.container {
+  background-color: var(--color-cream);
+}
 </style>

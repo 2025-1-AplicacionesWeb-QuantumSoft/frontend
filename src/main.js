@@ -2,8 +2,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import i18n from "@/i18n.js";
-
+import router from './router'
 import {
     AutoComplete,
     Button,
@@ -28,6 +27,12 @@ import {
     Toolbar,
     Tooltip
 } from 'primevue'
+import i18n from "@/i18n.js";
+import PrimeVue from 'primevue/config'
+import Aura from '@primeuix/themes/aura';
+import '@primevue/themes'
+import 'primeicons/primeicons.css'
+import 'primeflex/primeflex.css'
 
 
 const app= createApp(App)
@@ -57,4 +62,19 @@ app
     .component("pv-dialog",Dialog)
     .component("pv-column",Column)
     .use(i18n)
+    .use(router)
+    .use(PrimeVue, {
+        // Default theme configuration
+        theme: {
+            preset: Aura,
+            options: {
+                prefix: 'p',
+                darkModeSelector: 'system',
+                cssLayer: {
+                    name: 'primevue',
+                    order: ' app-styles, primevue, tailwindcss '
+                }
+            }
+        }
+    })
     .mount('#app')
