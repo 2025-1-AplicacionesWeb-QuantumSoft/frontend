@@ -880,7 +880,10 @@
     {
       "id": 1,
       "amount": 48.00,
-      "method": "tarjeta",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 1
+      },
       "status": "completado",
       "created_at": "2024-10-20 09:45:00",
       "reservations_id": 1,
@@ -889,7 +892,10 @@
     {
       "id": 2,
       "amount": 48.00,
-      "method": "tarjeta",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 3
+      },
       "status": "completado",
       "created_at": "2024-10-20 12:00:00",
       "reservations_id": 2,
@@ -898,7 +904,10 @@
     {
       "id": 3,
       "amount": 48.00,
-      "method": "paypal",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 5
+      },
       "status": "pendiente",
       "created_at": "2024-10-21 08:30:00",
       "reservations_id": 3,
@@ -907,7 +916,10 @@
     {
       "id": 4,
       "amount": 48.00,
-      "method": "transferencia",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 7
+      },
       "status": "pendiente",
       "created_at": "2024-10-21 14:45:00",
       "reservations_id": 4,
@@ -916,7 +928,10 @@
     {
       "id": 5,
       "amount": 96.00,
-      "method": "tarjeta",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 9
+      },
       "status": "completado",
       "created_at": "2024-10-22 10:15:00",
       "reservations_id": 5,
@@ -925,7 +940,10 @@
     {
       "id": 6,
       "amount": 72.00,
-      "method": "paypal",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 11
+      },
       "status": "reembolsado",
       "created_at": "2024-10-22 17:00:00",
       "reservations_id": 6,
@@ -934,7 +952,10 @@
     {
       "id": 7,
       "amount": 96.00,
-      "method": "tarjeta",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 13
+      },
       "status": "completado",
       "created_at": "2024-10-23 09:45:00",
       "reservations_id": 7,
@@ -943,7 +964,10 @@
     {
       "id": 8,
       "amount": 72.00,
-      "method": "transferencia",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 15
+      },
       "status": "pendiente",
       "created_at": "2024-10-23 15:35:00",
       "reservations_id": 8,
@@ -952,7 +976,10 @@
     {
       "id": 9,
       "amount": 96.00,
-      "method": "tarjeta",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 17
+      },
       "status": "completado",
       "created_at": "2024-10-24 11:25:00",
       "reservations_id": 9,
@@ -961,11 +988,304 @@
     {
       "id": 10,
       "amount": 96.00,
-      "method": "paypal",
+      "paymentMethod": {
+        "type": "tarjeta de crédito",
+        "cardId": 19
+      },
       "status": "completado",
       "created_at": "2024-10-24 18:00:00",
       "reservations_id": 10,
       "parent_id": 10
+    }
+  ],
+  "card": [
+    {
+      "id": 1,
+      "parent_id": 1,
+      "cardNumber": "5555 1231 5555 5325",
+      "cardHolder": "JUAN PEREZ GONZALES ABARCÓN",
+      "cvv": "790",
+      "expirationDate": "11/24"
+    },
+    {
+      "id": 2,
+      "parent_id": 1,
+      "cardNumber": "5555 4321 8765 1234",
+      "cardHolder": "JUAN PEREZ GONZALES ABARCÓN",
+      "cvv": "123",
+      "expirationDate": "05/25"
+    },
+    {
+      "id": 3,
+      "parent_id": 2,
+      "cardNumber": "5555 8765 4321 9876",
+      "cardHolder": "ANA GÓMEZ SÁNCHEZ",
+      "cvv": "234",
+      "expirationDate": "01/26"
+    },
+    {
+      "id": 4,
+      "parent_id": 2,
+      "cardNumber": "5555 2345 6789 5678",
+      "cardHolder": "ANA GÓMEZ SÁNCHEZ",
+      "cvv": "987",
+      "expirationDate": "12/27"
+    },
+    {
+      "id": 5,
+      "parent_id": 3,
+      "cardNumber": "5555 2345 1234 5678",
+      "cardHolder": "PEDRO RAMIREZ MARTÍNEZ",
+      "cvv": "456",
+      "expirationDate": "09/28"
+    },
+    {
+      "id": 6,
+      "parent_id": 3,
+      "cardNumber": "5555 8765 2345 9876",
+      "cardHolder": "PEDRO RAMIREZ MARTÍNEZ",
+      "cvv": "678",
+      "expirationDate": "02/29"
+    },
+    {
+      "id": 7,
+      "parent_id": 4,
+      "cardNumber": "5555 6789 1234 2345",
+      "cardHolder": "LUIS MORALES LÓPEZ",
+      "cvv": "567",
+      "expirationDate": "07/24"
+    },
+    {
+      "id": 8,
+      "parent_id": 4,
+      "cardNumber": "5555 9876 5432 7654",
+      "cardHolder": "LUIS MORALES LÓPEZ",
+      "cvv": "876",
+      "expirationDate": "04/25"
+    },
+    {
+      "id": 9,
+      "parent_id": 5,
+      "cardNumber": "5555 1231 5555 6789",
+      "cardHolder": "MARTA FERNÁNDEZ LÓPEZ",
+      "cvv": "345",
+      "expirationDate": "01/26"
+    },
+    {
+      "id": 10,
+      "parent_id": 5,
+      "cardNumber": "5555 4321 8765 6543",
+      "cardHolder": "MARTA FERNÁNDEZ LÓPEZ",
+      "cvv": "654",
+      "expirationDate": "12/27"
+    },
+    {
+      "id": 11,
+      "parent_id": 13,
+      "cardNumber": "5555 1111 5555 1234",
+      "cardHolder": "ANDREA JIMÉNEZ MARTÍNEZ",
+      "cvv": "987",
+      "expirationDate": "06/27"
+    },
+    {
+      "id": 12,
+      "parent_id": 13,
+      "cardNumber": "5555 9999 2222 3333",
+      "cardHolder": "ANDREA JIMÉNEZ MARTÍNEZ",
+      "cvv": "112",
+      "expirationDate": "09/28"
+    },
+    {
+      "id": 13,
+      "parent_id": 14,
+      "cardNumber": "5555 3333 4444 5555",
+      "cardHolder": "JUANITA RIVERA FERNÁNDEZ",
+      "cvv": "222",
+      "expirationDate": "08/29"
+    },
+    {
+      "id": 14,
+      "parent_id": 14,
+      "cardNumber": "5555 4444 5555 6666",
+      "cardHolder": "JUANITA RIVERA FERNÁNDEZ",
+      "cvv": "543",
+      "expirationDate": "01/30"
+    },
+    {
+      "id": 15,
+      "parent_id": 15,
+      "cardNumber": "5555 1111 6666 4444",
+      "cardHolder": "PATRICIA GÓMEZ FERNÁNDEZ",
+      "cvv": "678",
+      "expirationDate": "07/28"
+    },
+    {
+      "id": 16,
+      "parent_id": 15,
+      "cardNumber": "5555 9999 1111 0000",
+      "cardHolder": "PATRICIA GÓMEZ FERNÁNDEZ",
+      "cvv": "321",
+      "expirationDate": "10/29"
+    },
+    {
+      "id": 17,
+      "babysitter_id": 1,
+      "cardNumber": "5555 1231 5555 5325",
+      "cardHolder": "Estudiante de educación infantil",
+      "cvv": "790",
+      "expirationDate": "11/24"
+    },
+    {
+      "id": 18,
+      "babysitter_id": 1,
+      "cardNumber": "5555 4321 8765 1234",
+      "cardHolder": "Estudiante de educación infantil",
+      "cvv": "123",
+      "expirationDate": "05/25"
+    },
+    {
+      "id": 19,
+      "babysitter_id": 2,
+      "cardNumber": "5555 8765 4321 9876",
+      "cardHolder": "Profesor de primaria",
+      "cvv": "234",
+      "expirationDate": "01/26"
+    },
+    {
+      "id": 20,
+      "babysitter_id": 2,
+      "cardNumber": "5555 2345 6789 5678",
+      "cardHolder": "Profesor de primaria",
+      "cvv": "987",
+      "expirationDate": "12/27"
+    },
+    {
+      "id": 21,
+      "babysitter_id": 3,
+      "cardNumber": "5555 2345 1234 5678",
+      "cardHolder": "Enfermera pediátrica",
+      "cvv": "456",
+      "expirationDate": "09/28"
+    },
+    {
+      "id": 22,
+      "babysitter_id": 3,
+      "cardNumber": "5555 8765 2345 9876",
+      "cardHolder": "Enfermera pediátrica",
+      "cvv": "678",
+      "expirationDate": "02/29"
+    },
+    {
+      "id": 23,
+      "babysitter_id": 4,
+      "cardNumber": "5555 6789 1234 2345",
+      "cardHolder": "Estudiante de psicología",
+      "cvv": "567",
+      "expirationDate": "07/24"
+    },
+    {
+      "id": 24,
+      "babysitter_id": 4,
+      "cardNumber": "5555 9876 5432 7654",
+      "cardHolder": "Estudiante de psicología",
+      "cvv": "876",
+      "expirationDate": "04/25"
+    },
+    {
+      "id": 25,
+      "babysitter_id": 5,
+      "cardNumber": "5555 1231 5555 6789",
+      "cardHolder": "Monitora de tiempo libre",
+      "cvv": "345",
+      "expirationDate": "01/26"
+    },
+    {
+      "id": 26,
+      "babysitter_id": 5,
+      "cardNumber": "5555 4321 8765 6543",
+      "cardHolder": "Monitora de tiempo libre",
+      "cvv": "654",
+      "expirationDate": "12/27"
+    },
+    {
+      "id": 27,
+      "babysitter_id": 6,
+      "cardNumber": "5555 1111 5555 1234",
+      "cardHolder": "Graduado en magisterio",
+      "cvv": "987",
+      "expirationDate": "06/27"
+    },
+    {
+      "id": 28,
+      "babysitter_id": 6,
+      "cardNumber": "5555 9999 2222 3333",
+      "cardHolder": "Graduado en magisterio",
+      "cvv": "112",
+      "expirationDate": "09/28"
+    },
+    {
+      "id": 29,
+      "babysitter_id": 7,
+      "cardNumber": "5555 3333 4444 5555",
+      "cardHolder": "Au pair",
+      "cvv": "222",
+      "expirationDate": "08/29"
+    },
+    {
+      "id": 30,
+      "babysitter_id": 7,
+      "cardNumber": "5555 4444 5555 6666",
+      "cardHolder": "Au pair",
+      "cvv": "543",
+      "expirationDate": "01/30"
+    },
+    {
+      "id": 31,
+      "babysitter_id": 8,
+      "cardNumber": "5555 1111 6666 4444",
+      "cardHolder": "Técnico en jardín de infancia",
+      "cvv": "678",
+      "expirationDate": "07/28"
+    },
+    {
+      "id": 32,
+      "babysitter_id": 8,
+      "cardNumber": "5555 9999 1111 0000",
+      "cardHolder": "Técnico en jardín de infancia",
+      "cvv": "321",
+      "expirationDate": "10/29"
+    },
+    {
+      "id": 33,
+      "babysitter_id": 9,
+      "cardNumber": "5555 1234 5678 9876",
+      "cardHolder": "Estudiante de nutrición",
+      "cvv": "555",
+      "expirationDate": "05/26"
+    },
+    {
+      "id": 34,
+      "babysitter_id": 9,
+      "cardNumber": "5555 8765 4321 6543",
+      "cardHolder": "Estudiante de nutrición",
+      "cvv": "999",
+      "expirationDate": "02/27"
+    },
+    {
+      "id": 35,
+      "babysitter_id": 10,
+      "cardNumber": "5555 9876 5432 1234",
+      "cardHolder": "Animador sociocultural",
+      "cvv": "111",
+      "expirationDate": "06/28"
+    },
+    {
+      "id": 36,
+      "babysitter_id": 10,
+      "cardNumber": "5555 4321 8765 5678",
+      "cardHolder": "Animador sociocultural",
+      "cvv": "444",
+      "expirationDate": "03/29"
     }
   ],
   "review": [

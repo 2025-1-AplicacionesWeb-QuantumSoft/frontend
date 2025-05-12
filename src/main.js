@@ -2,8 +2,32 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
-import { AutoComplete, Button, Card, CascadeSelect, Checkbox, ConfirmDialog, DataTable, DatePicker, FileUpload, FloatLabel, IconField, Image, InputIcon , Menu, Menubar, Message, Stepper, Textarea, ToggleSwitch, Toolbar, Tooltip } from 'primevue'
+import i18n from "@/i18n.js";
+
+import {
+    AutoComplete,
+    Button,
+    Card,
+    CascadeSelect,
+    Checkbox, Column,
+    ConfirmDialog,
+    DataTable,
+    DatePicker,
+    Dialog,
+    FileUpload,
+    FloatLabel,
+    IconField,
+    Image,
+    InputIcon,
+    Menu,
+    Menubar,
+    Message,
+    Stepper,
+    Textarea,
+    ToggleSwitch,
+    Toolbar,
+    Tooltip
+} from 'primevue'
 
 
 const app= createApp(App)
@@ -30,6 +54,7 @@ app
     .component("pv-message",Message)
     .component("pv-inputIcon",InputIcon)
     .component("pv-image",Image)
+    .component("pv-dialog",Dialog)
+    .component("pv-column",Column)
     .use(i18n)
-    .use(router)
     .mount('#app')
