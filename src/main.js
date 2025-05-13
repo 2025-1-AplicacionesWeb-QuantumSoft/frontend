@@ -17,7 +17,7 @@ import {
     FloatLabel,
     IconField,
     Image,
-    InputIcon,
+    InputIcon, InputText,
     Menu,
     Menubar,
     Message,
@@ -61,6 +61,7 @@ app
     .component("pv-image",Image)
     .component("pv-dialog",Dialog)
     .component("pv-column",Column)
+    .component("pv-inputText",InputText)
     .use(i18n)
     .use(router)
     .use(PrimeVue, {

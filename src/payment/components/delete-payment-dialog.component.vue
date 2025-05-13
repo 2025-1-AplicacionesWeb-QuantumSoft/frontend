@@ -1,9 +1,8 @@
 <script >
-import {Button as PvButton, Dialog as PvDialog} from "primevue";
 
   export default {
     name:"delete-payment-dialog",
-    components: {PvButton, PvDialog},
+
   }
 </script>
 

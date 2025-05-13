@@ -879,7 +879,7 @@
   "payment": [
     {
       "id": 1,
-      "amount": 48.00,
+      "amount": 48,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 1
@@ -891,7 +891,7 @@
     },
     {
       "id": 2,
-      "amount": 48.00,
+      "amount": 48,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 3
@@ -903,7 +903,7 @@
     },
     {
       "id": 3,
-      "amount": 48.00,
+      "amount": 48,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 5
@@ -915,7 +915,7 @@
     },
     {
       "id": 4,
-      "amount": 48.00,
+      "amount": 48,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 7
@@ -927,7 +927,7 @@
     },
     {
       "id": 5,
-      "amount": 96.00,
+      "amount": 96,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 9
@@ -939,7 +939,7 @@
     },
     {
       "id": 6,
-      "amount": 72.00,
+      "amount": 72,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 11
@@ -951,7 +951,7 @@
     },
     {
       "id": 7,
-      "amount": 96.00,
+      "amount": 96,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 13
@@ -963,7 +963,7 @@
     },
     {
       "id": 8,
-      "amount": 72.00,
+      "amount": 72,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 15
@@ -975,7 +975,7 @@
     },
     {
       "id": 9,
-      "amount": 96.00,
+      "amount": 96,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 17
@@ -987,7 +987,7 @@
     },
     {
       "id": 10,
-      "amount": 96.00,
+      "amount": 96,
       "paymentMethod": {
         "type": "tarjeta de crédito",
         "cardId": 19
@@ -999,14 +999,6 @@
     }
   ],
   "card": [
-    {
-      "id": 1,
-      "parent_id": 1,
-      "cardNumber": "5555 1231 5555 5325",
-      "cardHolder": "JUAN PEREZ GONZALES ABARCÓN",
-      "cvv": "790",
-      "expirationDate": "11/24"
-    },
     {
       "id": 2,
       "parent_id": 1,
@@ -1264,12 +1256,11 @@
       "expirationDate": "05/26"
     },
     {
-      "id": 34,
-      "babysitter_id": 9,
       "cardNumber": "5555 8765 4321 6543",
       "cardHolder": "Estudiante de nutrición",
       "cvv": "999",
-      "expirationDate": "02/27"
+      "expirationDate": "02/26",
+      "id": 34
     },
     {
       "id": 35,
@@ -1368,5 +1359,6 @@
       "created_at": "2024-10-30 15:45:00",
       "parent_id": 8,
       "reservations_id": 8
-    }]
+    }
+  ]
 }

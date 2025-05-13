@@ -1,17 +1,20 @@
 <script>
+  import {CardApiService} from "@/payment/services/card-api.service.js";
+  import {Button as PvButton} from "primevue";
+
 
   export default {
     name: "create-edit-payment",
+    components: {PvButton},
 
     props:{
       cardData:{
         type:Object,
         default:null
-      }
+      },
     },
     data(){
       return{
-        editMode: !!this.cardData,
         user: JSON.parse(window.localStorage.getItem("user") || "{}"),
         cardForm: {
           cardNumber: "",
@@ -22,123 +25,94 @@
         formattedExpirationDate: "",
       }
     },
+    computed:{
+      editMode(){
+        return !!this.cardData;
+      }
+    },
+
     watch:{
       cardData: {
         immediate: true,
-        handler(newData) {
-          if (this.editMode) {
-            this.cardForm.cardNumber = newData.cardNumber;
-            this.cardForm.cardHolder = newData.cardHolder;
-            this.cardForm.cvv = newData.cvv;
-            this.cardForm.expirationDate = newData.expirationDate;
-
-            // Use the formatted expiration date for display
-            this.formattedExpirationDate = this.getFormattedExpirationDate(newData.expirationDate);
+        handler(newVal) {
+          if (newVal) {
+            this.cardForm = {
+              cardNumber: newVal.cardNumber || "",
+              cardHolder: newVal.cardHolder || "",
+              cvv: newVal.cvv || "",
+              expirationDate: newVal.expirationDate || "",
+            };
           }
         },
       },
     },
     methods:{
-      getFormattedExpirationDate(expirationDate) {
-        return new Date(expirationDate).toLocaleDateString("en-US", {
-          month: "2-digit",
-          day: "2-digit",
-          year: "2-digit",
-        });
-      },
 
       onCancel() {
         this.$emit("close");
       },
 
-      onSubmit() {
-        const {cardNumber, cardHolder, cvv} = this.cardForm;
-        const expirationDate = this.formattedExpirationDate;
-        const month = expirationDate.split("/")[0];
-        const year = expirationDate.split("/")[1];
+      async onSubmit() {
+        const cardApiService = new CardApiService();
 
         const card = {
           parentId: this.user.id,
-          cardNumber,
-          cardHolder,
-          cvv,
-          expirationDate: `${month}/${year}`,
+          ...this.cardForm,
         };
-        if (this.editMode) {
-          CardApi.updateCard(this.cardData.id, card).then(() => {
-            this.$emit("update", card);
-          });
-        } else {
-          CardApi.createCard(card).then(() => {
-            this.$emit("add", card);
-          });
-        }
-        this.onCancel();
-      }
-    }
 
+        try {
+          if (this.editMode) {
+            await cardApiService.updateCard(this.cardData.id, card);
+            this.$emit("update", { ...card, id: this.cardData.id });
+          } else {
+            const createCard = await cardApiService.createCard(card);
+            this.$emit("add", createCard);
+          }
+        } catch (e) {
+          console.error("Error saving card:", e);
+        }
+
+        this.onCancel();
+      },
+    },
   }
 </script>
 
 <template>
   <pv-dialog
-      :header="editMode ? 'Update your card' : 'Add a new card'"
+      :header="editMode ? 'Edit Card' : 'Add New Card'"
       :visible="true"
       :modal="true"
       :closable="true"
       :style="{ width: '400px' }"
-      @hide="onCancel">
+      @hide="onCancel"
+  >
     <form @submit.prevent="onSubmit">
       <div class="p-field">
-        <label for="cardNumber">Card number</label>
-        <InputText
-            id="cardNumber"
-            v-model="cardForm.cardNumber"
-            required
-        />
+        <label for="cardNumber">Card Number</label>
+        <pv-inputText id="cardNumber" v-model="cardForm.cardNumber" required />
       </div>
+
       <div class="p-field">
-        <label for="cardHolder">Card holder</label>
-        <InputText
-            id="cardHolder"
-            v-model="cardForm.cardHolder"
-            required
-        />
+        <label for="cardHolder">Card Holder</label>
+        <pv-inputText id="cardHolder" v-model="cardForm.cardHolder" required />
       </div>
+
       <div class="p-grid">
         <div class="p-col">
-          <div class="p-field">
-            <label for="expirationDate">Exp. Date</label>
-            <InputText
-                id="expirationDate"
-                v-model="formattedExpirationDate"
-                required
-            />
-          </div>
+          <label for="expirationDate">Exp. Date (MM/YY)</label>
+          <pv-inputText id="expirationDate" v-model="cardForm.expirationDate" required />
         </div>
         <div class="p-col">
-          <div class="p-field">
-            <label for="cvv">CVV</label>
-            <InputText
-                id="cvv"
-                v-model="cardForm.cvv"
-                required
-            />
-          </div>
+          <label for="cvv">CVV</label>
+          <pv-inputText id="cvv" v-model="cardForm.cvv" required />
         </div>
       </div>
-      <p-footer>
-        <pv-button
-            label="Cancel"
-            class="p-button-secondary"
-            @click="onCancel"
-        />
-        <pv-button
-            label="Save"
-            class="p-button-primary"
-            type="submit"
-        />
-      </p-footer>
+
+      <div class="dialog-footer">
+        <pv-button label="Cancel" class="p-button-secondary" @click="onCancel" />
+        <pv-button label="Save" class="p-button-primary" type="submit" />
+      </div>
     </form>
   </pv-dialog>
 </template>

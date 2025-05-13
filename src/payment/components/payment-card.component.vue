@@ -10,13 +10,13 @@
         required:true
       }
     },
-    emits:["delete","edit"],
+    emits:["onDelete","onEdit"],
     methods:{
       handleDelete() {
-        this.$emit('delete', this.card);
+        this.$emit('onDelete', this.card);
       },
       handleEdit() {
-        this.$emit('edit', this.card);
+        this.$emit('onEdit', this.card);
       },
       formatExpiration(date) {
         if (!date) return '';

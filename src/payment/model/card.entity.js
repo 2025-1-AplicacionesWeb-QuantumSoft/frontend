@@ -13,8 +13,8 @@ export class Card {
 
                 }) {
         this.id = id;
-        this.parent_id = parent_id;
-        this.babysitter_id = babysitter_id;
+        this.parent_id = parent_id ? new Parent(parent_id) : null;
+        this.babysitter_id = babysitter_id ? new Babysitter(babysitter_id) : null;
         this.cardNumber=cardNumber;
         this.cardHolder = cardHolder;
         this.cvv = cvv;

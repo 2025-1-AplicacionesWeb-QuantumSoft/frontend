@@ -9,7 +9,7 @@ const http = axios.create({
 export class CardApiService {
     getByUserId(userId) {
         return http
-            .get(`/card?userId=${userId}`)
+            .get(`/card?parent_id=${userId}`)
             .then(response => response.data)
             .catch(error => {
                 console.error("Error al obtener tarjetas:", error);
