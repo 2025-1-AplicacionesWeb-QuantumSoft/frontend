@@ -1,6 +1,7 @@
 <script>
 
   import {PaymentApiService} from "@/payment/services/payment-api.service.js";
+  import {CardApiService} from "@/payment/services/card-api.service.js";
   import {onMounted, ref} from "vue";
   import {useRouter} from "vue-router";
 
@@ -13,11 +14,28 @@
       const paymentListData = ref([]);
 
       const paymentApiService= new PaymentApiService()
+      const cardApisService= new CardApiService()
 
       onMounted(async () => {
         const res = await paymentApiService.getPaymentByUserId(user.id);
         console.log("Datos recibidos:", res);
-        paymentListData.value = res;
+        const enriched = await Promise.all(res.map(async (payment) => {
+          let cardNumber = 'N/A';
+          if (payment.paymentMethod?.cardId) {
+            try {
+              const card = await cardApisService.getCardById(payment.paymentMethod.cardId);
+              cardNumber = card.cardNumber;
+            } catch (_) {
+            }
+          }
+          return {
+            ...payment,
+            cardNumber: cardNumber,
+          };
+        }));
+
+          paymentListData.value = enriched;
+
       });
 
       const formatDate = (dateString) => {
@@ -72,7 +90,7 @@
 
       <pv-column header="Card number">
         <template #body="slotProps">
-          {{ slotProps.data.paymentMethod?.cardId ?? 'N/A' }}
+          {{ slotProps.data.cardNumber }}
         </template>
       </pv-column>
     </pv-dataTable>

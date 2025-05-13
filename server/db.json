@@ -1000,14 +1000,6 @@
   ],
   "card": [
     {
-      "id": 2,
-      "parent_id": 1,
-      "cardNumber": "5555 4321 8765 1234",
-      "cardHolder": "JUAN PEREZ GONZALES ABARCÓN",
-      "cvv": "123",
-      "expirationDate": "05/25"
-    },
-    {
       "id": 3,
       "parent_id": 2,
       "cardNumber": "5555 8765 4321 9876",
@@ -1016,12 +1008,11 @@
       "expirationDate": "01/26"
     },
     {
-      "id": 4,
-      "parent_id": 2,
       "cardNumber": "5555 2345 6789 5678",
       "cardHolder": "ANA GÓMEZ SÁNCHEZ",
-      "cvv": "987",
-      "expirationDate": "12/27"
+      "cvv": "986",
+      "expirationDate": "12/27",
+      "id": 4
     },
     {
       "id": 5,

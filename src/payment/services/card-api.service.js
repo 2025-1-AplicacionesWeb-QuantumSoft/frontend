@@ -21,6 +21,15 @@ export class CardApiService {
         return http.get("/card");
     }
 
+    getCardById(cardId){
+        return http.get(`/card/${cardId}`)
+            .then(response => response.data)
+            .catch(error => {
+                console.error("Error al obtener tarjeta por ID:", error);
+                throw error;
+            });
+    }
+
     updateCard(id, cardData) {
         return http
             .put(`/card/${id}`, cardData)

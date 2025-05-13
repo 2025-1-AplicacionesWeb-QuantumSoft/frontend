@@ -19,9 +19,8 @@
         this.$emit('onEdit', this.card);
       },
       formatExpiration(date) {
-        if (!date) return '';
-        const [year, month] = date.split('-');
-        return `${month}/${year?.slice(2)}`;
+        const regex = /^\d{2}\/\d{2}$/; // MM/YY
+        return regex.test(date) ? date : '';
       },
     },
 
