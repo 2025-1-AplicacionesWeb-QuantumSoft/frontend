@@ -30,6 +30,7 @@ import {Card} from "@/payment/model/card.entity.js";
       onMounted(async () => {
         try {
           const response = await cardApiService.getCards();
+          console.log("API response:", response.data);
           cards.value = response.data.map(cardData=> new Card(cardData));
           console.log(cards.value);
         } catch (error) {

@@ -2,7 +2,7 @@ import axios from "axios";
 import {Parent} from "@/payment/model/parent.entity.js";
 import {Reservation} from "@/payment/model/reservation.entity.js";
 
-const baseurl = "http://localhost:3000";
+const baseurl = import.meta.env.VITE_API_BASE_URL;
 
 
 const http = axios.create({
@@ -25,10 +25,8 @@ export  class PaymentApiService{
             : { babysitter_id: userId };
         return http.get("/payment",{params:params})
             .then(async (res) => {
-                // Proceso para obtener las relaciones manualmente
                 const expandedPayments = await Promise.all(res.data.map(async (payment) => {
                     let reservation = null;
-                    // Si tiene un reservation_id, obtenemos los detalles de la reserva
                     if (payment.reservation_id) {
                         const reservationResponse = await http.get(`/reservation/${payment.reservation_id}`);
                         reservation = new Reservation(reservationResponse.data);
