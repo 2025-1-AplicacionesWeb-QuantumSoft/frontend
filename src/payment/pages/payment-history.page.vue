@@ -98,14 +98,12 @@
 </template>
 
 <style scoped>
-/* Fuente general y colores */
 .space-y-4 {
   font-family: 'Open Sans', sans-serif;
   color: #222;
   padding: 2rem;
 }
 
-/* Título principal */
 h1 {
   font-size: 2rem;
   font-weight: 700;
@@ -113,7 +111,6 @@ h1 {
   margin-bottom: 1rem;
 }
 
-/* Botón "Go back" */
 ::v-deep(.p-button-text) {
   background-color: #4F8EF7 !important;
   color: white !important;
@@ -129,7 +126,6 @@ h1 {
   background-color: #3c76d3 !important;
 }
 
-/* Tabla de pagos */
 ::v-deep(.p-datatable) {
   border-radius: 12px;
   overflow: hidden;
@@ -151,10 +147,9 @@ h1 {
   border-bottom: 1px solid #eee;
   font-size: 0.95rem;
   color: #222;
-  background-color: white; /* Forza fondo blanco */
+  background-color: white;
 }
 
-/* Elimina color de fila alterna */
 ::v-deep(.p-datatable .p-datatable-tbody > tr:nth-child(even)) {
   background-color: white;
 }

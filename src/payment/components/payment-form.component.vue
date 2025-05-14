@@ -9,7 +9,7 @@
     data(){
       return {
         newCard: new Card({
-          parent_id: 1, // o predefinido desde localStorage si aplica
+          parent_id: 1,
           cardNumber: "",
           cardHolder: "",
           expirationDate: "",

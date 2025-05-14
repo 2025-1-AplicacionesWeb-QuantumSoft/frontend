@@ -27,10 +27,9 @@ import {Card} from "@/payment/model/card.entity.js";
       const currentPage = ref(1);
       const itemsPerPage = 9;
 
-      // Cargar las tarjetas al montar el componente
       onMounted(async () => {
         try {
-          const response = await cardApiService.getCards(); // Obtén todas las tarjetas
+          const response = await cardApiService.getCards();
           cards.value = response.data.map(cardData=> new Card(cardData));
           console.log(cards.value);
         } catch (error) {
@@ -177,7 +176,6 @@ import {Card} from "@/payment/model/card.entity.js";
         @close="closeDialog"
     />
 
-    <!-- Modal de Eliminar -->
     <delete-payment-dialog
         v-if="showDeleteDialog"
         @delete="deleteCard"
@@ -215,7 +213,7 @@ import {Card} from "@/payment/model/card.entity.js";
 .payment-methods-container h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: #222; /* Más oscuro que el negro puro */
+  color: #222;
   margin-bottom: 1rem;
 }
 
@@ -247,7 +245,7 @@ payment-card {
 }
 
 .custom-button.secondary {
-  background-color: #F582AE88 !important; /* un tono más claro para distinguir */
+  background-color: #F582AE88 !important;
   color: #000 !important;
 }
 </style>
