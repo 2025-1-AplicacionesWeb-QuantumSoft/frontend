@@ -40,6 +40,10 @@ export default {
         <h4>Biography</h4>
         <p>{{ babysitter.description }}</p>
       </section>
+      <section>
+        <h4>About</h4>
+        <p>{{ babysitter.about }}</p>
+      </section>
 
       <form class="profile-form">
         <div class="form-group">
@@ -53,7 +57,7 @@ export default {
         </div>
 
         <div class="form-group">
-          <label>Phone</label>
+          <label>Phone Number</label>
           <input type="text" :value="babysitter.phone" disabled />
         </div>
 
@@ -65,6 +69,21 @@ export default {
         <div class="form-group">
           <label>Experience</label>
           <input type="text" :value="babysitter.experience + ' años'" disabled />
+        </div>
+
+        <div class="form-group">
+          <label>Lastname</label>
+          <input type="text" :value="babysitter.lastname " disabled />
+        </div>
+
+        <div class="form-group">
+          <label>Update Password</label>
+          <input type="text" :value="babysitter.updateP " disabled />
+        </div>
+
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input type="text" :value="babysitter.confirmP " disabled />
         </div>
 
         <div class="form-group">

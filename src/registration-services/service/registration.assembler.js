@@ -38,7 +38,14 @@ export class BabysitterAssembler {
             accountBank,
             bankName,
             typeAccountBank,
-            dni
+            dni,
+            phone,
+            name,
+            email,
+            lastname,
+            updateP,
+            confirmP,
+            about
         } = resource;
 
         if (!id || !user_id || !description) {
@@ -58,7 +65,14 @@ export class BabysitterAssembler {
             accountBank: accountBank || "",
             bankName: bankName || "",
             typeAccountBank: typeAccountBank || "",
-            dni: dni || ""
+            dni: dni || "",
+            phone: phone || "",
+            name: name || "",
+            email: email || "",
+            lastname: lastname || "",
+            updateP: updateP || "",
+            confirmP: confirmP || "",
+            about: about || "",
         });
     }
 }

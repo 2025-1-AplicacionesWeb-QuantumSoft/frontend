@@ -11,7 +11,15 @@ export class Babysitter {
                     accountBank = '',
                     bankName = '',
                     typeAccountBank = '',
-                    dni = ''
+                    dni = '',
+                    phone = '',
+                    name = '',
+                    email = '',
+                    lastname = '',
+                    updateP = '',
+                    confirmP= '',
+                    about = ''
+
                 }) {
         this.id = id;                   // babysitter.id
         this.user_id = user_id;         // babysitter.user_id
@@ -25,5 +33,12 @@ export class Babysitter {
         this.bankName = bankName;       // babysitter.bankName
         this.typeAccountBank = typeAccountBank; // babysitter.typeAccountBank
         this.dni = dni;                 // babysitter.dni
+        this.phone = phone;
+        this.name = name;
+        this.email = email;
+        this.lastname = lastname;
+        this.updateP = updateP;
+        this.confirmP = confirmP;
+        this.about = about;
     }
 }
