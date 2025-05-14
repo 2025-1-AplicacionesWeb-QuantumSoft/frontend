@@ -1,4 +1,4 @@
-import {Babysitter} from "../model/babysitter.entity.js";
+import { Babysitter } from "../model/babysitter.entity.js";
 
 export class BabysitterAssembler {
     static toEntitiesFromResponse(response) {
@@ -9,27 +9,56 @@ export class BabysitterAssembler {
 
         console.log("Items response", response.data);
 
-        return response.data.map((character) => {
-            return this.toEntityFromResponse(character);
-        });
+        return response.data
+            .map((item, index) => {
+                const entity = this.toEntityFromResponse(item);
+                if (!entity) {
+                    console.warn(`Elemento inválido en índice ${index}:`, item);
+                }
+                return entity;
+            })
+            .filter(Boolean); // elimina los nulls
     }
 
     static toEntityFromResponse(resource) {
-        if (!resource || !resource.id || !resource.user_id || !resource.name) {
-            console.error("Estructura de recurso inválida", resource);
+        if (!resource || typeof resource !== "object") {
+            console.error("Recurso no es un objeto válido", resource);
+            return null;
+        }
+
+        const {
+            id,
+            user_id,
+            description,
+            experience,
+            languages,
+            rating,
+            verified,
+            location,
+            accountBank,
+            bankName,
+            typeAccountBank,
+            dni
+        } = resource;
+
+        if (!id || !user_id || !description) {
+            console.warn("Recurso incompleto para Babysitter", { id, user_id, description });
             return null;
         }
 
         return new Babysitter({
-            id: resource.id,
-            user_id: resource.user_id,
-            name: resource.name,
-            email: resource.email,
-            phone: resource.phone,
-            location: resource.location,
-            experience: resource.experience,
-            description: resource.description,
-            rating: resource.rating,
+            id,
+            user_id,
+            description,
+            experience: experience || "",
+            languages: languages ?? null,
+            rating: rating ?? null,
+            verified: verified ?? false,
+            location: location || "",
+            accountBank: accountBank || "",
+            bankName: bankName || "",
+            typeAccountBank: typeAccountBank || "",
+            dni: dni || ""
         });
     }
 }

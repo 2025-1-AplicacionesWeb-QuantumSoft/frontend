@@ -1,13 +1,29 @@
 export class Babysitter {
-    constructor(id, user_id, name, email, phone, location, experience, description, rating) {
+    constructor({
+                    id = '',
+                    user_id = '',
+                    description = '',
+                    experience = '',
+                    languages = null,
+                    rating = null,
+                    verified = false,
+                    location = '',
+                    accountBank = '',
+                    bankName = '',
+                    typeAccountBank = '',
+                    dni = ''
+                }) {
         this.id = id;                   // babysitter.id
         this.user_id = user_id;         // babysitter.user_id
-        this.name = name;               // user.name
-        this.email = email;             // user.email
-        this.phone = phone;             // user.phone
-        this.location = location;       // babysitter.location
+        this.description = description; // babysitter.description
         this.experience = experience;   // babysitter.experience
-        this.description = description; // babysitter.description (biografía)
+        this.languages = languages;     // babysitter.languages
         this.rating = rating;           // babysitter.rating
+        this.verified = verified;       // babysitter.verified
+        this.location = location;       // babysitter.location
+        this.accountBank = accountBank; // babysitter.accountBank
+        this.bankName = bankName;       // babysitter.bankName
+        this.typeAccountBank = typeAccountBank; // babysitter.typeAccountBank
+        this.dni = dni;                 // babysitter.dni
     }
 }
