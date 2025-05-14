@@ -12,7 +12,7 @@ const routes = [
             //...reservationRoutes,
             //demas rutas de bounded context
             //se pone por cada bounded context
-            { path: 'hola', component: Chat },
+            { path: 'chat', component: Chat },
 
         ]
     }
