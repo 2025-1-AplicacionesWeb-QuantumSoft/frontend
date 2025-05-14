@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import reservationRoutes from '@/reservations/routes.js'
 import paymentRoutes from '@/payment/routes.js'
+import communicationRoutes from '@/communication-system/routes.js'
 import Layout from '@/shared/Layout.component.vue'
 
 
@@ -12,6 +13,8 @@ const routes = [
             children: [
                 ...reservationRoutes,
                 ...paymentRoutes,
+                ...communicationRoutes,
+
 
             ]
         }
