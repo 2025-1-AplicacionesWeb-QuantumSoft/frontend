@@ -12,4 +12,9 @@
     --color-blue-light: #8bd3dd;
     --color-blue-dark: #001858;
     --color-blue-accent: #172c66;
+    --p-floatlabel-color:  var(--color-pink);
+    --p-floatlabel-focus-color: var(--color-primary);
+    --p-floatlabel-on-active-background: var(--color-blue-light);
+    --p-floatlabel-active-font-weight: 50px;
+
 }

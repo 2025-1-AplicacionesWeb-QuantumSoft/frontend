@@ -73,7 +73,7 @@ app
                 darkModeSelector: 'system',
                 cssLayer: {
                     name: 'primevue',
-                    order: ' app-styles, primevue, tailwindcss '
+                    order: 'tailwindcss, app-styles, primevue  '
                 }
             }
         }
