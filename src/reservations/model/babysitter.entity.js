@@ -1,5 +1,19 @@
 ﻿export class Babysitter {
-    constructor(id,user_id, description, experience, languages, rating, verified, location, accountBank, bankName, typeAccountBank, dni) {
+    constructor( {
+       id = "",
+       user_id = "",
+       description = "",
+       experience = "",
+       languages = "",
+       rating = "",
+       verified = "",
+       location = "",
+       accountBank = "",
+       bankName = "",
+       typeAccountBank = "",
+       dni = ""
+    })
+    {
         this.id = id;
         this.user_id = user_id;
         this.description = description;

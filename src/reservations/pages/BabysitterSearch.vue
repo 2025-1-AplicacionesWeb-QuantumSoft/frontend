@@ -2,9 +2,10 @@
 import Sidebar from '@/public/Sidebar.vue'
 import FiltersBar from '@/reservations/components/FiltersBar.vue'
 import BabysitterCard from '@/reservations/components/BabysitterCard.vue'
-import {getBabysitters} from "@/reservations/service/reservation.service.js";
+import {BabysitterService} from "@/reservations/service/reservation.service.js";
 
 import {ref, computed, onMounted} from 'vue'
+import {BabysitterAssembler} from "@/reservations/service/reservation.assembler.js";
 
 const babysitters = ref([])
 const selectedLocation = ref(null)
@@ -15,8 +16,7 @@ const ratings = [5, 4, 3, 2]
 
 onMounted(async () => {
   try {
-    const response = await getBabysitters()
-    babysitters.value = response.data
+    babysitters.value = await BabysitterService.getBabysitters();
   } catch (error) {
     console.error('Error al obtener reservas:', error)
   }
@@ -50,9 +50,9 @@ const filteredBabysitters = computed(() => {
 
       <div class="grid mt-4">
         <BabysitterCard
-            v-for="sitter in filteredBabysitters"
-            :key="sitter.id"
-            :sitter="sitter"
+            v-for="babysitter in filteredBabysitters"
+            :key="babysitter.id"
+            :babysitter="babysitter"
             class="col-12 md:col-4 lg:col-3"
         />
       </div>
