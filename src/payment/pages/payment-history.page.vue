@@ -98,5 +98,64 @@
 </template>
 
 <style scoped>
+/* Fuente general y colores */
+.space-y-4 {
+  font-family: 'Open Sans', sans-serif;
+  color: #222;
+  padding: 2rem;
+}
 
+/* Título principal */
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 1rem;
+}
+
+/* Botón "Go back" */
+::v-deep(.p-button-text) {
+  background-color: #4F8EF7 !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  transition: background-color 0.3s ease;
+}
+
+::v-deep(.p-button-text:hover) {
+  background-color: #3c76d3 !important;
+}
+
+/* Tabla de pagos */
+::v-deep(.p-datatable) {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+  color: #222 !important;
+  background-color: #fff;
+}
+
+::v-deep(.p-datatable .p-datatable-thead > tr > th) {
+  background-color: #4F8EF7;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+}
+
+::v-deep(.p-datatable .p-datatable-tbody > tr > td) {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #eee;
+  font-size: 0.95rem;
+  color: #222;
+  background-color: white; /* Forza fondo blanco */
+}
+
+/* Elimina color de fila alterna */
+::v-deep(.p-datatable .p-datatable-tbody > tr:nth-child(even)) {
+  background-color: white;
+}
 </style>

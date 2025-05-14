@@ -31,14 +31,16 @@
 <template>
   <pv-card class="payment-card">
     <template #content>
+      <div class="card-stripe mb-3"></div>
       <div class="payment-card-content">
-        <p>Num: {{ card.cardNumber }}</p>
-        <p>Exp. Date: {{ formatExpiration(card.expirationDate) }}</p>
-        <p style="text-transform: uppercase">{{ card.cardHolder }}</p>
+        <p class="field"><strong>Num:</strong> {{ card.cardNumber }}</p>
+        <p class="field"><strong>F.V.:</strong> {{ formatExpiration(card.expirationDate) }}</p>
+        <p class="card-holder">{{ card.cardHolder }}</p>
       </div>
     </template>
+
     <template #footer>
-      <div class="flex justify-end gap-2">
+      <div class="flex justify-end gap-2 mt-2">
         <pv-button label="Delete" severity="danger" @click="handleDelete" />
         <pv-button label="Edit" severity="primary" @click="handleEdit" />
       </div>
@@ -47,12 +49,31 @@
 </template>
 
 <style scoped>
-  .payment-card {
-    border: 1px solid  #dcdcdc;
-    border-radius: 1rem;
-    padding: 1rem;
-  }
-  .payment-card-content p {
-    margin: 0.25rem 0;
-  }
+.payment-card {
+  background-color: #92d2dc; /* Celeste claro */
+  border-radius: 12px;
+  padding: 1rem;
+  color: #001b5e; /* Azul oscuro */
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-stripe {
+  height: 20px;
+  background-color: #001b5e;
+  border-radius: 4px;
+}
+
+.payment-card-content .field {
+  margin: 0.5rem 0;
+  color: #001b5e;
+  font-size: 1rem;
+}
+
+.card-holder {
+  margin-top: 0.75rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #001b5e;
+}
 </style>

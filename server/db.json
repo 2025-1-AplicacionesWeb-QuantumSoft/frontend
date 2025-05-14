@@ -1000,21 +1000,6 @@
   ],
   "card": [
     {
-      "id": 3,
-      "parent_id": 2,
-      "cardNumber": "5555 8765 4321 9876",
-      "cardHolder": "ANA GÓMEZ SÁNCHEZ",
-      "cvv": "234",
-      "expirationDate": "01/26"
-    },
-    {
-      "cardNumber": "5555 2345 6789 5678",
-      "cardHolder": "ANA GÓMEZ SÁNCHEZ",
-      "cvv": "986",
-      "expirationDate": "12/27",
-      "id": 4
-    },
-    {
       "id": 5,
       "parent_id": 3,
       "cardNumber": "5555 2345 1234 5678",

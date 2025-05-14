@@ -28,6 +28,12 @@ const isHovered = ref(false)
           <i class="pi pi-calendar mr-2"></i>
           <span v-if="isHovered">My Reservations</span>
         </li>
+        <router-link to="/payment">
+          <li class="mb-3 ml-2 p-2 flex align-items-center">
+            <i class="pi pi-credit-card mr-2"></i>
+            <span v-if="isHovered">Payments</span>
+          </li>
+        </router-link>
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-comments mr-2"></i>
           <span v-if="isHovered">Messages</span>
