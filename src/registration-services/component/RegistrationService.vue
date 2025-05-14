@@ -8,7 +8,7 @@ export default {
   },
   methods: {
     onEditProfile() {
-      // Aquí luego puedes usar el servicio en tu carpeta service
+
       console.log("Actualizar perfil:", this.profile);
     }
   }

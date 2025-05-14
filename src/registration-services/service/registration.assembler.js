@@ -2,22 +2,21 @@ import {Babysitter} from "../model/babysitter.entity.js";
 
 export class BabysitterAssembler {
     static toEntitiesFromResponse(response) {
-        if (!response || response.statusText !== "OK") {
-            console.error(`${response?.status || "Unknown status"}, ${response?.code || "Unknown code"}, ${response?.message || "Unknown message"}`);
+        if (!response || response.status !== 200 || !Array.isArray(response.data)) {
+            console.error(`Error en la respuesta: ${response?.status || "Estado desconocido"}, ${response?.message || "Sin mensaje"}`);
             return [];
         }
 
-        const itemsResponse = Array.isArray(response.data) ? response.data : [];
-        console.log("Items response", itemsResponse);
+        console.log("Items response", response.data);
 
-        return itemsResponse.map((character) => {
+        return response.data.map((character) => {
             return this.toEntityFromResponse(character);
         });
     }
 
     static toEntityFromResponse(resource) {
         if (!resource || !resource.id || !resource.user_id || !resource.name) {
-            console.error("Invalid resource structure", resource);
+            console.error("Estructura de recurso inválida", resource);
             return null;
         }
 

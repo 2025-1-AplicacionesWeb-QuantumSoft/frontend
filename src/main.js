@@ -6,11 +6,11 @@ import router from './router'
 import { AutoComplete, Button, Card, CascadeSelect, Checkbox, ConfirmDialog, DataTable, DatePicker, FileUpload, FloatLabel, IconField, Image, InputIcon , Menu, Menubar, Message, Stepper, Textarea, ToggleSwitch, Toolbar, Tooltip } from 'primevue'
 import i18n from "@/i18n.js";
 import PrimeVue from 'primevue/config'
-import Aura from '@primeuix/themes/aura';
+
 import '@primevue/themes'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
-import Lara from '@primevue/themes/lara';
+import Aura from '@primeuix/themes/aura';
 
 const app= createApp(App)
 
@@ -41,7 +41,7 @@ app
     .use(PrimeVue, {
         // Default theme configuration
         theme: {
-            preset: Aura,
+            present: Aura,
             options: {
                 prefix: 'p',
                 darkModeSelector: 'system',

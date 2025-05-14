@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {BabysitterAssembler} from './registration.assembler.js';
 
-const API_BASE = 'http://localhost:3001';
+const API_BASE = 'http://localhost:3000';
 
 export const getBabysitters = async () => {
     try {
