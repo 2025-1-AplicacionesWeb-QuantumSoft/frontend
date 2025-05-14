@@ -237,16 +237,24 @@
     {
       "id": 1,
       "user_id": 6,
-      "description": "Estudiante de educación infantil con 3 años de experiencia cuidando niños",
-      "experience": "3 años",
+      "description": "Soy una profesional dedicada al cuidado infantil con más de 5 años de experiencia en el acompañamiento y desarrollo de niños de diferentes edades. Me apasiona crear entornos seguros, estimulantes y llenos de aprendizaje, donde cada niño pueda crecer a su ritmo. Cuento con formación en psicología infantil y primeros auxilios, y siempre estoy en constante actualización. Mi enfoque se basa en la empatía, la paciencia y la comunicación efectiva con padres y tutores para garantizar el bienestar integral de los menores a mi cargo.",
+      "experience": "5 ",
       "languages": 2,
-      "rating": 4,
+      "rating": 4.4,
       "verified": true,
-      "location": "Cusco",
+      "location": "Ica",
       "accountBank": "ES12345678901234567890",
       "bankName": "BBVA",
       "typeAccountBank": "corriente",
-      "dni": "12345678A"
+      "dni": "12345678A",
+      "phone": "+51 936 948 397",
+      "name":  "Maria Alejandra",
+      "email": "u202221625@gmail.com",
+      "lastname": "Tasayco",
+      "updateP": "****",
+      "confirmP": "****",
+      "about": "Laboral days:\nLunes a viernes\n\nSchedule:\n08:00 AM a 05:00 PM\n\nWorkaround:\nBrindo atención personalizada y flexible para adaptarme a las necesidades de cada familia. Mi objetivo es ofrecer un servicio confiable, con comunicación constante, seguimiento del desarrollo infantil y apoyo emocional tanto para los niños como para sus cuidadores. Estoy disponible para resolver dudas, coordinar actividades y responder ante cualquier eventualidad que pueda surgir.\n\n"
+
     },
     {
       "id": 2,

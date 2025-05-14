@@ -20,10 +20,14 @@ const isHovered = ref(false)
       </div>
 
       <ul class="list-none p-3">
+        <router-link to="/babysitter-profile">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
-          <i class="pi pi-users mr-2 text-pink-500 "></i>
-          <span v-if="isHovered">Babysitters</span>
+
+            <i class="pi pi-users mr-2 text-pink-500 "></i>
+            <span v-if="isHovered">Babysitters</span>
         </li>
+        </router-link>
+
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-calendar mr-2"></i>
           <span v-if="isHovered">My Reservations</span>
