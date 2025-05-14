@@ -22,7 +22,6 @@ export default {
 }
 
 
-
 </script>
 
 <template>
@@ -32,6 +31,11 @@ export default {
     </template>
 
     <template #content>
+      <img
+          src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+          alt="User Avatar"
+          class="border-circle w-3rem h-3rem"
+      />
       <section>
         <h4>Biography</h4>
         <p>{{ babysitter.description }}</p>
