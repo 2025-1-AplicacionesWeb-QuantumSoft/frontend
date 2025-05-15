@@ -1,7 +1,6 @@
 ﻿<script setup>
 import { ref } from 'vue'
 const isHovered = ref(false)
-
 </script>
 
 <template>
@@ -14,8 +13,7 @@ const isHovered = ref(false)
     <div>
       <div class="px-3 pt-3 w-5rem flex align-items-center">
         <img src="@/assets/logo.png" alt="">
-      <div class="text-xl font-bold mb-5 px-3 pt-3" v-if="isHovered">KindyCare</div>
-
+        <div class="text-xl font-bold mb-5 px-3 pt-3" v-if="isHovered">KindyCare</div>
       </div>
 
       <ul class="list-none p-3">
@@ -51,12 +49,17 @@ const isHovered = ref(false)
           <span v-if="isHovered">Settings</span>
         </li>
         </router-link>
-        <router-link to="">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-star mr-2"></i>
-          <span v-if="isHovered">My Reviews</span>
+          <router-link
+              v-if="isHovered"
+              to="/reviews"
+              class="text-white"
+              style="text-decoration: none"
+          >
+            My Reviews
+          </router-link>
         </li>
-        </router-link>
       </ul>
     </div>
   <div class="flex justify-content-center align-items-center mb-3">
@@ -79,10 +82,10 @@ const isHovered = ref(false)
 </template>
 
 <style scoped>
- .transition-all {
-   transition: all 0.2s ease-in-out;
- }
- .sidebar{
-   background-color: var(--color-primary);
- }
+.transition-all {
+  transition: all 0.2s ease-in-out;
+}
+.sidebar{
+  background-color: var(--color-primary);
+}
 </style>
