@@ -41,7 +41,7 @@ onMounted(async () => {
       <div class="profile-card-wrapper">
         <div class="profile-card">
           <div class="profile-image-container">
-            <img :src="`/src/assets/profile${babysitter.id}.jpg`" alt="Profile Picture" class="profile-image" />
+            <img :src="`@/assets/profile${babysitter.id}.jpg`" alt="Profile Picture" class="profile-image" />
           </div>
           <div class="profile-content">
             <h2 class="profile-name">{{ babysitter.bankName }}</h2>

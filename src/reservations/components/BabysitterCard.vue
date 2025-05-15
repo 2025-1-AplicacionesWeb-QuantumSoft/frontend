@@ -12,7 +12,7 @@ const goToDetail = () => {
 <template>
   <div class="babysitter-card">
     <div class="card-image-container">
-      <img :src="`/src/assets/profile${babysitter.id}.jpg`" alt="Profile picture" class="card-image" />
+      <img :src="`@/assets/profile${babysitter.id}.jpg`" alt="Profile picture" class="card-image" />
     </div>
     <div class="card-content">
       <h3 class="card-name">{{ babysitter.name }}</h3>
