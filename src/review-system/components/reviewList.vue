@@ -24,6 +24,8 @@ const props = defineProps({
   background-color: var(--color-primary);
   border-radius: 1.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  height: 100%;
+  min-height: 100%;
 }
 
 .review-item-wrapper {

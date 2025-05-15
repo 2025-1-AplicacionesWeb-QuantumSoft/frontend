@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import reservationRoutes from '@/reservations/routes.js'
 import Layout from '@/shared/Layout.component.vue'
-
+import ReviewList from '@/review-system/components/reviewList.vue'
 
 const routes = [
     {
@@ -9,8 +9,12 @@ const routes = [
         component: Layout,
         children: [
             ...reservationRoutes,
-            //demas rutas de bounded context
-            //se pone por cada bounded context
+            {
+                path: 'reviews',
+                component: ReviewList,
+                name: 'Reviews'
+            }
+            // otras rutas de bounded context
         ]
     }
 ]
