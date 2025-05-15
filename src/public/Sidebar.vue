@@ -17,7 +17,7 @@ const isHovered = ref(false)
       </div>
 
       <ul class="list-none p-3">
-        <router-link to="/babysitter">
+        <router-link to="/babysitters">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
 
             <i class="pi pi-users mr-2 text-pink-500 "></i>
@@ -36,7 +36,7 @@ const isHovered = ref(false)
             <span v-if="isHovered">Payments</span>
           </li>
         </router-link>
-        <router-link to="/chat_session">
+        <router-link to="/chat">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-comments mr-2"></i>
           <span v-if="isHovered">Messages</span>
@@ -53,7 +53,7 @@ const isHovered = ref(false)
           <i class="pi pi-star mr-2"></i>
           <router-link
               v-if="isHovered"
-              to="/review"
+              to="/reviews"
               class="text-white"
               style="text-decoration: none"
           >
