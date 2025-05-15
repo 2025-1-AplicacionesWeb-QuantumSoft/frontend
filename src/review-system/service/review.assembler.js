@@ -1,6 +1,7 @@
 import {Parent} from "@/review-system/model/parent.entity.js";
+import {Review} from "@/review-system/model/review.entity.js";
 
-export class ParentAssembler {
+export class ReviewAssembler {
     static toEntitiesFromResponse(response) {
         if (response.statusText !== "OK") {
             console.error(`${response.status}, ${response.code}, ${response.message}`);
@@ -15,13 +16,13 @@ export class ParentAssembler {
     }
 
     static toEntityFromResponse(resource) {
-        return new Parent(
-            resource.id,
-            resource.user_id,
-            resource.address,
-            resource.city,
-            resource.children_count,
-            resource.preferences
-        );
+        return new Review({
+            id: resource.id,
+            parentId: resource.parent_id,
+            babysitterId: resource.babysitter_id,
+            comment: resource.comment,
+            rating: resource.rating,
+            date: resource.date,
+        });
     }
 }

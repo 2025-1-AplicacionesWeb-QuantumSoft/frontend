@@ -350,9 +350,10 @@ const repetitionOptions = ref([
 }
 
 .modal-confirm-button {
-  background-color: #f97316;
-  border: none;
   color: white;
+  background-color: var(--color-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
 }
 
 /* PrimeVue component overrides */

@@ -38,6 +38,7 @@ import Aura from '@primeuix/themes/aura';
 const app= createApp(App)
 
 app
+    .use(router)
     .component("pv-menu",Menu)
     .component("pv-menubar",Menubar)
     .component("pv-upload",FileUpload)
@@ -63,7 +64,6 @@ app
     .component("pv-column",Column)
     .component("pv-inputText",InputText)
     .use(i18n)
-    .use(router)
     .use(PrimeVue, {
         // Default theme configuration
         theme: {

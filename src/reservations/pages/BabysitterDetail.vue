@@ -19,7 +19,8 @@ const showModal = ref(false)
 onMounted(async () => {
   try {
     babysitterId.value = route.params.id
-    babysitter.value = await BabysitterService.getBabysitterById(babysitterId.toString());
+    console.log('babysitterId:', babysitterId.value)
+    babysitter.value = await BabysitterService.getBabysitterById(babysitterId.value.toString());
     console.log('babysitterId:', babysitterId)
     console.log(babysitter.value)
   } catch (error) {
@@ -264,13 +265,17 @@ onMounted(async () => {
   line-height: 1.6;
 }
 
-/* Action Buttons */
+
 .action-buttons {
   display: flex;
   gap: 1rem;
   margin-top: 2rem;
 }
-
+.modal-confirm-button{
+ background-color: var(--color-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+}
 .primary-button {
   background-color: #3498db;
   color: white;

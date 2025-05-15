@@ -55,6 +55,7 @@ const emitClose = () => emit('close')
   color: #555;
   cursor: pointer;
   transition: color 0.2s;
+
 }
 
 .modal-close-button:hover {

@@ -3,16 +3,16 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const props = defineProps(['babysitter'])
-
+console.log(typeof props.babysitter.id)
 const goToDetail = () => {
-  router.push(`/babysitter/${props.babysitter.id.toString()}`)
+  router.push(`/babysitter/${props.babysitter.id}`)
 }
 </script>
 
 <template>
   <div class="babysitter-card">
     <div class="card-image-container">
-      <img src="@/assets/profile1.jpg" alt="Profile picture" class="card-image" />
+      <img :src="`@/assets/profile${babysitter.id}.jpg`" alt="Profile picture" class="card-image" />
     </div>
     <div class="card-content">
       <h3 class="card-name">{{ babysitter.name }}</h3>

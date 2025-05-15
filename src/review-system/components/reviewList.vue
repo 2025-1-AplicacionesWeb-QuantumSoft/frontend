@@ -1,9 +1,20 @@
 <script setup>
 import ReviewItem from "./reviewItem.vue";
+import {onMounted, ref} from "vue";
+import {ReviewService} from "@/review-system/service/review.service.js";
 
 const props = defineProps({
   reviews: { type: Array, required: true }
 });
+const reviews = ref([])
+
+onMounted(async ()=>{
+  try{
+    reviews.value = await ReviewService.getReviews();
+  } catch (error) {
+
+  }
+})
 </script>
 
 <template>

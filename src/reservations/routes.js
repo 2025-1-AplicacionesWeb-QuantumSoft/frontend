@@ -4,23 +4,20 @@ import ReservationDetail from "@/reservations/pages/ReservationDetail.vue";
 import ReservationsList from "@/reservations/pages/ReservationsList.vue";
 export default [
     {
-        path: '/babysitters',
-        name: 'babysitter-search',
-        component: BabysitterSearch,
+        path: 'babysitters',
+        component: () => import('@/reservations/pages/BabysitterSearch.vue'),
     },
     {
-        path: '/babysitter/:id',
-        name: 'BabysitterDetail',
-        component: BabysitterDetail,
+        path: 'babysitter/:id',
+        component: () => import('@/reservations/pages/BabysitterDetail.vue'),
+        props: true,
     },
     {
-        path: '/reservation-detail',
-        name: 'ReservationDetail',
-        component: ReservationDetail,
+        path: 'reservation-detail',
+        component: () => import('@/reservations/pages/ReservationDetail.vue'),
     },
     {
-        path: '/reservation-list/',
-        name: 'ReservationList',
-        component: ReservationsList,
+        path: 'reservation-list/',
+        component: () => import('@/reservations/pages/ReservationsList.vue'),
     }
 ]

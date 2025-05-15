@@ -17,6 +17,9 @@ const ratings = [5, 4, 3, 2]
 onMounted(async () => {
   try {
     babysitters.value = await BabysitterService.getBabysitters();
+    babysitters.value.forEach((babysitter, index) => {
+      console.log(`Babysitter ${index}:`, babysitter);
+    });
   } catch (error) {
     console.error('Error al obtener reservas:', error)
   }
@@ -63,5 +66,7 @@ const filteredBabysitters = computed(() => {
 <style scoped>
 .container {
   background-color: var(--color-cream);
+  max-height: 100vh;
+  overflow: scroll;
 }
 </style>

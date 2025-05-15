@@ -12,12 +12,12 @@ const reviewImage = computed(() => props.review.image_url || "https://via.placeh
 <template>
   <pv-card class="review-card">
     <template #header>
-      <h3 class="review-author">{{ review.author }}</h3>
+      <h3 class="review-author">review</h3>
       <img :src="reviewImage" :alt="`Imagen de ${review.author}`" v-if="review.image_url" class="review-img"/>
     </template>
     <template #content>
       <h6 class="review-rating">Calificación: {{ review.rating }}</h6>
-      <p class="review-content">{{ review.content }}</p>
+      <p class="review-content">{{ review.comment }}</p>
       <small class="review-date">Fecha: {{ review.date }}</small>
     </template>
     <template #footer>
