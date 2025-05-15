@@ -12,7 +12,7 @@ const isHovered = ref(false)
   >
     <div>
       <div class="px-3 pt-3 w-5rem flex align-items-center">
-        <img src="@/assets/logo.png" alt="">
+        <img src="@/assets/logo.png" alt="logo">
         <div class="text-xl font-bold mb-5 px-3 pt-3" v-if="isHovered">KindyCare</div>
       </div>
 
