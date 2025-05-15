@@ -45,7 +45,7 @@ const repetitionOptions = ref([
       </div>
 
       <div class="reservation-grid">
-        <!-- Left side - Reservation Information -->
+
         <div class="reservation-section">
           <div class="section-header">
             <h3>Reservation Information</h3>

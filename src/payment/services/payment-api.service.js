@@ -4,7 +4,7 @@ import {Reservation} from "@/payment/model/reservation.entity.js";
 
 const baseurl = import.meta.env.VITE_API_BASE_URL;
 
-
+console.log("baseurl:",baseurl);
 const http = axios.create({
     baseURL: baseurl,
 });

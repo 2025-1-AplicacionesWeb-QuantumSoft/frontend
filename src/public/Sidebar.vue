@@ -1,6 +1,5 @@
 ﻿<script setup>
 import { ref } from 'vue'
-
 const isHovered = ref(false)
 
 </script>
@@ -20,45 +19,54 @@ const isHovered = ref(false)
       </div>
 
       <ul class="list-none p-3">
-        <router-link to="/babysitter-profile">
+        <router-link to="/babysitters">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
 
             <i class="pi pi-users mr-2 text-pink-500 "></i>
             <span v-if="isHovered">Babysitters</span>
         </li>
         </router-link>
-
+        <router-link to="/reservation-list">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-calendar mr-2"></i>
           <span v-if="isHovered">My Reservations</span>
         </li>
+        </router-link>
         <router-link to="/payment">
           <li class="mb-3 ml-2 p-2 flex align-items-center">
             <i class="pi pi-credit-card mr-2"></i>
             <span v-if="isHovered">Payments</span>
           </li>
         </router-link>
+        <router-link to="/chat">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-comments mr-2"></i>
           <span v-if="isHovered">Messages</span>
           <span v-if="isHovered" class="ml-2 p-tag">3</span>
         </li>
+        </router-link>
+        <router-link to="">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-cog mr-2"></i>
           <span v-if="isHovered">Settings</span>
         </li>
+        </router-link>
+        <router-link to="">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-star mr-2"></i>
           <span v-if="isHovered">My Reviews</span>
         </li>
+        </router-link>
       </ul>
     </div>
   <div class="flex justify-content-center align-items-center mb-3">
+    <router-link to="/babysitter-profile">
     <img
         src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
         alt="User Avatar"
         class="border-circle w-3rem h-3rem"
     />
+    </router-link>
     <div class="ml-2" v-if="isHovered">
       <h4 class="text-900 font-bold mb-0">Amy</h4>
       <p class="text-500 mb-0">

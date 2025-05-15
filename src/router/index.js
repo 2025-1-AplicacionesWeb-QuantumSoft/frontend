@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import reservationRoutes from '@/reservations/routes.js'
 import paymentRoutes from '@/payment/routes.js'
 import communicationRoutes from '@/communication-system/routes.js'
+import registrationRoutes from '@/registration-services/routes.js'
 import Layout from '@/shared/Layout.component.vue'
 
 
@@ -14,6 +15,7 @@ const routes = [
                 ...reservationRoutes,
                 ...paymentRoutes,
                 ...communicationRoutes,
+                ...registrationRoutes
 
 
             ]

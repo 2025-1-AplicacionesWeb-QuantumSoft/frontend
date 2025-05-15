@@ -13,7 +13,7 @@ export class BabysitterService {
     }
     static async getBabysitterById(id) {
         const response = await axios.get(`${API_BASE}/babysitter/${id}`)
-        console.log("Babysitters", response)
+        console.log("Babysitter", response)
         return BabysitterAssembler.toEntityFromResponse(response.data)
     }
 }

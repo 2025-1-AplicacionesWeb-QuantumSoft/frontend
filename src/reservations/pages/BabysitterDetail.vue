@@ -7,7 +7,7 @@ import Button from "primevue/button";
 import ModalComponent from "@/reservations/components/ModalComponent.vue";
 const router = useRouter()
 const route = useRoute()
-const babysitterId = route.params.id
+const babysitterId = ref(null)
 const babysitter = ref(null)
 
 const goBack = () => router.back()
@@ -18,7 +18,8 @@ const gotoReservationDetail = () => {
 const showModal = ref(false)
 onMounted(async () => {
   try {
-    babysitter.value = await BabysitterService.getBabysitterById(babysitterId);
+    babysitterId.value = route.params.id
+    babysitter.value = await BabysitterService.getBabysitterById(babysitterId.toString());
     console.log('babysitterId:', babysitterId)
     console.log(babysitter.value)
   } catch (error) {
@@ -35,7 +36,7 @@ onMounted(async () => {
     </button>
 
     <div v-if="babysitter" class="profile-grid">
-      <!-- Left Column - Profile Card -->
+
       <div class="profile-card-wrapper">
         <div class="profile-card">
           <div class="profile-image-container">
@@ -69,7 +70,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- Right Column - Profile Details -->
+
       <div class="profile-details-section">
         <h2 class="section-title">Biography</h2>
         <p class="profile-bio">
