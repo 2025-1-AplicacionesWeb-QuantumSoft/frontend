@@ -29,18 +29,16 @@ import {Card} from "@/payment/model/card.entity.js";
       }
     },
     computed: {
-      // Paginación de las tarjetas
       paginatedCards() {
         const start = (this.currentPage - 1) * this.itemsPerPage;
         return this.cards.slice(start, start + this.itemsPerPage);
       },
-      // Número total de páginas
       totalPages() {
         return Math.ceil(this.cards.length / this.itemsPerPage);
       },
     },
     mounted() {
-      this.fetchCards();  // Llamar a la API cuando el componente se monta
+      this.fetchCards();
     },
 
     methods: {
@@ -56,23 +54,20 @@ import {Card} from "@/payment/model/card.entity.js";
           }
           const cardApiService = new CardApiService();
 
-
-          // Solicitar todas las tarjetas y filtrar solo las que pertenecen al usuario logueado
           const response = await cardApiService.getCards();
           console.log("API response:", response.data);
 
-          // Filtrar las tarjetas por `user_id` y asignarlas a `cards`
           if (role === "parent") {
             this.cards = response.data
-                .filter(cardData => cardData.parent_id === userId)  // Filtrar por `parent_id`
-                .map(cardData => new Card(cardData));  // Crear instancia de `Card`
+                .filter(cardData => cardData.parent_id === userId)
+                .map(cardData => new Card(cardData));
           } else if (role === "babysitter") {
             this.cards = response.data
-                .filter(cardData => cardData.babysitter_id === userId)  // Filtrar por `babysitter_id`
-                .map(cardData => new Card(cardData));  // Crear instancia de `Card`
+                .filter(cardData => cardData.babysitter_id === userId)
+                .map(cardData => new Card(cardData));
           }
 
-          console.log("Filtered Cards:", this.cards);// Verifica que solo se muestren las tarjetas correctas
+          console.log("Filtered Cards:", this.cards);
         } catch (error) {
           console.error("Error fetching cards:", error);
           this.errorMessage = "Error fetching cards";
