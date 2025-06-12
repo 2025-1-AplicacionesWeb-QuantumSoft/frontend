@@ -23,6 +23,8 @@
           const userData =  await userApiService.login(this.email, this.password);
           const user= userData ? userData : null;
           if(user){
+            localStorage.setItem("user", JSON.stringify(user));
+
             if(user.role == "babysitter"){
               console.log("Ninera", user);
               this.$router.push({path:"/babysitter-profile"});
