@@ -1,46 +1,44 @@
 <script>
 
+  import {UserApiService} from "@/auth/services/user-api.service.js";
+
   export  default {
     name: 'log-in',
     data(){
       return {
-        email: '',
-        password: '',
-        users: {
-          parent: {
-            id: 5,
-            name: "María Sánchez",
-            email: "maria.sanchez@email.com",
-            password: "hashed_password_5",
-            phone: "+34600567890",
-            role: "parent",
-            created_at: "2024-10-05",
-            updated_at: "2024-10-05"
-          },
-          babysitter: {
-            id: 6,
-            name: "Lucía Fernández",
-            email: "lucia.fernandez@email.com",
-            password: "hashed_password_6",
-            phone: "+34600678901",
-            role: "babysitter",
-            created_at: "2024-10-06",
-            updated_at: "2024-10-06"
-          }
-        }
+        name: "",
+        email: "",
+        password: "",
+        phone: "",
+        role: "",
+        created_at: "",
+        updated_at: "",
+        errorMessage: ""
       }
     },
     methods:{
-      handleNiñera() {
-        const user = this.users.babysitter;
-        window.localStorage.setItem('user', JSON.stringify(user));
-        this.$router.push(`/babysitter-profile/${user.id}`);
+      async handleLogin() {
+        try {
+          const userApiService = new UserApiService();
+          const userData =  await userApiService.login(this.email, this.password);
+          const user= userData ? userData : null;
+          if(user){
+            if(user.role == "babysitter"){
+              console.log("Ninera", user);
+              this.$router.push({path:"/babysitter-profile"});
+            }else {
+              console.log("Padre", user);
+              this.$router.push({path:"/reservation-list"});
+            }
+
+          }else {
+            this.errorMessage = "Correo o contraseña incorrectos.";
+          }
+        }catch(err){
+          console.log(err);
+          this.errorMessage = err.message || "Hubo un error al intentar iniciar sesion";
+        }
       },
-      handlePadre() {
-        const user = this.users.parent;
-        window.localStorage.setItem('user', JSON.stringify(user));
-        this.$router.push(`/payment/${user.id}`);
-      }
     }
   }
 </script>
@@ -51,7 +49,7 @@
       <div class="login-card-header">
         <img src="./../../assets/logo.png" class="logo">
       </div>
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleLogin">
         <div class="p-field">
           <label for="email">Email</label>
           <pv-inputText
@@ -76,16 +74,9 @@
         </div>
         <div class="p-d-flex p-jc-between">
           <pv-button
-              type="button"
-              label="Niñera"
+              type="submit"
+              label="Log in"
               class="p-button p-button-success"
-              @click="handleNiñera"
-          />
-          <pv-button
-              type="button"
-              label="Padre"
-              class="p-button p-button-primary"
-              @click="handlePadre"
           />
         </div>
         <p class="register-link">
