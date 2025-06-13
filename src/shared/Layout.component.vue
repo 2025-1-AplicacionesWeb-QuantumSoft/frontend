@@ -4,12 +4,12 @@ import Sidebar from '@/public/Sidebar.vue'
 
 <template>
 
-    <div class="flex">
-      <Sidebar />
-      <main class="flex-1 p-4">
-        <router-view />
-      </main>
-    </div>
+  <div class="flex">
+    <Sidebar />
+    <main class="flex-1 p-4">
+      <router-view />
+    </main>
+  </div>
 </template>
 
 <style scoped>

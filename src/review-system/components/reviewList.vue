@@ -1,15 +1,22 @@
-<script setup>
+<script>
 import ReviewItem from "./reviewItem.vue";
 
-const props = defineProps({
-  reviews: { type: Array, required: true }
-});
+export default {
+  name: 'review-list',
+  components: {
+    ReviewItem
+  },
+  props: {
+    reviews: { type: Array, required: true }
+  }
+}
 </script>
 
 <template>
-  <div class="review-list">
-    <div v-for="review in reviews" :key="review.id" class="review-item-wrapper">
-      <review-item :review="review" />
+  <div>
+    <Sidebar />
+    <div class="review-list-container">
+      <review-list :reviews="reviews" />
     </div>
   </div>
 </template>
