@@ -14,15 +14,19 @@ export  class UserApiService{
             console.log("Respuesta de la API:", res.data);
             if(res.data.length>0){
                 const user =  res.data[0];
-                if (user.role === "parent") {
-                    return this.getParentDetails(user.id);  // Obtener detalles del padre
-                } else if (user.role === "babysitter") {
-                    return this.getBabysitterDetails(user.id);  // Obtener detalles de la niñera
-                }
+                console.log("Usuario encontrado:", user);
 
-                return user;
+                if (user.role === "parent") {
+                    return this.getParentDetails(user.id)
+                        .then(parentDetails=>({...user,...parentDetails}));  // Obtener detalles del padre
+                } else if (user.role === "babysitter") {
+                    return this.getBabysitterDetails(user.id)
+                        .then(babysitterDetails=>({...user,...babysitterDetails}));  // Obtener detalles de la niñera
+                }else {
+                    return Promise.reject(new Error("Rol de usuario no reconocido."));
+                }
             }else {
-                throw new Error("Invalid email or password");
+                return Promise.reject(new Error("Correo o contraseña incorrectos"));
             }
         }).catch(err=>{
             console.log('Error during login',err)
@@ -36,7 +40,6 @@ export  class UserApiService{
         }).then(res=>{
             return{
                 ...res.data[0],
-                userId: userId,
             };
         }).catch(err=>{
             console.log('Error during getParentDetails',err)
@@ -49,8 +52,7 @@ export  class UserApiService{
             params: {user_id: userId}
         }).then(res => {
             return {
-                ...res.data[0],  // Detalles adicionales de la niñera
-                userId: userId  // Añadimos el ID del usuario para poder usarlo más tarde
+                ...res.data[0],  // Detalles adicionales de la niñera// Añadimos el ID del usuario para poder usarlo más tarde
             };
         }).catch(err => {
             console.log('Error al obtener los detalles de la niñera:', err);

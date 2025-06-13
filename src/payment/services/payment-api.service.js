@@ -19,29 +19,73 @@ export  class PaymentApiService{
     }
 
 
-    getPaymentByUserId(userType, userId){
-        const params = userType === 'parent'
-            ? { parent_id: userId }
-            : { babysitter_id: userId };
+    getPaymentByUserId(role, userId){
+        const params =
+            role === 'parent' ? { parent_id: userId } : { babysitter_id: userId };
+
         return http.get("/payment",{params:params})
             .then(async (res) => {
-                const expandedPayments = await Promise.all(res.data.map(async (payment) => {
+                const payments = res.data?.data|| res.data;
+
+                if (!payments || payments.length === 0) {
+                    return [];
+                }
+                const expandedPayments = await Promise.all(
+                    payments.map(async (payment) => {
                     let reservation = null;
+                    let relatedUser = null;
+                    let cardNumber = 'N/A'
+
                     if (payment.reservation_id) {
-                        const reservationResponse = await http.get(`/reservation/${payment.reservation_id}`);
-                        reservation = new Reservation(reservationResponse.data);
+                        try {
+                            const reservationResponse = await http.get(`/reservation/${payment.reservation_id}`);
+                            reservation = new Reservation(reservationResponse.data);
+
+                            if (role === "parent") {
+                                if (reservation.babysitter_id) {
+                                    const babysitterResponse = await http.get(`/babysitter/${reservation.babysitter_id}`);
+                                    const userResponse = await http.get(`/user/${babysitterResponse.data.user_id}`);
+                                    relatedUser = userResponse.data;
+
+                                    console.log("Datos que llegan:", relatedUser);
+                                }
+                            } else if (role === "babysitter") {
+                                if (reservation.parent_id) {
+                                    const parentResponse = await http.get(`/parent/${reservation.parent_id}`);
+                                    const userResponse = await http.get(`/user/${parentResponse.data.user_id}`)
+                                    relatedUser = userResponse.data;
+                                    console.log("Datos que llegan:", relatedUser);
+                                }
+                            }
+
+                            if (payment.paymentMethod && payment.paymentMethod.cardId) {
+                                try {
+                                    const cardResponse = await http.get(`/card/${payment.paymentMethod.cardId}`);
+                                    cardNumber = cardResponse.data.cardNumber;
+                                    console.log("Número de tarjeta encontrado:", cardNumber);
+                                } catch (error) {
+                                    console.log("Error al obtener número de tarjeta:", error);
+                                }
+                            }
+                        } catch (error) {
+                            console.log("Error al Obtener reserva",error);
+                        }
+
                     }
 
                     return {
                         ...payment,
                         reservation,
-                        parent: payment.parent_id ? new Parent(payment.parent_id) : null
+                        relatedUser,
+                        cardNumber,
                     };
                 }));
+                console.log("Pagos procesados", expandedPayments);
                 return expandedPayments;
             })
             .catch(error => {
                 console.error("Error al obtener pagos:", error);
+                return [];
             });
     }
 

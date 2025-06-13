@@ -1,7 +1,6 @@
 <script>
 import PaymentCard from "@/payment/components/payment-card.component.vue";
 import {CardApiService} from "@/payment/services/card-api.service.js";
-import {useRouter} from "vue-router";
 import CreateEditPayment from "@/payment/components/create-edit-payment.component.vue";
 import DeletePaymentDialog from "@/payment/components/delete-payment-dialog.component.vue";
 import {Card} from "@/payment/model/card.entity.js";
@@ -45,29 +44,32 @@ import {Card} from "@/payment/model/card.entity.js";
       async fetchCards() {
         try {
           const user = JSON.parse(localStorage.getItem("user") || "{}");
-          const userId = user.id;
-          const role = user.role;
+          console.log("dato guardado",user);
 
-          if (!userId || !role) {
-            console.error("User is not logged in.");
-            return;
+          if (user && user.role) {
+            console.log("Role encontrado:", user.role);
+          } else {
+            console.log("El usuario no tiene rol definido.");
+
           }
-          const cardApiService = new CardApiService();
 
+          const cardApiService = new CardApiService();
           const response = await cardApiService.getCards();
+
           console.log("API response:", response.data);
 
-          if (role === "parent") {
+          if (user.role === "parent") {
             this.cards = response.data
-                .filter(cardData => cardData.parent_id === userId)
+                .filter(cardData => cardData.parent_id === Number(user.id))
                 .map(cardData => new Card(cardData));
-          } else if (role === "babysitter") {
+          } else if (user.role === "babysitter") {
             this.cards = response.data
-                .filter(cardData => cardData.babysitter_id === userId)
+                .filter(cardData => cardData.babysitter_id === user.id)
                 .map(cardData => new Card(cardData));
           }
 
           console.log("Filtered Cards:", this.cards);
+
         } catch (error) {
           console.error("Error fetching cards:", error);
           this.errorMessage = "Error fetching cards";

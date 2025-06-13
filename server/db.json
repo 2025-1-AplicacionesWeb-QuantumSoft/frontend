@@ -1007,6 +1007,14 @@
   ],
   "card": [
     {
+      "id": 1,
+      "parent_id": 1,
+      "cardNumber": "5555 2345 1234 5678",
+      "cardHolder": "PEDRO RAMIREZ MARTÍNEZ",
+      "cvv": "456",
+      "expirationDate": "09/28"
+    },
+    {
       "id": 5,
       "parent_id": 3,
       "cardNumber": "5555 2345 1234 5678",
@@ -1037,14 +1045,6 @@
       "cardHolder": "LUIS MORALES LÓPEZ",
       "cvv": "876",
       "expirationDate": "04/25"
-    },
-    {
-      "id": 9,
-      "parent_id": 5,
-      "cardNumber": "5555 1231 5555 6789",
-      "cardHolder": "MARTA FERNÁNDEZ LÓPEZ",
-      "cvv": "345",
-      "expirationDate": "01/26"
     },
     {
       "id": 10,
@@ -1268,6 +1268,22 @@
       "cvv": "123",
       "expirationDate": "06/12",
       "id": 37
+    },
+    {
+      "parentId": 1,
+      "cardNumber": "5555 1231 5555 5322",
+      "cardHolder": "Lynn",
+      "cvv": "123",
+      "expirationDate": "06/23",
+      "id": 38
+    },
+    {
+      "parentId": 2,
+      "cardNumber": "5555 2134 1234 1234",
+      "cardHolder": "Lynn",
+      "cvv": "123",
+      "expirationDate": "09/23",
+      "id": 39
     }
   ],
   "review": [

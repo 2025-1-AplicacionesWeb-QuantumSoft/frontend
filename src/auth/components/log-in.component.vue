@@ -6,14 +6,9 @@
     name: 'log-in',
     data(){
       return {
-        name: "",
         email: "",
         password: "",
-        phone: "",
-        role: "",
-        created_at: "",
-        updated_at: "",
-        errorMessage: ""
+        errorMessage: "",
       }
     },
     methods:{
@@ -22,15 +17,22 @@
           const userApiService = new UserApiService();
           const userData =  await userApiService.login(this.email, this.password);
           const user= userData ? userData : null;
+
           if(user){
+            console.log(user);
+            if (!user.role) {
+              console.error("El usuario no tiene rol definido.");
+              this.errorMessage = "Rol del usuario no definido.";
+              return;
+            }
             localStorage.setItem("user", JSON.stringify(user));
 
             if(user.role == "babysitter"){
               console.log("Ninera", user);
-              this.$router.push({path:"/babysitter-profile"});
+              this.$router.push({path:"/payment"});
             }else {
               console.log("Padre", user);
-              this.$router.push({path:"/reservation-list"});
+              this.$router.push({path:"/payment"});
             }
 
           }else {

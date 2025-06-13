@@ -2,53 +2,53 @@
 
   import {PaymentApiService} from "@/payment/services/payment-api.service.js";
   import {CardApiService} from "@/payment/services/card-api.service.js";
-  import {onMounted, ref} from "vue";
-  import {useRouter} from "vue-router";
 
   export default {
     name: "payment-history",
 
-    setup() {
-      const router = useRouter();
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
-      const paymentListData = ref([]);
+    data(){
+      return{
+        user: JSON.parse(localStorage.getItem("user") || "{}"),
+        paymentListData:[],
+        errorMessage:""
+      }
+    },
 
-      const paymentApiService= new PaymentApiService()
-      const cardApisService= new CardApiService()
+    methods:{
+      async fetchPayments() {
+        const user = this.user;
+        if (!this.user.id) {
+          this.errorMessage = "Usuario no logeado.";
+          return;
+        }
 
-      onMounted(async () => {
-        const res = await paymentApiService.getPaymentByUserId(user.id);
-        console.log("Datos recibidos:", res);
-        const enriched = await Promise.all(res.map(async (payment) => {
-          let cardNumber = 'N/A';
-          if (payment.paymentMethod?.cardId) {
-            try {
-              const card = await cardApisService.getCardById(payment.paymentMethod.cardId);
-              cardNumber = card.cardNumber;
-            } catch (_) {
-            }
+        try {
+          const paymentApiService = new PaymentApiService();
+          const payments = await paymentApiService.getPaymentByUserId(user.role, user.id);
+
+          if (payments.length === 0) {
+            console.log("No se encontraron pagos para este usuario.");
+            this.errorMessage = "No tienes historial de pagos.";
+            return;
           }
-          return {
-            ...payment,
-            cardNumber: cardNumber,
-          };
-        }));
 
-          paymentListData.value = enriched;
+          this.paymentListData = payments;
 
-      });
+        } catch (error) {
+          console.error("Error al obtener los pagos:", error);
+          this.errorMessage = "Error al obtener los pagos";
+        }
+      },
 
-      const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return date.toLocaleDateString("en-GB");
-      };
+        formatDate(dateString) {
+          if (!dateString) return '';
+          const date = new Date(dateString);
+          return date.toLocaleDateString("en-GB");
+        }
+    },
 
-      return {
-        user,
-        paymentListData,
-        formatDate,
-        router,
-      };
+    mounted() {
+      this.fetchPayments();
     },
 
   }
@@ -83,8 +83,8 @@
       <pv-column :header="user.role === 'parent' ? `Babysitter's name` : `Parent's name`">
         <template #body="slotProps">
           {{ user.role === 'parent'
-            ? slotProps.data.reservation?.babysitter_id?.name ?? 'N/A'
-            : slotProps.data.reservation?.parent_id ?? 'N/A' }}
+            ? slotProps.data.relatedUser?.name ?? 'N/A'
+            : slotProps.data.reservation?.name ?? 'N/A' }}
         </template>
       </pv-column>
 
