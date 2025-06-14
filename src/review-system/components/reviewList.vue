@@ -23,19 +23,21 @@ export default {
 <style scoped>
 .review-list {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
+  flex-wrap: nowrap;
   gap: 20px;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 20px;
   background-color: var(--color-primary);
   border-radius: 1.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   height: 100%;
   min-height: 100%;
+  overflow-x: auto;
 }
 
 .review-item-wrapper {
-  flex: 1 1 calc(30% - 20px);
+  flex: 0 0 300px;
   max-width: 300px;
 }
 </style>
