@@ -94,6 +94,9 @@ export default {
           </div>
         </div>
       </form>
+      <div style="margin-top: 1.5rem; text-align: right;">
+        <button type="button" class="update-btn">Actualizar</button>
+      </div>
     </template>
   </pv-card>
 </template>
@@ -134,4 +137,19 @@ input {
   align-items: center;
   gap: 0.5rem;
 }
+
+.update-btn {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.5rem;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.update-btn:hover {
+  background-color: #2980b9;
+}
+
 </style>
