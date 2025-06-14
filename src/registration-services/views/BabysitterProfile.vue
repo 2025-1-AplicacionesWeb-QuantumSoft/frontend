@@ -23,7 +23,6 @@ export default {
 
 
 </script>
-
 <template>
   <pv-card v-if="babysitter">
     <template #header>
@@ -37,65 +36,83 @@ export default {
           class="border-circle w-3rem h-3rem"
       />
       <section>
-        <h4>Biography</h4>
+        <h4 class="biography-section">Biography</h4>
         <p>{{ babysitter.description }}</p>
       </section>
-      <section>
-        <h4>About</h4>
+      <section >
+        <h4 class="about-section">About</h4>
         <p>{{ babysitter.about }}</p>
       </section>
 
       <form class="profile-form">
         <div class="form-group">
           <label>Name</label>
-          <input type="text" :value="babysitter.name" disabled />
+          <div class="input-icon-group">
+          <input type="text" :value="babysitter.name" disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Email</label>
-          <input type="email" :value="babysitter.email" disabled />
+          <div class="input-icon-group">
+          <input type="email" :value="babysitter.email" disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Phone Number</label>
-          <input type="text" :value="babysitter.phone" disabled />
+          <div class="input-icon-group">
+          <input type="text" :value="babysitter.phone" disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Location</label>
-          <input type="text" :value="babysitter.location" disabled />
+          <div class="input-icon-group">
+          <input type="text" :value="babysitter.location" disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Experience</label>
-          <input type="text" :value="babysitter.experience + ' años'" disabled />
+          <div class="input-icon-group">
+          <input type="text" :value="babysitter.experience + ' años'" disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Lastname</label>
-          <input type="text" :value="babysitter.lastname " disabled />
+          <div class="input-icon-group">
+          <input type="text" :value="babysitter.lastname " disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Update Password</label>
-          <input type="text" :value="babysitter.updateP " disabled />
+          <div class="input-icon-group">
+          <input type="text" :value="babysitter.updateP " disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Confirm Password</label>
-          <input type="text" :value="babysitter.confirmP " disabled />
+          <div class="input-icon-group">
+          <input type="text" :value="babysitter.confirmP " disabled /><i class="pi pi-pencil edit-icon"></i>
+          </div>
         </div>
 
         <div class="form-group">
           <label>Rating</label>
+          <div class="input-icon-group">
           <div class="rating">
             <span>⭐</span>
-            <span>{{ babysitter.rating }}</span>
+            <span>{{ babysitter.rating }}</span><i class="pi pi-pencil edit-icon"></i>
+          </div>
           </div>
         </div>
       </form>
       <div style="margin-top: 1.5rem; text-align: right;">
-        <button type="button" class="update-btn">Actualizar</button>
+        <button type="button" class="update-btn">Update</button>
       </div>
     </template>
   </pv-card>
@@ -110,7 +127,7 @@ h3 {
 h4 {
   font-size: 1.2rem;
   color: #34495e;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 .profile-form {
   display: grid;
@@ -152,4 +169,26 @@ input {
   background-color: #2980b9;
 }
 
+.edit-icon {
+  margin-left: 0.4rem;
+  color: #888;
+  font-size: 1rem;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, transform 0.2s;
+  border-radius: 50%;
+}
+.edit-icon:hover {
+  color: #3498db;
+  background: #eaf4fb;
+  transform: scale(1.15);
+}
+
+.about-section {
+  margin-top: 2.5rem;
+}
+
+.biography-section {
+  margin-top: 2.5rem;
+}
 </style>
