@@ -1,15 +1,38 @@
 <script>
-import { Review } from '../model/review.entity.js'
+import { ref } from 'vue';
+import { ReviewApiService } from '@/review-system/service/review.service.js';
 
 export default {
   name: 'review-item',
   props: {
-    profile: { type: Review, required: true }
+    profile: { type: Object, required: true }
   },
-  methods: {
-    onEditReview() {
-      console.log("Actualizar reseña:", this.profile)
+  emits: ['review-updated'],
+  setup(props, { emit }) {
+    const isEditing = ref(false);
+    const editableReview = ref({ ...props.profile });
+    const reviewService = new ReviewApiService();
+
+    function onEditReview() {
+      isEditing.value = true;
     }
+
+    async function onSaveReview() {
+      try {
+        await reviewService.updateReview(editableReview.value);
+        isEditing.value = false;
+        emit('review-updated');
+      } catch (error) {
+        console.error('Error al actualizar la reseña:', error);
+      }
+    }
+
+    function onCancelEdit() {
+      editableReview.value = { ...props.profile };
+      isEditing.value = false;
+    }
+
+    return { isEditing, editableReview, onEditReview, onSaveReview, onCancelEdit };
   }
 }
 </script>
@@ -20,26 +43,32 @@ export default {
       <h3>Review</h3>
     </template>
     <template #content>
-      <form class="form-grid">
+      <form class="form-grid" @submit.prevent="onSaveReview">
         <label>ID de reseña</label>
-        <input type="text" :value="profile.id" disabled />
+        <input type="text" v-model="editableReview.id" disabled />
 
         <label>ID del padre</label>
-        <input type="text" :value="profile.parentId" disabled />
+        <input type="text" v-model="editableReview.parentId" :disabled="!isEditing" />
 
         <label>ID de niñera</label>
-        <input type="text" :value="profile.babysitterId" disabled />
+        <input type="text" v-model="editableReview.babysitterId" :disabled="!isEditing" />
 
         <label>Comentario</label>
-        <textarea :value="profile.comment" disabled></textarea>
+        <textarea v-model="editableReview.comment" :disabled="!isEditing"></textarea>
 
         <label>Calificación</label>
-        <input type="number" :value="profile.rating" disabled />
+        <input type="number" v-model="editableReview.rating" :disabled="!isEditing" />
 
         <label>Fecha</label>
-        <input type="text" :value="profile.date" disabled />
+        <input type="text" v-model="editableReview.date" :disabled="!isEditing" />
       </form>
-      <button class="edit-button" @click="onEditReview">Editar reseña</button>
+      <div>
+        <button v-if="!isEditing" class="edit-button" @click="onEditReview">Editar reseña</button>
+        <div v-else>
+          <button class="edit-button" @click="onSaveReview">Guardar</button>
+          <button class="edit-button" @click="onCancelEdit" type="button">Cancelar</button>
+        </div>
+      </div>
     </template>
   </pv-card>
 </template>
@@ -84,6 +113,7 @@ export default {
   padding: 0.5rem 1rem;
   font-weight: bold;
   cursor: pointer;
+  margin-right: 0.5rem;
 }
 .edit-button:hover {
   background: #ffe066;
