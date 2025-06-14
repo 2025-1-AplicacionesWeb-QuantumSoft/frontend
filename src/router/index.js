@@ -4,6 +4,7 @@ import paymentRoutes from '@/payment/routes.js'
 import communicationRoutes from '@/communication-system/routes.js'
 import registrationRoutes from '@/registration-services/routes.js'
 import reviewRoutes from '@/review-system/routes.js'
+import reviewManagementComponent from "@/review-system/pages/review.management.component.vue";
 import Layout from '@/shared/Layout.component.vue'
 import BabysitterDetail from "@/reservations/pages/BabysitterDetail.vue";
 
@@ -18,7 +19,11 @@ const routes = [
                 ...paymentRoutes,
                 ...communicationRoutes,
                 ...registrationRoutes,
-                ...reviewRoutes
+                {
+                    path: '/reviews',
+                    component: reviewManagementComponent,
+                    name: 'Reviews'
+                }
             ]
         }
 ]

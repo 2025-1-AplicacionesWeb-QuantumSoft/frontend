@@ -1,18 +1,18 @@
 export class Review{
     constructor({
                     id = '',
+                    rating = 0,
+                    comment = '',
+                    date = new Date(),
                     parentId = '',
                     babysitterId = '',
-                    comment = '',
-                    rating = 0,
-                    date = new Date(),
                 })
     {
         this.id = id;
+        this.rating = rating;
+        this.comment = comment;
+        this.date = date;
         this.parentId = parentId;
         this.babysitterId = babysitterId;
-        this.comment = comment;
-        this.rating = rating;
-        this.date = date;
     }
 }
