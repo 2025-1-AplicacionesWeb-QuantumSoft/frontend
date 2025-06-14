@@ -1,28 +1,22 @@
 import {Review} from "@/review-system/model/review.entity.js";
 
 export class ReviewAssembler {
-    static toEntitiesFromResponse(response) {
-        if (response.statusText !== "OK") {
-            console.error(`${response.status}, ${response.code}, ${response.message}`);
+    static toEntitiesFromResponse(itemsResponse) {
+        if (!Array.isArray(itemsResponse)) {
+            console.error("La respuesta no es un array");
             return [];
         }
-        const itemsResponse = response;
-        console.log("Items response", itemsResponse);
-
-        return itemsResponse.map((item) => {
-            return this.toEntityFromResponse(item);
-        });
+        return itemsResponse.map((item) => this.toEntityFromResponse(item));
     }
 
-    // review.assembler.js
     static toEntityFromResponse(resource) {
         return new Review({
             id: resource.id || '',
-            parentId: resource.parent_id || '',
-            reservationId: resource.reservations_id || '',
+            parentId: resource.parentId || '',
+            babysitterId: resource.babysitterId || '',
             comment: resource.comment || '',
             rating: resource.rating || 0,
-            date: resource.created_at ? new Date(resource.created_at) : new Date(),
+            date: resource.date ? new Date(resource.date) : new Date(),
         });
     }
 }

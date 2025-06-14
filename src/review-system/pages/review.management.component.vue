@@ -13,10 +13,11 @@ export default {
     ReviewList
   },
   setup() {
-    const reviews = new ReviewApiService([]);
+    const reviews = ref([]);
+    const reviewService = new ReviewApiService([]);
     onMounted(async () => {
       try {
-        reviews.value = await reviews.getReviews();
+        reviews.value = await reviewService.getReviews();
       } catch (error) {
         console.error('Failed to fetch reviews:', error);
       }
@@ -30,34 +31,8 @@ export default {
 </script>
 
 <template>
-  <div v-for="review in reviews" :key="review.id" class="review-card">
-    <pv-card>
-      <template #header>
-        <h3>Detalle de Reseña</h3>
-      </template>
-      <template #content>
-        <form class="form-grid">
-          <label>ID</label>
-          <input type="text" :value="review.id" disabled />
-
-          <label>ID del padre</label>
-          <input type="text" :value="review.parentId" disabled />
-
-          <label>ID de niñera</label>
-          <input type="text" :value="review.babysitterId" disabled />
-
-          <label>Comentario</label>
-          <textarea :value="review.comment" disabled></textarea>
-
-          <label>Calificación</label>
-          <input type="number" :value="review.rating" disabled />
-
-          <label>Fecha</label>
-          <input type="text" :value="review.date" disabled />
-        </form>
-      </template>
-    </pv-card>
-  </div>
+  <Sidebar />
+  <ReviewList :reviews="reviews" />
 </template>
 
 <style scoped>

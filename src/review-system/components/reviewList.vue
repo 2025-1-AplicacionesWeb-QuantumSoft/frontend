@@ -13,10 +13,9 @@ export default {
 </script>
 
 <template>
-  <div>
-    <Sidebar />
-    <div class="review-list-container">
-      <review-list :reviews="reviews" />
+  <div class="review-list">
+    <div v-for="review in reviews" :key="review.id" class="review-item-wrapper">
+      <ReviewItem :profile="review" />
     </div>
   </div>
 </template>

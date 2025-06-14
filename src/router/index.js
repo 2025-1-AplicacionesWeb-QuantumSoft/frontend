@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import reservationRoutes from '@/reservations/routes.js'
 import Layout from '@/shared/Layout.component.vue'
-import ReviewList from '@/review-system/components/reviewList.vue'
+//import ReviewList from '@/review-system/components/reviewList.vue'
 import reviewManagementComponent from "@/review-system/pages/review.management.component.vue";
 
 
