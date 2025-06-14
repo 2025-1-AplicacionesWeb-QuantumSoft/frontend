@@ -1,28 +1,47 @@
 <script>
 import Sidebar from '@/public/Sidebar.vue'
-import {ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 import RegistrationService from "@/registration-services/component/RegistrationService.vue";
-import {getBabysitters} from "@/registration-services/service/registration.service.js";
+import { getBabysitters } from "@/registration-services/service/registration.service.js";
 
 export default {
   name: "babysitter-profile",
   components: {
     RegistrationService,
   },
-  setup(){
+  setup() {
     const babysitter = ref(null);
+    const editable = ref({});
+    const editing = ref({});
+    const showNewCard = ref(false);
+
     onMounted(async () => {
       const data = await getBabysitters();
       babysitter.value = data.length > 0 ? data[0] : null;
+      editable.value = { ...babysitter.value };
     });
+
+    function toggleEdit(field) {
+      editing.value[field] = !editing.value[field];
+    }
+
+    function updateProfile() {
+      babysitter.value = { ...editable.value };
+      showNewCard.value = true;
+    }
+
     return {
       babysitter,
+      editable,
+      editing,
+      toggleEdit,
+      updateProfile,
+      showNewCard,
     };
-  }
+  },
 }
-
-
 </script>
+
 <template>
   <pv-card v-if="babysitter">
     <template #header>
@@ -39,81 +58,45 @@ export default {
         <h4 class="biography-section">Biography</h4>
         <p>{{ babysitter.description }}</p>
       </section>
-      <section >
+      <section>
         <h4 class="about-section">About</h4>
         <p>{{ babysitter.about }}</p>
       </section>
 
       <form class="profile-form">
-        <div class="form-group">
-          <label>Name</label>
+        <div v-for="field in ['name','email','phone','location','experience','lastname','updateP','confirmP','rating']" :key="field" class="form-group">
+          <label>{{ field.charAt(0).toUpperCase() + field.slice(1) }}</label>
           <div class="input-icon-group">
-          <input type="text" :value="babysitter.name" disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Email</label>
-          <div class="input-icon-group">
-          <input type="email" :value="babysitter.email" disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Phone Number</label>
-          <div class="input-icon-group">
-          <input type="text" :value="babysitter.phone" disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Location</label>
-          <div class="input-icon-group">
-          <input type="text" :value="babysitter.location" disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Experience</label>
-          <div class="input-icon-group">
-          <input type="text" :value="babysitter.experience + ' años'" disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Lastname</label>
-          <div class="input-icon-group">
-          <input type="text" :value="babysitter.lastname " disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Update Password</label>
-          <div class="input-icon-group">
-          <input type="text" :value="babysitter.updateP " disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Confirm Password</label>
-          <div class="input-icon-group">
-          <input type="text" :value="babysitter.confirmP " disabled /><i class="pi pi-pencil edit-icon"></i>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label>Rating</label>
-          <div class="input-icon-group">
-          <div class="rating">
-            <span>⭐</span>
-            <span>{{ babysitter.rating }}</span><i class="pi pi-pencil edit-icon"></i>
-          </div>
+            <input
+                :type="field.includes('email') ? 'email' : 'text'"
+                v-model="editable[field]"
+                :disabled="!editing[field]"
+            />
+            <i class="pi pi-pencil edit-icon" @click="toggleEdit(field)"></i>
           </div>
         </div>
       </form>
+
       <div style="margin-top: 1.5rem; text-align: right;">
-        <button type="button" class="update-btn">Update</button>
+        <button type="button" class="update-btn" @click="updateProfile">Update</button>
       </div>
+    </template>
+  </pv-card>
+
+  <pv-card v-if="showNewCard">
+    <template #header>
+      <h3>Updated Profile</h3>
+    </template>
+    <template #content>
+      <p><strong>Name:</strong> {{ babysitter.name }}</p>
+      <p><strong>Email:</strong> {{ babysitter.email }}</p>
+      <p><strong>Phone:</strong> {{ babysitter.phone }}</p>
+      <p><strong>Location:</strong> {{ babysitter.location }}</p>
+      <p><strong>Experience:</strong> {{ babysitter.experience }} años</p>
+      <p><strong>Lastname:</strong> {{ babysitter.lastname }}</p>
+      <p><strong>Update Password:</strong> {{ babysitter.updateP }}</p>
+      <p><strong>Confirm Password:</strong> {{ babysitter.confirmP }}</p>
+      <p><strong>Rating:</strong> {{ babysitter.rating }}</p>
     </template>
   </pv-card>
 </template>
