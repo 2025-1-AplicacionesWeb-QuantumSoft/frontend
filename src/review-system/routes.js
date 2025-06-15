@@ -2,6 +2,6 @@
 export default [
     {
         path: '/reviews',
-        component: () => import('@/review-system/components/reviewList.vue'),
+        component: () => import('@/review-system/pages/review.management.component.vue'),
     }
 ]
