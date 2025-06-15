@@ -1287,86 +1287,86 @@
       "id": 39
     }
   ],
-  "review": [
+  "reviews": [
     {
       "id": 1,
       "rating": 5,
       "comment": "Excelente servicio, muy puntual y los niños quedaron encantados.",
-      "created_at": "2024-10-26 14:15:00",
-      "parent_id": 1,
-      "reservations_id": 1
+      "date": "2024-10-26 14:15:00",
+      "parentId": 1,
+      "babysitterId": 1
     },
     {
       "id": 2,
       "rating": 4,
       "comment": "Muy buen servicio, aunque llegó un poco tarde.",
-      "created_at": "2024-10-26 16:30:00",
-      "parent_id": 2,
-      "reservations_id": 2
+      "date": "2024-10-26 16:30:00",
+      "parentId": 2,
+      "babysitterId": 2
     },
     {
       "id": 3,
       "rating": 5,
       "comment": "Increíble trato con los niños, muy profesional.",
-      "created_at": "2024-10-27 10:45:00",
-      "parent_id": 5,
-      "reservations_id": 5
+      "date": "2024-10-27 10:45:00",
+      "parentId": 5,
+      "babysitterId": 5
     },
     {
       "id": 4,
       "rating": 5,
       "comment": "Muy recomendable, los niños se divirtieron mucho.",
-      "created_at": "2024-10-27 18:20:00",
-      "parent_id": 7,
-      "reservations_id": 7
+      "date": "2024-10-27 18:20:00",
+      "parentId": 7,
+      "babysitterId": 2
     },
     {
       "id": 5,
       "rating": 4,
       "comment": "Buen trato con los niños, pero podría mejorar en puntualidad.",
-      "created_at": "2024-10-28 09:30:00",
-      "parent_id": 9,
-      "reservations_id": 9
+      "date": "2024-10-28 09:30:00",
+      "parentId": 9,
+      "babysitterId": 4
     },
     {
       "id": 6,
       "rating": 5,
       "comment": "Excelente experiencia, muy profesional y cariñosa con los niños.",
-      "created_at": "2024-10-28 14:45:00",
-      "parent_id": 10,
-      "reservations_id": 10
+      "date": "2024-10-28 14:45:00",
+      "parentId": 10,
+      "babysitterId": 5
     },
     {
       "id": 7,
       "rating": 3,
       "comment": "Servicio aceptable, pero faltó más interacción con los niños.",
-      "created_at": "2024-10-29 11:15:00",
-      "parent_id": 3,
-      "reservations_id": 3
+      "date": "2024-10-29 11:15:00",
+      "parentId": 3,
+      "babysitterId": 3
     },
     {
       "id": 8,
       "rating": 4,
       "comment": "Buena experiencia en general, los niños quedaron contentos.",
-      "created_at": "2024-10-29 17:30:00",
-      "parent_id": 4,
-      "reservations_id": 4
+      "date": "2024-10-29 17:30:00",
+      "parentId": 4,
+      "babysitterId": 4
     },
     {
       "id": 9,
       "rating": 5,
       "comment": "Excelente niñera, muy atenta y puntual.",
-      "created_at": "2024-10-30 10:00:00",
-      "parent_id": 6,
-      "reservations_id": 6
+      "date": "2024-10-30 10:00:00",
+      "parentId": 6,
+      "babysitterId": 1
     },
     {
       "id": 10,
       "rating": 4,
       "comment": "Buen servicio, los niños disfrutaron mucho.",
-      "created_at": "2024-10-30 15:45:00",
-      "parent_id": 8,
-      "reservations_id": 8
+      "date": "2024-10-30 15:45:00",
+      "parentId": 8,
+      "babysitterId": 3
     }
   ]
 }
