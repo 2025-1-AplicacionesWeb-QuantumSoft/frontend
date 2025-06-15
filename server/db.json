@@ -248,12 +248,13 @@
       "typeAccountBank": "corriente",
       "dni": "12345678A",
       "phone": "+51 936 948 397",
-      "name": "Maria Alejandra",
+      "name":  "Maria Alejandra",
       "email": "u202221625@gmail.com",
       "lastname": "Tasayco",
       "updateP": "****",
       "confirmP": "****",
       "about": "Laboral days:\nLunes a viernes\n\nSchedule:\n08:00 AM a 05:00 PM\n\nWorkaround:\nBrindo atención personalizada y flexible para adaptarme a las necesidades de cada familia. Mi objetivo es ofrecer un servicio confiable, con comunicación constante, seguimiento del desarrollo infantil y apoyo emocional tanto para los niños como para sus cuidadores. Estoy disponible para resolver dudas, coordinar actividades y responder ante cualquier eventualidad que pueda surgir.\n\n"
+
     },
     {
       "id": 2,
