@@ -9,7 +9,7 @@ const babysitters = ref([])
 
 onMounted(async ()=>{
   try {
-    reservation.value = await ReservationService.getReservations();
+    reservation.value = await ReservationService.getReservationById(1);
     babysitters.value = await BabysitterService.getBabysitters();
     console.log(reservation.value)
     console.log(babysitters.value)

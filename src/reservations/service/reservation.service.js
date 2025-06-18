@@ -26,7 +26,7 @@ export class ReservationService {
         return ReservationAssembler.toEntitiesFromResponse(response)
     }
     static async getReservationById(id) {
-        const response = await axios.get(`${API_BASE}/reservation/${id}`)
+        const response = await axios.get(`${API_BASE}reservation/${id}`)
         console.log("Reservations", response)
         return ReservationAssembler.toEntityFromResponse(response.data)
     }
