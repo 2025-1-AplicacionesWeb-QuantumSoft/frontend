@@ -8,6 +8,7 @@ import Layout from '@/shared/Layout.component.vue'
 import authRoutes from '@/auth/routes.js'
 import BabysitterDetail from "@/reservations/pages/BabysitterDetail.vue";
 import logInComponent from "@/auth/components/log-in.component.vue";
+import Dashboard from "@/public/Dashboard.vue";
 
 
 
@@ -21,6 +22,11 @@ const routes = [
             path: '/',
             component: Layout,
             children: [
+                {
+                    path: '',
+                    name: 'dashboard',
+                    component: Dashboard
+                },
                 ...reservationRoutes,
                 ...paymentRoutes,
                 ...communicationRoutes,

@@ -13,7 +13,9 @@ const isHovered = ref(false)
     <div>
       <div class="px-3 pt-3 w-5rem flex align-items-center">
         <img src="@/assets/logo.png" alt="logo">
+        <router-link to="/">
         <div class="text-xl font-bold mb-5 px-3 pt-3" v-if="isHovered">KindyCare</div>
+        </router-link>
       </div>
 
       <ul class="list-none p-3">
@@ -43,12 +45,12 @@ const isHovered = ref(false)
           <span v-if="isHovered" class="ml-2 p-tag">3</span>
         </li>
         </router-link>
-        <router-link to="">
+<!--        <router-link to="">
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-cog mr-2"></i>
           <span v-if="isHovered">Settings</span>
         </li>
-        </router-link>
+        </router-link>-->
         <li class="mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-star mr-2"></i>
           <router-link
