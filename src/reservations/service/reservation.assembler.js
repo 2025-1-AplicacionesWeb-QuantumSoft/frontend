@@ -36,7 +36,7 @@ export class BabysitterAssembler {
 
 export class ReservationAssembler {
     static toEntitiesFromResponse(response) {
-        if (response.statusText !== "OK") {
+        if (response.status !== 200) {
             console.error(`${response.status}, ${response.code}, ${response.message}`);
             return [];
         }

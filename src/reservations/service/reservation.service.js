@@ -30,4 +30,9 @@ export class ReservationService {
         console.log("Reservations", response)
         return ReservationAssembler.toEntityFromResponse(response.data)
     }
+    static async getReservationByBabysitterId(id) {
+        const response = await axios.get(`${API_BASE}reservation/babysitter/${id}`)
+        console.log("Reservations", response.data)
+        return ReservationAssembler.toEntitiesFromResponse(response)
+    }
 }
