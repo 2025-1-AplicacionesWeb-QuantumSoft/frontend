@@ -51,12 +51,19 @@ export class ReservationAssembler {
 
         return new ReservationEntity(  {
             id: resource.id,
-            start_time: resource.start_time,
-            end_time: resource.end_time,
+            startTime: resource.startTime,
+            endTime: resource.endTime,
             status: resource.status,
-            notification: resource.notification,
-            parent_id: resource.parent_id,
-            babysitter_id: resource.babysitter_id
+            notificationId: resource.notificationId,
+            parentId: resource.parentId,
+            babysitterId: resource.babysitterId,
+            address: resource.address,
+            frequency: resource.frequency,
+            childName: resource.childName,
+            childAge: resource.childAge,
+            specialNeeds: resource.specialNeeds,
+            additionalInfo: resource.additionalInfo,
+            createdAt: resource.createdAt,
         });
     }
 }

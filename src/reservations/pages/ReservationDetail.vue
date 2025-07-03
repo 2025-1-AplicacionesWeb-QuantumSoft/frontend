@@ -2,26 +2,51 @@
 import { ref } from 'vue'
 import ModalComponent from "@/reservations/components/ModalComponent.vue";
 import {useRouter} from "vue-router";
+import {ReservationService} from "@/reservations/service/reservation.service.js";
 
 const router = useRouter()
 const form = ref({
   startDateTime: null,
   endDateTime: null,
-  repetition: null,
+  frecuency: null,
   address: '',
   childName: '',
-  childAge: null,
+  childAge: '',
   specialNeeds: '',
-  additionalInfo: ''
+  additionalInfo: '',
+  status: 'pending'
 })
-
-const goToReservationList = () => {
-  router.push(`/reservation-list`)
+const buildReservationPayload = () => {
+  return {
+    babysitterId: 1,
+    parentId: 10,
+    startTime: form.value.startDateTime,
+    endTime: form.value.endDateTime,
+    address: form.value.address,
+    frecuency: form.value.frecuency,
+    childName: form.value.childName,
+    childAge: form.value.childAge,
+    specialNeeds: form.value.specialNeeds,
+    aditionalInfo: form.value.additionalInfo,
+    status: form.value.status,
+    notificationId: 1,
+    createdAt: new Date().toISOString()
+  };
+};
+const submitReservation = async () => {
+  try {
+    const payload = buildReservationPayload();
+    console.log('Creating reservation with data:', payload);
+    const response = await ReservationService.createReservation(payload)
+    router.push(`/reservation-list`)
+  } catch (error) {
+    console.error('Error creating reservation:', error);
+  }
 }
 
 const showModal = ref(false)
 
-const repetitionOptions = ref([
+const frecuencyOptions = ref([
   { label: 'One-time', value: 'one-time' },
   { label: 'Daily', value: 'daily' },
   { label: 'Weekly', value: 'weekly' },
@@ -121,13 +146,13 @@ const handleAgeChange = (event) => {
               Frequency
             </label>
             <select
-                v-model="form.repetition"
+                v-model="form.frecuency"
                 id="repetition"
                 class="form-control"
             >
               <option value="">How often do you need care?</option>
               <option
-                  v-for="option in repetitionOptions"
+                  v-for="option in frecuencyOptions"
                   :key="option.value"
                   :value="option.value"
               >
@@ -273,7 +298,7 @@ const handleAgeChange = (event) => {
           </button>
           <button
               class="modal-confirm-button"
-              @click="goToReservationList"
+              @click="submitReservation"
           >
             Create Reservation
           </button>
@@ -373,9 +398,9 @@ const handleAgeChange = (event) => {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(20px);
   border-radius: 2rem;
-  box-shadow:
+  /*box-shadow:
       0 25px 50px -12px rgba(0, 0, 0, 0.25),
-      0 0 0 1px rgba(255, 255, 255, 0.2);
+      0 0 0 1px rgba(255, 255, 255, 0.2);*/
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -443,7 +468,7 @@ const handleAgeChange = (event) => {
 .reservation-section {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 0.5rem;
 }
 
 .section-header {

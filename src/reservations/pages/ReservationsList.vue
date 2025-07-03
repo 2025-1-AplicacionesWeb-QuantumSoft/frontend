@@ -2,14 +2,14 @@
 import {onMounted, ref} from 'vue';
 import {BabysitterService, ReservationService} from "@/reservations/service/reservation.service.js";
 
-const reservation = ref([])
+const reservations = ref([])
 const babysitters = ref([])
 const editingIndex = ref(null)
 const editForm = ref({})
 
 onMounted(async ()=>{
   try {
-    reservation.value = await ReservationService.getReservationByBabysitterId(1);
+    reservations.value = await ReservationService.getReservationByBabysitterId(1);
     babysitters.value = await BabysitterService.getBabysitters();
     console.log(reservation.value)
     console.log(babysitters.value)
@@ -18,7 +18,7 @@ onMounted(async ()=>{
   }
 })
 
-const reservations = ref([
+const reservation = ref([
   {
     id: 1,
     caregiver: 'John Doe',
@@ -67,9 +67,9 @@ const reservations = ref([
 
 const getStatusClass = (status) => {
   switch (status) {
-    case 'Pending': return 'status-pending';
-    case 'Realized': return 'status-realized';
-    case 'Cancelled': return 'status-cancelled';
+    case 'pending': return 'status-pending';
+    case 'confirmed': return 'status-confirmed';
+    case 'cancelled': return 'status-cancelled';
     default: return 'status-default';
   }
 };
@@ -99,29 +99,45 @@ const cancelEdit = () => {
 
 const saveEdit = async () => {
   try {
-    // Format date
-    const formattedDate = editForm.value.dateObj.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+
+    const originalReservation = reservations.value[editingIndex.value];
+
+    function unwrap(obj) {
+      const result = {}
+      for (const key in obj) {
+        const val = obj[key]
+        result[key] = val?.value ?? val
+      }
+      return result
+    }
+    const updatedReservation = unwrap({
+      ...originalReservation,
+      startTime: new Date(editForm.value.startTime).toISOString(),
+      endTime: new Date(editForm.value.endTime).toISOString(),
+      frequency: editForm.value.frequency,
+      address: editForm.value.address,
+      specialNeeds: editForm.value.specialNeeds,
+      additionalInfo: editForm.value.additionalInfo
     });
+    delete updatedReservation.id
 
-    // Update reservation
-    const updatedReservation = {
-      ...editForm.value,
-      date: formattedDate
+    const reservationId = editForm.value.id;
+    console.log(updatedReservation);
+    const response = await ReservationService.updateReservation(updatedReservation, reservationId);
+    console.log('Response:', response.data);
+
+    // Actualiza localmente
+    reservations.value[editingIndex.value] = {
+      ...updatedReservation,
+      id: reservationId
     };
-
-    // Update local array
-    reservations.value[editingIndex.value] = updatedReservation;
-
-    console.log('Reservation updated:', updatedReservation);
-
-    // Reset edit state
+    console.log('Sending to backend:', updatedReservation);
+    console.log('Reservation ID:', reservationId);
+    console.log('Full URL:', `/api/reservations/${reservationId}`);
+    // Limpia estado de edición
     editingIndex.value = null;
     editForm.value = {};
 
-    // Show success message
     alert('Reservation updated successfully!');
 
   } catch (error) {
@@ -130,10 +146,13 @@ const saveEdit = async () => {
   }
 };
 
+
 const cancelReservation = async (index) => {
   if (confirm('Are you sure you want to cancel this reservation?')) {
     try {
       // Update status to cancelled
+      const reservationId = reservations.value[index].id;
+      await ReservationService.deleteReservation(reservationId);
       reservations.value[index].status = 'Cancelled';
 
       console.log('Reservation cancelled:', reservations.value[index]);
@@ -175,7 +194,7 @@ const cancelReservation = async (index) => {
               <div class="avatar-status" :class="getStatusClass(reservation.status)"></div>
             </div>
             <div class="caregiver-info">
-              <h3 class="caregiver-name">{{ reservation.caregiver }}</h3>
+              <h3 class="caregiver-name">{{ reservation.caregiver || 'Carol' }}</h3>
               <span class="caregiver-specialty">{{ reservation.specialty || 'Professional Caregiver' }}</span>
             </div>
           </div>
@@ -187,7 +206,7 @@ const cancelReservation = async (index) => {
                   <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
                 </svg>
                 <div class="detail-text">
-                  <label>Address:</label>
+                  <label>Address: </label>
                   <span>{{ reservation.address }}</span>
                 </div>
               </div>
@@ -198,8 +217,8 @@ const cancelReservation = async (index) => {
                   <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
                 </svg>
                 <div class="detail-text">
-                  <label>Start:</label>
-                  <span>{{ new Date(reservation.startTime).toLocaleString() }}</span>
+                  <label>Start: </label>
+                  <span>{{ new Date(reservation.startTime.value).toLocaleString() }}</span>
                 </div>
               </div>
 
@@ -210,8 +229,8 @@ const cancelReservation = async (index) => {
                   <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
                 </svg>
                 <div class="detail-text">
-                  <label>End:</label>
-                  <span>{{ new Date(reservation.endTime).toLocaleString() }}</span>
+                  <label>End: </label>
+                  <span>{{ new Date(reservation.endTime.value).toLocaleString() }}</span>
                 </div>
               </div>
 
@@ -221,8 +240,8 @@ const cancelReservation = async (index) => {
                   <path d="M4 5h16v2H4V5zm0 4h16v2H4V9zm0 4h16v2H4v-2zm0 4h16v2H4v-2z"/>
                 </svg>
                 <div class="detail-text">
-                  <label>Frequency:</label>
-                  <span>{{ reservation.repetition }}</span>
+                  <label>Frequency: </label>
+                  <span>{{ reservation.frequency }}</span>
                 </div>
               </div>
             </div>
@@ -230,12 +249,12 @@ const cancelReservation = async (index) => {
         </div>
           <div class="action-container">
             <div class="status-section">
-              <div :class="['status-badge', getStatusClass(reservation.status)]">
-                {{ reservation.status }}
+              <div :class="['status-badge', getStatusClass(reservation.status.value)]">
+                {{ reservation.status.value }}
               </div>
             </div>
 
-            <div class="actions-section" v-if="reservation.status === 'Pending'">
+            <div class="actions-section" v-if="reservation.status.value === 'pending'">
               <button class="action-btn edit-btn" @click="startEdit(index)">
                 <svg class="btn-icon" viewBox="0 0 24 24">
                   <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
@@ -304,7 +323,7 @@ const cancelReservation = async (index) => {
                 <label class="form-label" for="edit-frequency">Frequency</label>
                 <select
                     id="edit-frequency"
-                    v-model="editForm.repetition"
+                    v-model="editForm.frequency"
                     class="form-input"
                 >
                   <option value="Once">Once</option>
@@ -315,8 +334,8 @@ const cancelReservation = async (index) => {
               </div>
             </div>
 
-            <!-- Special Needs & Info -->
-<!--            <div class="form-row">
+             Special Needs & Info
+            <div class="form-row">
               <div class="form-group">
                 <label class="form-label" for="edit-special">Special Needs</label>
                 <input
@@ -336,7 +355,7 @@ const cancelReservation = async (index) => {
                     class="form-input"
                 />
               </div>
-            </div>-->
+            </div>
 
             <!-- Actions -->
             <div class="form-actions">
@@ -380,7 +399,7 @@ const cancelReservation = async (index) => {
 
 .reservations-header {
   text-align: center;
-  margin-bottom: 3rem;
+
   color: white;
 }
 
@@ -596,7 +615,7 @@ const cancelReservation = async (index) => {
   pointer-events: none;
 }
 
-.status-realized {
+.status-confirmed {
   background: linear-gradient(135deg, #10b981, #059669);
   color: white;
 
