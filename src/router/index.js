@@ -14,12 +14,12 @@ import Dashboard from "@/public/Dashboard.vue";
 
 const routes = [
         {
-            path: '/',
+            path: '/login',
             name: 'login',
              ...authRoutes,
         },
         {
-            path: '/',
+            path: '',
             component: Layout,
             children: [
                 {

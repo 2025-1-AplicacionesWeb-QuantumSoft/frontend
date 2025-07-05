@@ -7,12 +7,12 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export class BabysitterService {
     static async getBabysitters() {
-        const response = await axios.get(`${API_BASE}/babysitter`)
+        const response = await axios.get(`${API_BASE}babysitter`)
         console.log("Babysitters", response)
         return BabysitterAssembler.toEntitiesFromResponse(response)
     }
     static async getBabysitterById(id) {
-        const response = await axios.get(`${API_BASE}/babysitter/${id}`)
+        const response = await axios.get(`${API_BASE}babysitter/${id}`)
         console.log("Babysitter", response)
         return BabysitterAssembler.toEntityFromResponse(response.data)
     }
