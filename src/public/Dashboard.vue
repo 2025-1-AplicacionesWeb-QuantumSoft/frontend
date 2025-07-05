@@ -74,10 +74,10 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   gap: 20px;
-  max-width: 1200px;
+  max-width: 1400px;
   width: 96vw;
-  margin: 0 auto;
-  padding: 20px 24px;
+  margin: -20px auto;
+  padding: 10px 20px;
   background: rgba(255,255,255,0.7);
   border-radius: 2.5rem;
   box-shadow: 0 8px 32px rgba(0,0,0,0.10);
@@ -93,7 +93,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   border: 1.5px solid #e3e8ee;
-  min-height: 260px;
+  min-height: 250px;
   transition: box-shadow 0.2s, transform 0.2s;
   position: relative;
   overflow: hidden;

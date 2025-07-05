@@ -1,5 +1,5 @@
 import './assets/main.css'
-
+import pinia from "./pinia.js";
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -38,6 +38,7 @@ import Aura from '@primeuix/themes/aura';
 const app= createApp(App)
 
 app
+    .use(pinia)
     .use(router)
     .component("pv-menu",Menu)
     .component("pv-menubar",Menubar)

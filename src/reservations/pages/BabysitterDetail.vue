@@ -13,7 +13,7 @@ const babysitter = ref(null)
 const goBack = () => router.back()
 
 const gotoReservationDetail = () => {
-  router.push(`/reservation-detail`)
+  router.push({name:'reservation-detail', query: { babysitterId: babysitterId.value }})
 }
 const showModal = ref(false)
 onMounted(async () => {

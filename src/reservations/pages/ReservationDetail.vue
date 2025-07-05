@@ -1,14 +1,19 @@
 ﻿<script setup>
 import { ref } from 'vue'
 import ModalComponent from "@/reservations/components/ModalComponent.vue";
-import {useRouter} from "vue-router";
+import {useRoute, useRouter} from "vue-router";
 import {ReservationService} from "@/reservations/service/reservation.service.js";
+import { useAuthenticationStore } from "@/iam/services/authentication.store";
 
+
+const authStore = useAuthenticationStore();
 const router = useRouter()
+const route = useRoute()
+
 const form = ref({
-  startDateTime: null,
-  endDateTime: null,
-  frecuency: null,
+  startTime: '',
+  endTime: '',
+  frequency: '',
   address: '',
   childName: '',
   childAge: '',
@@ -18,16 +23,16 @@ const form = ref({
 })
 const buildReservationPayload = () => {
   return {
-    babysitterId: 1,
-    parentId: 10,
-    startTime: form.value.startDateTime,
-    endTime: form.value.endDateTime,
+    babysitterId: parseInt(route.query.babysitterId, 10),
+    parentId: authStore.currentUserId,
+    startTime: new Date(form.value.startTime).toISOString(),
+    endTime: new Date(form.value.endTime).toISOString(),
     address: form.value.address,
-    frecuency: form.value.frecuency,
+    frequency: form.value.frequency,
     childName: form.value.childName,
     childAge: form.value.childAge,
     specialNeeds: form.value.specialNeeds,
-    aditionalInfo: form.value.additionalInfo,
+    additionalInfo: form.value.additionalInfo,
     status: form.value.status,
     notificationId: 1,
     createdAt: new Date().toISOString()
@@ -38,7 +43,7 @@ const submitReservation = async () => {
     const payload = buildReservationPayload();
     console.log('Creating reservation with data:', payload);
     const response = await ReservationService.createReservation(payload)
-    router.push(`/reservation-list`)
+    await router.push(`/reservation-list`)
   } catch (error) {
     console.error('Error creating reservation:', error);
   }
@@ -120,9 +125,9 @@ const handleAgeChange = (event) => {
               <input
                   type="datetime-local"
                   id="startDateTime"
-                  v-model="form.startDateTime"
+                  v-model="form.startTime"
                   class="form-control"
-                  :class="{ invalid: !form.startDateTime }"
+                  :class="{ invalid: !form.startTime }"
               />
             </div>
 
@@ -133,9 +138,9 @@ const handleAgeChange = (event) => {
               <input
                   type="datetime-local"
                   id="endDateTime"
-                  v-model="form.endDateTime"
+                  v-model="form.endTime"
                   class="form-control"
-                  :class="{ invalid: !form.endDateTime }"
+                  :class="{ invalid: !form.endTime }"
               />
             </div>
           </div>
@@ -146,7 +151,7 @@ const handleAgeChange = (event) => {
               Frequency
             </label>
             <select
-                v-model="form.frecuency"
+                v-model="form.frequency"
                 id="repetition"
                 class="form-control"
             >
