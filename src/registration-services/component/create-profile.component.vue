@@ -1,86 +1,121 @@
 <script>
-import {useAuthenticationStore} from "../services/authentication.store.js";
-import {SignUpRequest} from "../model/sign-up.request.js";
+import { useAuthenticationStore } from "@/iam/services/authentication.store.js";
+import { BabysitterService, ParentService } from "@/registration-services/service/registration.service.js";
+import router from "@/router/index.js";
 
 export default {
-  name: "sign-up",
+  name: "create-profile",
   data() {
     return {
       authenticationStore: useAuthenticationStore(),
-      username: "",
-      password: "",
-      role: ""
+
+      babysitterForm: {
+        userId: 0,
+        description: "",
+        name: "",
+        phone: "",
+        languages: "",
+        rating: 0,
+        location: "",
+        accountBank: "",
+        bankName: "",
+        typeAccountBank: "",
+        dni: "",
+        experienceLevel: ""
+      },
+      parentForm: {
+        userId: 0,
+        name: "",
+        phone: "",
+        address: "",
+        childrenCount: 0,
+        preferences: "",
+        city: ""
+      }
     };
   },
+  computed: {
+    role() {
+      return this.authenticationStore.currentRole;
+    },
+    userId() {
+      return this.authenticationStore.currentUserId;
+    }
+  },
+  mounted() {
+    if (this.role === "babysitter") this.babysitterForm.userId = this.userId;
+    if (this.role === "parent") this.parentForm.userId = this.userId;
+  },
   methods: {
-    onSignUp() {
-      let signUpRequest = new SignUpRequest(this.username, this.password, this.role);
-      this.authenticationStore.signUp(signUpRequest, this.$router);
+    async submitProfile() {
+      const payload = this.role === "babysitter" ? this.babysitterForm : this.parentForm;
+
+      try {
+        if (this.role === "babysitter") {
+          await BabysitterService.createBabysitter(payload);
+        } else if (this.role === "parent") {
+          await ParentService.createParent(payload);
+        } else {
+          throw new Error("Unknown role");
+        }
+
+        alert("Profile created successfully!");
+        router.push('/');
+      } catch (error) {
+        console.error("Error creating profile:", error);
+        alert("Error creating profile. Please try again.");
+      }
     }
   }
-}
+};
 </script>
+
 
 <template>
   <div class="signup-container">
     <div class="signup-card">
       <div class="signup-card-header">
-        <img src="./../../assets/logo.png" class="logo">
-        <h2>Sign Up</h2>
-        <p class="subtitle">Please enter the required information to sign up.</p>
+        <img src="../../assets/logo.png" class="logo">
+        <h2>Create {{ role === 'babysitter' ? 'Babysitter' : 'Parent' }} Profile</h2>
+        <p class="subtitle">Please fill in your profile details.</p>
       </div>
-      <form @submit.prevent="onSignUp">
-        <div class="p-field">
-          <label for="username">Username</label>
-          <input
-              id="username"
-              v-model="username"
-              :class="{'p-invalid': !username}"
-              class="p-inputText p-component"
-              placeholder="Enter your username"
-              required
-          />
-          <small v-if="!username" class="p-invalid">Username is required.</small>
-        </div>
-        <div class="p-field">
-          <label for="password">Password</label>
-          <input
-              id="password"
-              v-model="password"
-              :class="{'p-invalid': !password}"
-              type="password"
-              class="p-inputText p-component"
-              placeholder="Enter your password"
-              required
-          />
-          <small v-if="!password" class="p-invalid">Password is required.</small>
-        </div>
-        <div class="p-field">
-          <label for="role">Role</label>
-          <select
-              id="role"
-              v-model="role"
-              :class="{ 'p-invalid': !role }"
-              class="p-inputText p-component"
-              required
-          >
-            <option disabled value="">Select your role</option>
-            <option value="parent">Parent</option>
-            <option value="babysitter">Babysitter</option>
-          </select>
-          <small v-if="!role" class="p-invalid">Role is required.</small>
-        </div>
+
+      <form @submit.prevent="submitProfile">
+        <template v-if="role === 'babysitter'">
+          <div class="p-field" v-for="(value, key) in babysitterForm" v-if="key !== 'userId'" :key="key">
+            <label :for="key">{{ key }}</label>
+            <input
+                :id="key"
+                v-model="babysitterForm[key]"
+                class="p-inputText p-component"
+                :placeholder="`Enter ${key}`"
+                :type="typeof value === 'number' ? 'number' : 'text'"
+                required
+            />
+          </div>
+        </template>
+
+        <template v-else-if="role === 'parent'">
+          <div class="p-field" v-for="(value, key) in parentForm" v-if="key !== 'userId'" :key="key">
+            <label :for="key">{{ key }}</label>
+            <input
+                :id="key"
+                v-model="parentForm[key]"
+                class="p-inputText p-component"
+                :placeholder="`Enter ${key}`"
+                :type="typeof value === 'number' ? 'number' : 'text'"
+                required
+            />
+          </div>
+        </template>
+
         <div class="p-d-flex p-jc-between">
           <pv-button
               type="submit"
-              label="Sign Up"
+              label="Create Profile"
               class="p-button p-button-primary"
           />
         </div>
-        <p class="login-link">
-          Already have an account?
-          <router-link to="/sign-in">Sign In here</router-link>
-        </p>
       </form>
     </div>
   </div>

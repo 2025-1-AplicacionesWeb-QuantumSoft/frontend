@@ -1,6 +1,10 @@
 ﻿<script setup>
 import { ref } from 'vue'
 import authenticationSectionComponent from "@/iam/components/authentication-section.component.vue";
+import { useAuthenticationStore } from "@/iam/services/authentication.store";
+
+
+const authStore = useAuthenticationStore();
 const isHovered = ref(false)
 </script>
 
@@ -65,13 +69,13 @@ const isHovered = ref(false)
       <div class="flex">
         <router-link to="/babysitter-profile">
           <img
-              src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+              :src="'https://randomuser.me/api/portraits/women/' + authStore.currentUserId + '.jpg'"
               alt="User Avatar"
               class="border-circle w-3rem h-3rem user-avatar"
           />
         </router-link>
         <div class="ml-2" v-if="isHovered">
-          <h4 class="text-900 font-bold mb-0">Amy</h4>
+          <h4 class="text-900 font-bold mb-0">{{authStore.currentUsername}}</h4>
           <p class="text-500 mb-0">
             <i class="pi pi-map-marker mr-1"></i>
             <span>Lima</span>

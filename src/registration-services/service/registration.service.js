@@ -1,14 +1,32 @@
-import axios from 'axios';
-import {BabysitterAssembler} from './registration.assembler.js';
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+import httpInstance from '@/shared/services/http.instance.js';
+import {BabysitterAssembler, ParentAssembler} from "@/registration-services/service/registration.assembler.js";
 // const API_BASE = 'http://localhost:3000';
 
-export const getBabysitters = async () => {
-    try {
-        const response = await axios.get(`${API_BASE}/babysitter`);
-        return BabysitterAssembler.toEntitiesFromResponse(response);
-    } catch (error) {
-        console.error("Error al obtener babysitters:", error);
-        return [];
+
+export class BabysitterService {
+    static async getBabysitters() {
+        const response = await httpInstance.get(`babysitter`)
+        console.log("Babysitters", response)
+        return BabysitterAssembler.toEntitiesFromResponse(response)
     }
-};
+
+    static async createBabysitter(babysitter) {
+        const response = await httpInstance.post(`babysitter`, babysitter)
+        console.log("Create Babysitter", response)
+        return BabysitterAssembler.toEntityFromResponse(response)
+    }
+}
+
+
+export class ParentService {
+    static async getParents() {
+        const response = await httpInstance.get(`parent`)
+        console.log("Parents", response)
+        return ParentAssembler.toEntitiesFromResponse(response)
+    }
+    static async createParent(parent) {
+        const response = await httpInstance.post(`parent`, parent)
+        console.log("Create Parent", response)
+        return ParentAssembler.toEntityFromResponse(response)
+    }
+}

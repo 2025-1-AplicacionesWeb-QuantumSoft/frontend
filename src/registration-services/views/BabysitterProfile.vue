@@ -2,7 +2,7 @@
 import Sidebar from '@/public/Sidebar.vue'
 import { ref, onMounted } from 'vue';
 import RegistrationService from "@/registration-services/component/RegistrationService.vue";
-import { getBabysitters } from "@/registration-services/service/registration.service.js";
+import { BabysitterService } from "@/registration-services/service/registration.service.js";
 
 export default {
   name: "babysitter-profile",
@@ -16,7 +16,7 @@ export default {
     const showNewCard = ref(false);
 
     onMounted(async () => {
-      const data = await getBabysitters();
+      const data = await BabysitterService.getBabysitters();
       babysitter.value = data.length > 0 ? data[0] : null;
       editable.value = { ...babysitter.value };
     });

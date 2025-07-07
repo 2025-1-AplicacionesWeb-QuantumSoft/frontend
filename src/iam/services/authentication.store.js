@@ -13,7 +13,7 @@ const authenticationService = new AuthenticationService();
  * It contains actions to sign-in, sign-up, and sign-out.
  */
 export const useAuthenticationStore = defineStore('authentication', {
-    state: () => ({ signedIn: false, userId: 0, username: '' }),
+    state: () => ({ signedIn: false, userId: 0, username: '', role: '' }),
     getters: {
         /**
          * Getter to check if user is signed in
@@ -37,6 +37,8 @@ export const useAuthenticationStore = defineStore('authentication', {
          * Getter to get the current token
          * @returns {string} - Current token
          */
+        currentRole: (state) => state['role'],
+
         currentToken: () => localStorage.getItem('token')
     },
     actions: {
@@ -53,9 +55,10 @@ export const useAuthenticationStore = defineStore('authentication', {
         async signIn(signInRequest, router) {
             authenticationService.signIn(signInRequest)
                 .then(response => {
-                    let signInResponse = new SignInResponse(response.data.id, response.data.username, response.data.token);
+                    let signInResponse = new SignInResponse(response.data.id, response.data.username,response.data.role, response.data.token);
                     this.signedIn = true;
                     this.userId = signInResponse.id;
+                    this.role = signInResponse.role;
                     this.username = signInResponse.username;
                     localStorage.setItem('token', signInResponse.token);
                     console.log(signInResponse);
@@ -79,7 +82,7 @@ export const useAuthenticationStore = defineStore('authentication', {
             authenticationService.signUp(signUpRequest)
                 .then(response => {
                     let signUpResponse = new SignUpResponse(response.data.message);
-                    router.push({ name: 'sign-in' });
+                    router.push('sign-in');
                     console.log(signUpResponse);
                 })
                 .catch(error => {
@@ -99,6 +102,7 @@ export const useAuthenticationStore = defineStore('authentication', {
         async signOut(router) {
             this.signedIn = false;
             this.userId = 0;
+            this.role = '';
             this.username = '';
             localStorage.removeItem('token');
             console.log('Signed out');

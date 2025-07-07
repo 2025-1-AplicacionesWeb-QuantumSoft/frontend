@@ -1,44 +1,32 @@
 export class Babysitter {
-    constructor({
-                    id = '',
-                    user_id = '',
-                    description = '',
-                    experience = '',
-                    languages = null,
-                    rating = null,
-                    verified = false,
-                    location = '',
-                    accountBank = '',
-                    bankName = '',
-                    typeAccountBank = '',
-                    dni = '',
-                    phone = '',
-                    name = '',
-                    email = '',
-                    lastname = '',
-                    updateP = '',
-                    confirmP= '',
-                    about = ''
-
-                }) {
-        this.id = id;                   // babysitter.id
-        this.user_id = user_id;         // babysitter.user_id
-        this.description = description; // babysitter.description
-        this.experience = experience;   // babysitter.experience
-        this.languages = languages;     // babysitter.languages
-        this.rating = rating;           // babysitter.rating
-        this.verified = verified;       // babysitter.verified
-        this.location = location;       // babysitter.location
-        this.accountBank = accountBank; // babysitter.accountBank
-        this.bankName = bankName;       // babysitter.bankName
-        this.typeAccountBank = typeAccountBank; // babysitter.typeAccountBank
-        this.dni = dni;                 // babysitter.dni
-        this.phone = phone;
+    constructor( {
+                     id = 0,
+                     user_id = 0,
+                     name= "",
+                     phone = "",
+                     description = "",
+                     languages = "",
+                     rating = 0,
+                     location = "",
+                     accountBank = "",
+                     bankName = "",
+                     typeAccountBank = "",
+                     dni = "",
+                     experienceLevel = ""
+                 })
+    {
+        this.id = id;
+        this.user_id = user_id;
         this.name = name;
-        this.email = email;
-        this.lastname = lastname;
-        this.updateP = updateP;
-        this.confirmP = confirmP;
-        this.about = about;
+        this.phone = phone;
+        this.description = description;
+        this.experienceLevel = experienceLevel;
+        this.languages = languages;
+        this.rating = rating;
+        this.location = location;
+        this.accountBank = accountBank;
+        this.bankName = bankName;
+        this.typeAccountBank = typeAccountBank;
+        this.dni = dni;
     }
 }
