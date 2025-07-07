@@ -1,69 +1,31 @@
 ﻿<script setup>
 import {onMounted, ref} from 'vue';
 import {BabysitterService, ReservationService} from "@/reservations/service/reservation.service.js";
+import { useAuthenticationStore } from "@/iam/services/authentication.store";
 
+
+const authStore = useAuthenticationStore();
 const reservations = ref([])
+const filteredBabysitters = ref([]);
 const babysitters = ref([])
 const editingIndex = ref(null)
 const editForm = ref({})
 
 onMounted(async ()=>{
   try {
-    reservations.value = await ReservationService.getReservationByBabysitterId(1);
+    reservations.value = await ReservationService.getReservationByParentId(authStore.currentUserId);
     babysitters.value = await BabysitterService.getBabysitters();
-    console.log(reservation.value)
-    console.log(babysitters.value)
+
+
+    // Now use filteredBabysitters.value to display babysitter data
   } catch (error) {
-    console.error('Error al obtener reservas:', error)
+    console.error('Error fetching data:', error);
   }
 })
 
-const reservation = ref([
-  {
-    id: 1,
-    caregiver: 'John Doe',
-    specialty: 'Professional Babysitter',
-    location: 'San Isidro, Lima',
-    date: 'January 1st, 2024',
-    time: 'From 9AM to 5PM (8 hours)',
-    frequency: 'Weekly',
-    status: 'Pending',
-    image: 'https://randomuser.me/api/portraits/women/1.jpg'
-  },
-  {
-    id: 2,
-    caregiver: 'Jane Smith',
-    specialty: 'Child Care Expert',
-    location: 'Miraflores, Lima',
-    date: 'January 2nd, 2024',
-    time: 'From 10AM to 6PM (8 hours)',
-    frequency: 'Weekly',
-    status: 'Realized',
-    image: 'https://randomuser.me/api/portraits/women/2.jpg'
-  },
-  {
-    id: 3,
-    caregiver: 'Maria Garcia',
-    specialty: 'Certified Nanny',
-    location: 'Surco, Lima',
-    date: 'January 3rd, 2024',
-    time: 'From 8AM to 4PM (8 hours)',
-    frequency: 'Weekly',
-    status: 'Pending',
-    image: 'https://randomuser.me/api/portraits/women/3.jpg'
-  },
-  {
-    id: 4,
-    caregiver: 'Julio Cesar',
-    specialty: 'Experienced Caretaker',
-    location: 'Barranco, Lima',
-    date: 'January 4th, 2024',
-    time: 'From 9AM to 5PM (8 hours)',
-    frequency: 'Weekly',
-    status: 'Cancelled',
-    image: 'https://randomuser.me/api/portraits/men/5.jpg'
-  }
-]);
+const getBabysitterById = (id) => {
+  return babysitters.value.find(b => b.id === id.value);
+};
 
 const getStatusClass = (status) => {
   switch (status) {
@@ -190,12 +152,12 @@ const cancelReservation = async (index) => {
           <div class="info-container">
           <div class="caregiver-section">
             <div class="avatar-container">
-              <img :src="reservation.image" :alt="reservation.caregiver" class="caregiver-avatar" />
-              <div class="avatar-status" :class="getStatusClass(reservation.status)"></div>
+              <img :src="`https://randomuser.me/api/portraits/women/${getBabysitterById(reservation.babysitterId)?.id}.jpg`" :alt="reservation.name" class="caregiver-avatar" />
+              <div class="avatar-status" :class="getStatusClass(reservation.status.value)"></div>
             </div>
             <div class="caregiver-info">
-              <h3 class="caregiver-name">{{ reservation.caregiver || 'Carol' }}</h3>
-              <span class="caregiver-specialty">{{ reservation.specialty || 'Professional Caregiver' }}</span>
+              <h3 class="caregiver-name">{{ getBabysitterById(reservation.babysitterId)?.name || 'Carol' }}</h3>
+              <span class="caregiver-specialty">{{ getBabysitterById(reservation.babysitterId)?.dni || 'Professional Caregiver' }}</span>
             </div>
           </div>
 
