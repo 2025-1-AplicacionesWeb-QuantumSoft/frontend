@@ -1,177 +1,266 @@
-<script>
-import Sidebar from '@/public/Sidebar.vue'
+<script setup>
 import { ref, onMounted } from 'vue';
-import RegistrationService from "@/registration-services/component/RegistrationService.vue";
 import { getBabysitters } from "@/registration-services/service/registration.service.js";
+import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
+import Button from 'primevue/button';
+import Card from 'primevue/card';
+import Avatar from 'primevue/avatar';
 
-export default {
-  name: "babysitter-profile",
-  components: {
-    RegistrationService,
-  },
-  setup() {
-    const babysitter = ref(null);
-    const editable = ref({});
-    const editing = ref({});
-    const showNewCard = ref(false);
+const babysitter = ref(null);
+const form = ref({
+  name: '',
+  email: '',
+  phone: '',
+  location: '',
+  experience: '',
+  lastname: '',
+  description: '',
+  about: '',
+  updateP: '',
+  confirmP: '',
+  rating: ''
+});
 
-    onMounted(async () => {
-      const data = await getBabysitters();
-      babysitter.value = data.length > 0 ? data[0] : null;
-      editable.value = { ...babysitter.value };
-    });
+onMounted(async () => {
+  const data = await getBabysitters();
+  babysitter.value = data.length > 0 ? data[0] : null;
+  if (babysitter.value) {
+    form.value = { ...babysitter.value };
+  }
+});
 
-    function toggleEdit(field) {
-      editing.value[field] = !editing.value[field];
-    }
-
-    function updateProfile() {
-      babysitter.value = { ...editable.value };
-      showNewCard.value = true;
-    }
-
-    return {
-      babysitter,
-      editable,
-      editing,
-      toggleEdit,
-      updateProfile,
-      showNewCard,
-    };
-  },
-}
+const updateProfile = () => {
+  babysitter.value = { ...form.value };
+};
 </script>
 
 <template>
-  <pv-card v-if="babysitter">
-    <template #header>
-      <h3>Your Profile</h3>
-    </template>
+  <div class="profile-container">
+    <Card class="profile-card">
+      <template #header>
+        <div class="profile-header">
+          <h2>Your Profile</h2>
+          <p class="profile-description">
+            Update your profile information to help parents know more about you.
+          </p>
+        </div>
+      </template>
 
-    <template #content>
-      <img
-          src="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-          alt="User Avatar"
-          class="border-circle w-3rem h-3rem"
-      />
-      <section>
-        <h4 class="biography-section">Biography</h4>
-        <p>{{ babysitter.description }}</p>
-      </section>
-      <section>
-        <h4 class="about-section">About</h4>
-        <p>{{ babysitter.about }}</p>
-      </section>
-
-      <form class="profile-form">
-        <div v-for="field in ['name','email','phone','location','experience','lastname','updateP','confirmP','rating']" :key="field" class="form-group">
-          <label>{{ field.charAt(0).toUpperCase() + field.slice(1) }}</label>
-          <div class="input-icon-group">
-            <input
-                :type="field.includes('email') ? 'email' : 'text'"
-                v-model="editable[field]"
-                :disabled="!editing[field]"
+      <template #content>
+        <div class="profile-content">
+          <div class="avatar-section">
+            <Avatar
+                image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+                size="xlarge"
+                shape="circle"
             />
-            <i class="pi pi-pencil edit-icon" @click="toggleEdit(field)"></i>
+          </div>
+
+          <div class="form-grid">
+            <!-- Personal Information -->
+            <div class="form-section">
+              <div class="section-header">
+                <h3>Personal Information</h3>
+              </div>
+
+              <div class="form-field">
+                <label for="name">Name</label>
+                <InputText
+                    v-model="form.name"
+                    id="name"
+                    class="form-control"
+                    placeholder="Enter your name"
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="lastname">Last Name</label>
+                <InputText
+                    v-model="form.lastname"
+                    id="lastname"
+                    class="form-control"
+                    placeholder="Enter your last name"
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="email">Email</label>
+                <InputText
+                    v-model="form.email"
+                    id="email"
+                    type="email"
+                    class="form-control"
+                    placeholder="Enter your email"
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="phone">Phone</label>
+                <InputText
+                    v-model="form.phone"
+                    id="phone"
+                    class="form-control"
+                    placeholder="Enter your phone number"
+                />
+              </div>
+            </div>
+
+            <!-- Professional Information -->
+            <div class="form-section">
+              <div class="section-header">
+                <h3>Professional Information</h3>
+              </div>
+
+              <div class="form-field">
+                <label for="description">Biography</label>
+                <Textarea
+                    v-model="form.description"
+                    id="description"
+                    rows="4"
+                    class="form-control"
+                    placeholder="Tell us about yourself..."
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="experience">Experience (years)</label>
+                <InputText
+                    v-model="form.experience"
+                    id="experience"
+                    type="number"
+                    class="form-control"
+                    placeholder="Years of experience"
+                />
+              </div>
+
+              <div class="form-field">
+                <label for="location">Location</label>
+                <InputText
+                    v-model="form.location"
+                    id="location"
+                    class="form-control"
+                    placeholder="Enter your location"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <Button
+                label="Update Profile"
+                icon="pi pi-check"
+                class="submit-button"
+                @click="updateProfile"
+            />
           </div>
         </div>
-      </form>
-
-      <div style="margin-top: 1.5rem; text-align: right;">
-        <button type="button" class="update-btn" @click="updateProfile">Update</button>
-      </div>
-    </template>
-  </pv-card>
-
-  <pv-card v-if="showNewCard">
-    <template #header>
-      <h3>Updated Profile</h3>
-    </template>
-    <template #content>
-      <p><strong>Name:</strong> {{ babysitter.name }}</p>
-      <p><strong>Email:</strong> {{ babysitter.email }}</p>
-      <p><strong>Phone:</strong> {{ babysitter.phone }}</p>
-      <p><strong>Location:</strong> {{ babysitter.location }}</p>
-      <p><strong>Experience:</strong> {{ babysitter.experience }} años</p>
-      <p><strong>Lastname:</strong> {{ babysitter.lastname }}</p>
-      <p><strong>Update Password:</strong> {{ babysitter.updateP }}</p>
-      <p><strong>Confirm Password:</strong> {{ babysitter.confirmP }}</p>
-      <p><strong>Rating:</strong> {{ babysitter.rating }}</p>
-    </template>
-  </pv-card>
+      </template>
+    </Card>
+  </div>
 </template>
 
 <style scoped>
-h3 {
-  font-size: 1.8rem;
-  color: #2c3e50;
+.profile-container {
+  min-height: 100vh;
+  padding: 1rem 2rem;
+  background-color: #fffaf0;
+  color: #1f2937;
+}
+
+.profile-card {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 0.75rem;
+}
+
+.profile-header {
+  padding-bottom: 1rem;
+}
+
+.profile-header h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #9c4221;
   margin-bottom: 0.5rem;
 }
-h4 {
-  font-size: 1.2rem;
-  color: #34495e;
-  margin-bottom: 0.5rem;
+
+.profile-description {
+  color: #4b5563;
+  font-size: 0.875rem;
 }
-.profile-form {
+
+.avatar-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
-.form-group {
+
+.form-section {
   display: flex;
   flex-direction: column;
-}
-label {
-  font-weight: bold;
-  margin-bottom: 0.3rem;
-}
-input {
-  padding: 0.5rem;
-  border: 1px solid #bdc3c7;
-  border-radius: 6px;
-  background-color: #ecf0f1;
-}
-.rating {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  gap: 1.5rem;
 }
 
-.update-btn {
-  background-color: #3498db;
-  color: #fff;
+.section-header h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #9c4221;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-field label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.form-control {
+  width: 100%;
+}
+
+.form-actions {
+  margin-top: 2rem;
+  text-align: right;
+}
+
+.submit-button {
+  background-color: #f97316;
   border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 6px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.update-btn:hover {
-  background-color: #2980b9;
+  padding: 0.75rem 1.5rem;
 }
 
-.edit-icon {
-  margin-left: 0.4rem;
-  color: #888;
-  font-size: 1rem;
-  vertical-align: middle;
-  cursor: pointer;
-  transition: color 0.2s, background 0.2s, transform 0.2s;
-  border-radius: 50%;
-}
-.edit-icon:hover {
-  color: #3498db;
-  background: #eaf4fb;
-  transform: scale(1.15);
+.submit-button:hover {
+  background-color: #ea580c;
 }
 
-.about-section {
-  margin-top: 2.5rem;
+:deep(.p-inputtext),
+:deep(.p-textarea) {
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  width: 100%;
+  transition: border-color 0.2s;
 }
 
-.biography-section {
-  margin-top: 2.5rem;
+:deep(.p-inputtext:focus),
+:deep(.p-textarea:focus) {
+  outline: none;
+  border-color: #f97316;
+  box-shadow: 0 0 0 0.2rem rgba(249, 115, 22, 0.2);
 }
 </style>
