@@ -1,21 +1,35 @@
 ﻿export class ReservationEntity {
     constructor( {
         id = "",
-        start_time = "",
-        end_time = "",
+        startTime = "",
+        endTime = "",
         status = "",
-        notification = "",
-        parent_id = 0,
-        babysitter_id = 0,
+        notificationId = 0,
+        parentId = 0,
+        babysitterId = 0,
+        address = "",
+        frequency = "",
+        childName = "",
+        childAge = 0,
+        specialNeeds = "",
+        additionalInfo = "",
+        createdAt = "",
+
                  })
     {
         this.id = id;
-        this.start_time = start_time;
-        this.end_time = end_time;
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.status = status;
-        this.notification = notification;
-        this.parent_id = parent_id;
-        this.babysitter_id = babysitter_id;
-
+        this.notificationId = notificationId;
+        this.parentId = parentId;
+        this.babysitterId = babysitterId;
+        this.address = address;
+        this.frequency = frequency;
+        this.childName = childName;
+        this.childAge = childAge;
+        this.specialNeeds = specialNeeds;
+        this.additionalInfo = additionalInfo;
+        this.createdAt = createdAt;
     }
 }

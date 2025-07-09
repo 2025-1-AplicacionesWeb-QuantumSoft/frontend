@@ -1,8 +1,6 @@
 <script>
 import PaymentCard from "@/payment/components/payment-card.component.vue";
-import {computed, onMounted, ref} from "vue";
 import {CardApiService} from "@/payment/services/card-api.service.js";
-import {useRouter} from "vue-router";
 import CreateEditPayment from "@/payment/components/create-edit-payment.component.vue";
 import DeletePaymentDialog from "@/payment/components/delete-payment-dialog.component.vue";
 import {Card} from "@/payment/model/card.entity.js";
@@ -15,112 +13,111 @@ import {Card} from "@/payment/model/card.entity.js";
       CreateEditPayment,
       DeletePaymentDialog,
     },
-    setup(){
-      const router = useRouter();
-      const cards = ref([]);
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
-      const cardApiService = new CardApiService();
-      const showCardDialog=ref(false);
-      const selectedCard = ref(null);
-      const showDeleteDialog = ref(false);
-      const cardToDelete = ref(null);
-      const currentPage = ref(1);
-      const itemsPerPage = 9;
 
-      onMounted(async () => {
+    data(){
+      return{
+        cards:[],
+        showCardDialog: false,
+        selectedCard: null,
+        showDeleteDialog: false,
+        cardToDelete: null,
+        currentPage: 1,
+        itemsPerPage: 9,
+        errorMessage: "",
+
+      }
+    },
+    computed: {
+      paginatedCards() {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        return this.cards.slice(start, start + this.itemsPerPage);
+      },
+      totalPages() {
+        return Math.ceil(this.cards.length / this.itemsPerPage);
+      },
+    },
+    mounted() {
+      this.fetchCards();
+    },
+
+    methods: {
+      async fetchCards() {
         try {
+          const user = JSON.parse(localStorage.getItem("user") || "{}");
+          console.log("dato guardado",user);
+
+          if (user && user.role) {
+            console.log("Role encontrado:", user.role);
+          } else {
+            console.log("El usuario no tiene rol definido.");
+
+          }
+
+          const cardApiService = new CardApiService();
           const response = await cardApiService.getCards();
+
           console.log("API response:", response.data);
-          cards.value = response.data.map(cardData=> new Card(cardData));
-          console.log(cards.value);
+
+          if (user.role === "parent") {
+            this.cards = response.data
+                .filter(cardData => cardData.parent_id === Number(user.id))
+                .map(cardData => new Card(cardData));
+          } else if (user.role === "babysitter") {
+            this.cards = response.data
+                .filter(cardData => cardData.babysitter_id === user.id)
+                .map(cardData => new Card(cardData));
+          }
+
+          console.log("Filtered Cards:", this.cards);
+
         } catch (error) {
           console.error("Error fetching cards:", error);
+          this.errorMessage = "Error fetching cards";
         }
-      });
-
-      const paginatedCards = computed(() => {
-        const start = (currentPage.value - 1) * itemsPerPage;
-        return cards.value.slice(start, start + itemsPerPage);
-      });
-
-      const totalPages = computed(() => {
-        return Math.ceil(cards.value.length / itemsPerPage);
-      });
-
-      const changePage = (page) => {
-        currentPage.value = page;
-      };
-
-      const addEditCard = (card = null) => {
-        selectedCard.value = card;
-        showCardDialog.value = true;
-      };
-
-      const handleAdd = (newCard) => {
-        cards.value.push(newCard);
-      };
-
-      const handleUpdate = (updatedCard) => {
-        const index = cards.value.findIndex(c => c.id === updatedCard.id);
-        if (index !== -1) cards.value[index] = updatedCard;
-      };
-
-      const closeDialog = () => {
-        showCardDialog.value = false;
-        selectedCard.value = null;
-      };
-
-      /*const addEditCard = (card = null) => {
-        router.push({ name: "editCard", params: { cardId: card ? card.id : null } });
-      };*/
-
-      const removeCard =  (card) => {
-        cardToDelete.value = card;
-        showDeleteDialog.value = true;
-      };
-
-      const deleteCard = async () => {
+      },
+      changePage(page) {
+        this.currentPage = page;
+      },
+      addEditCard(card = null) {
+        this.selectedCard = card;
+        this.showCardDialog = true;
+      },
+      handleAdd(newCard) {
+        this.cards.push(newCard);
+      },
+      handleUpdate(updatedCard) {
+        const index = this.cards.findIndex(c => c.id === updatedCard.id);
+        if (index !== -1) this.cards[index] = updatedCard;
+      },
+      closeDialog() {
+        this.showCardDialog = false;
+        this.selectedCard = null;
+      },
+      removeCard(card) {
+        this.cardToDelete = card;
+        this.showDeleteDialog = true;
+      },
+      async deleteCard() {
         try {
-          console.log("Attempting to delete card with ID:", cardToDelete.value?.id);
-          await cardApiService.deleteCard(cardToDelete.value.id);
-          cards.value = cards.value.filter(c => c.id !== cardToDelete.value.id);
-          showDeleteDialog.value = false;
-          cardToDelete.value = null;
+          console.log("Attempting to delete card with ID:", this.cardToDelete.id);
+          const cardApiService = new CardApiService();
+          await cardApiService.deleteCard(this.cardToDelete.id);
+          this.cards = this.cards.filter(c => c.id !== this.cardToDelete.id);
+          this.showDeleteDialog = false;
+          this.cardToDelete = null;
           alert("Card removed successfully");
-
         } catch (error) {
           console.error("Error removing card:", error);
           alert("Error removing card");
         }
-      };
-
-      const cancelDelete = () => {
-        showDeleteDialog.value = false;
-        cardToDelete.value = null;
-      };
-
-      const goToHistory = () => {
-        router.push({ name: "paymentHistory" });
-      };
-
-      return {
-        cards,
-        addEditCard,
-        removeCard,
-        goToHistory,
-        showCardDialog,
-        selectedCard,
-        handleAdd,
-        handleUpdate,
-        closeDialog,
-        showDeleteDialog,
-        deleteCard,
-        cancelDelete,
-        paginatedCards,
-        totalPages,
-        changePage,
-        currentPage,
-      };
+      },
+      cancelDelete() {
+        this.showDeleteDialog = false;
+        this.cardToDelete = null;
+      },
+      goToHistory() {
+        this.$router.push({ name: "paymentHistory" });
+      },
     },
   }
 

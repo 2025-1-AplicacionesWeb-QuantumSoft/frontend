@@ -9,13 +9,15 @@ export class Payment {
         created_at="",
         reservation_id = null,
         parent_id = null,
+        paymentMethod={}
                 }) {
         this.id = id;
         this.amount = amount;
         this.status = status;
         this.created_at = created_at;
-        this.reservation_id = reservation_id ? new Reservation(reservation_id) : null;
-        this.parent_id = parent_id ? new Parent(parent_id) : null;
+        this.reservation_id = reservation_id;
+        this.parent_id = parent_id;
+        this.paymentMethod = paymentMethod;
     }
 
     getFormatedCreatedAt(){

@@ -12,7 +12,7 @@ const goToDetail = () => {
 <template>
   <div class="babysitter-card">
     <div class="card-image-container">
-      <img :src="'/assets/profile' + babysitter.id + '.jpg'" alt="Profile picture" class="card-image" />
+      <img :src="'https://randomuser.me/api/portraits/women/' + babysitter.id + '.jpg'" alt="Profile picture" class="card-image" />
     </div>
     <div class="card-content">
       <h3 class="card-name">{{ babysitter.name }}</h3>
@@ -28,7 +28,6 @@ const goToDetail = () => {
 </template>
 
 <style scoped>
-/* Estilos base de la tarjeta */
 .babysitter-card {
   width: 240px;
   background: linear-gradient(135deg, #f5f7fa 0%, #e4e8eb 100%);
@@ -46,7 +45,6 @@ const goToDetail = () => {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Contenedor de la imagen */
 .card-image-container {
   width: 100%;
   height: 160px;
@@ -67,7 +65,6 @@ const goToDetail = () => {
   margin-top: 20px;
 }
 
-/* Contenido de la tarjeta */
 .card-content {
   padding: 20px;
   text-align: center;
@@ -106,7 +103,6 @@ const goToDetail = () => {
   flex-grow: 1;
 }
 
-/* Rating */
 .card-rating {
   display: flex;
   align-items: center;
@@ -122,7 +118,6 @@ const goToDetail = () => {
   font-size: 1rem;
 }
 
-/* Botón */
 .card-button {
   background-color: #3498db;
   color: white;
@@ -147,7 +142,6 @@ const goToDetail = () => {
   transform: translateY(0);
 }
 
-/* Efecto de carga para cuando no hay datos */
 .babysitter-card.skeleton {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;

@@ -20,11 +20,12 @@ export class BabysitterAssembler {
         return new Babysitter(  {
             id: resource.id,
             user_id: resource.user_id,
+            name: resource.name,
+            phone: resource.phone,
             description: resource.description,
-            experience: resource.experience,
+            experienceLevel: resource.experienceLevel,
             languages: resource.languages,
             rating: resource.rating,
-            verified: resource.verified,
             location: resource.location,
             accountBank: resource.accountBank,
             bankName: resource.bankName,
@@ -36,7 +37,7 @@ export class BabysitterAssembler {
 
 export class ReservationAssembler {
     static toEntitiesFromResponse(response) {
-        if (response.statusText !== "OK") {
+        if (response.status !== 200) {
             console.error(`${response.status}, ${response.code}, ${response.message}`);
             return [];
         }
@@ -51,12 +52,19 @@ export class ReservationAssembler {
 
         return new ReservationEntity(  {
             id: resource.id,
-            start_time: resource.start_time,
-            end_time: resource.end_time,
+            startTime: resource.startTime,
+            endTime: resource.endTime,
             status: resource.status,
-            notification: resource.notification,
-            parent_id: resource.parent_id,
-            babysitter_id: resource.babysitter_id
+            notificationId: resource.notificationId,
+            parentId: resource.parentId,
+            babysitterId: resource.babysitterId,
+            address: resource.address,
+            frequency: resource.frequency,
+            childName: resource.childName,
+            childAge: resource.childAge,
+            specialNeeds: resource.specialNeeds,
+            additionalInfo: resource.additionalInfo,
+            createdAt: resource.createdAt,
         });
     }
 }

@@ -56,6 +56,7 @@
   color: #001b5e; /* Azul oscuro */
   font-family: 'Segoe UI', sans-serif;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
 }
 
 .card-stripe {

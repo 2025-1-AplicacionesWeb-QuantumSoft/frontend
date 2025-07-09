@@ -1,28 +1,43 @@
-// src/registration-services/service/registration.service.js
-import axios from 'axios';
-import { BabysitterAssembler } from './registration.assembler.js';
+import httpInstance from '@/shared/services/http.instance.js';
+import {BabysitterAssembler, ParentAssembler} from "@/registration-services/service/registration.assembler.js";
+// const API_BASE = 'http://localhost:3000';
 
-const API_BASE = 'http://localhost:3000';
-//const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export class BabysitterService {
     static async getBabysitters() {
-        try {
-            const response = await axios.get(`${API_BASE}/babysitter`);
-            return BabysitterAssembler.toEntitiesFromResponse(response);
-        } catch (error) {
-            console.error("Error al obtener babysitters:", error);
-            return [];
-        }
+        const response = await httpInstance.get(`babysitter`)
+        console.log("Babysitters", response)
+        return BabysitterAssembler.toEntitiesFromResponse(response)
+    }
+    static async getBabysitterByUserId (userId) {
+        const response = await httpInstance.get(`babysitter/user/${userId}`)
+        console.log("Babysitter", response)
+        return BabysitterAssembler.toEntityFromResponse(response.data)
     }
 
-    static async getBabysitterById(id) {
-        try {
-            const response = await axios.get(`${API_BASE}/babysitter/${id}`);
-            return BabysitterAssembler.toEntityFromResponse(response.data);
-        } catch (error) {
-            console.error("Error al obtener babysitter por ID:", error);
-            return null;
-        }
+    static async createBabysitter(babysitter) {
+        const response = await httpInstance.post(`babysitter`, babysitter)
+        console.log("Create Babysitter", response)
+        return BabysitterAssembler.toEntityFromResponse(response)
+    }
+}
+
+
+export class ParentService {
+    static async getParents() {
+        const response = await httpInstance.get(`parent`)
+        console.log("Parents", response)
+        return ParentAssembler.toEntitiesFromResponse(response)
+    }
+    static async getParentByUserId(userId) {
+        const response = await httpInstance.get(`parent/user/${userId}`)
+        console.log("Parent", response)
+        return ParentAssembler.toEntityFromResponse(response.data)
+    }
+
+    static async createParent(parent) {
+        const response = await httpInstance.post(`parent`, parent)
+        console.log("Create Parent", response)
+        return ParentAssembler.toEntityFromResponse(response)
     }
 }
