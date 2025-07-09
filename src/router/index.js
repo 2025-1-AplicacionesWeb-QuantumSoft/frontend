@@ -7,7 +7,7 @@ import reviewRoutes from '@/review-system/routes.js'
 import Layout from '@/shared/Layout.component.vue'
 import authRoutes from '@/auth/routes.js'
 import BabysitterDetail from "@/reservations/pages/BabysitterDetail.vue";
-import logInComponent from "@/auth/components/log-in.component.vue";
+import CreateProfileComponent from "@/registration-services/component/create-profile.component.vue";
 import Dashboard from "@/public/Dashboard.vue";
 import SignInComponent from "@/iam/pages/sign-in.component.vue";
 import IAMRoutes from "@/iam/routes.js";
@@ -18,6 +18,11 @@ const routes = [
         {
             path: '',
             children: IAMRoutes
+        },
+        {
+            path: "/create-profile",
+            name: "CreateProfile",
+            component: () => import("@/registration-services/component/create-profile.component.vue")
         },
         {
             path: '',

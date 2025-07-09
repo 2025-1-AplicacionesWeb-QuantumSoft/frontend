@@ -13,7 +13,7 @@ const authenticationService = new AuthenticationService();
  * It contains actions to sign-in, sign-up, and sign-out.
  */
 export const useAuthenticationStore = defineStore('authentication', {
-    state: () => ({ signedIn: false, userId: 0, username: '' }),
+    state: () => ({ signedIn: false, userId: 0, username: '', role: '' }),
     getters: {
         /**
          * Getter to check if user is signed in
@@ -37,6 +37,8 @@ export const useAuthenticationStore = defineStore('authentication', {
          * Getter to get the current token
          * @returns {string} - Current token
          */
+        currentRole: (state) => state['role'],
+
         currentToken: () => localStorage.getItem('token')
     },
     actions: {
@@ -53,9 +55,10 @@ export const useAuthenticationStore = defineStore('authentication', {
         async signIn(signInRequest, router) {
             authenticationService.signIn(signInRequest)
                 .then(response => {
-                    let signInResponse = new SignInResponse(response.data.id, response.data.username, response.data.token);
+                    let signInResponse = new SignInResponse(response.data.id, response.data.username,response.data.role, response.data.token);
                     this.signedIn = true;
                     this.userId = signInResponse.id;
+                    this.role = signInResponse.role;
                     this.username = signInResponse.username;
                     localStorage.setItem('token', signInResponse.token);
                     console.log(signInResponse);
@@ -76,16 +79,34 @@ export const useAuthenticationStore = defineStore('authentication', {
              * @param signUpRequest - The {@link SignUpRequest} object to sign-up
              * @param router - Vue router instance
              */
-            authenticationService.signUp(signUpRequest)
-                .then(response => {
-                    let signUpResponse = new SignUpResponse(response.data.message);
-                    router.push({ name: 'sign-in' });
-                    console.log(signUpResponse);
-                })
-                .catch(error => {
-                    console.log(error);
-                    router.push({ name: 'sign-up' });
-                });
+            try {
+                const response = await authenticationService.signUp(signUpRequest);
+                console.log("Signed up:", response.data.message);
+
+                // 🔐 Login automático con las mismas credenciales
+                const signInRequest = { username: signUpRequest.username, password: signUpRequest.password };
+                const signInResponse = await authenticationService.signIn(signInRequest);
+
+                // Actualizas la store
+                const parsed = new SignInResponse(
+                    signInResponse.data.id,
+                    signInResponse.data.username,
+                    signInResponse.data.role,
+                    signInResponse.data.token
+                );
+
+                this.signedIn = true;
+                this.userId = parsed.id;
+                this.role = parsed.role;
+                this.username = parsed.username;
+                localStorage.setItem('token', parsed.token);
+
+                // ✅ Redirige a crear perfil
+                router.push('/create-profile');
+            } catch (error) {
+                console.log(error);
+                router.push({ name: 'sign-up' });
+            }
         },
         /**
          * Action to sign-out
@@ -99,6 +120,7 @@ export const useAuthenticationStore = defineStore('authentication', {
         async signOut(router) {
             this.signedIn = false;
             this.userId = 0;
+            this.role = '';
             this.username = '';
             localStorage.removeItem('token');
             console.log('Signed out');

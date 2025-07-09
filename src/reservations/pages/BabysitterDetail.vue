@@ -5,7 +5,9 @@ import { useRoute, useRouter } from 'vue-router'
 import {BabysitterService} from "@/reservations/service/reservation.service.js";
 import Button from "primevue/button";
 import ModalComponent from "@/reservations/components/ModalComponent.vue";
+import {useAuthenticationStore} from "@/iam/services/authentication.store.js";
 
+const authStore = useAuthenticationStore();
 const router = useRouter()
 const route = useRoute()
 const babysitterId = ref(null)
@@ -147,15 +149,15 @@ onMounted(async () => {
           </div>
         </div>
 
-        <div class="action-buttons">
+        <div class="action-buttons" v-if="authStore.role === 'parent'">
           <button class="primary-button" @click="showModal = true">
             <i class="pi pi-calendar-plus"></i>
             Reserve Now
           </button>
-          <button class="secondary-button">
+<!--          <button class="secondary-button">
             <i class="pi pi-envelope"></i>
             Send Message
-          </button>
+          </button>-->
         </div>
       </div>
     </div>
@@ -185,7 +187,7 @@ onMounted(async () => {
 }
 
 .back-button {
-  background: #667eea;
+  background: var(--color-primary);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;

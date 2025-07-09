@@ -3,6 +3,7 @@ import BabysitterProfile from "@/registration-services/views/BabysitterProfile.v
 export default [
     {
         path: "/babysitter-profile",
+        name: "BabysitterProfile",
         component: () => import("@/registration-services/views/BabysitterProfile.vue"),
     }
 ]
