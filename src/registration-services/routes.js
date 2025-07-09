@@ -5,10 +5,5 @@ export default [
         path: "/babysitter-profile",
         name: "BabysitterProfile",
         component: () => import("@/registration-services/views/BabysitterProfile.vue"),
-    },
-    {
-        path: "/create-profile",
-        name: "CreateProfile",
-        component: () => import("@/registration-services/component/create-profile.component.vue")
     }
 ]

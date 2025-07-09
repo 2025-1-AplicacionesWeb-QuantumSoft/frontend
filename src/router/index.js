@@ -20,6 +20,11 @@ const routes = [
             children: IAMRoutes
         },
         {
+            path: "/create-profile",
+            name: "CreateProfile",
+            component: () => import("@/registration-services/component/create-profile.component.vue")
+        },
+        {
             path: '',
             component: Layout,
             children: [

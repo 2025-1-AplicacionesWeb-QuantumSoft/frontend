@@ -16,6 +16,11 @@ export class BabysitterService {
         console.log("Babysitter", response)
         return BabysitterAssembler.toEntityFromResponse(response.data)
     }
+    static async getBabysitterByUserId (userId) {
+        const response = await httpInstance.get(`babysitter/user/${userId}`)
+        console.log("Babysitter", response)
+        return BabysitterAssembler.toEntityFromResponse(response.data)
+    }
 }
 
 

@@ -1,15 +1,27 @@
 ﻿<script setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import ModalComponent from "@/reservations/components/ModalComponent.vue";
 import {useRoute, useRouter} from "vue-router";
 import {ReservationService} from "@/reservations/service/reservation.service.js";
 import { useAuthenticationStore } from "@/iam/services/authentication.store";
+import {ParentService} from "@/registration-services/service/registration.service.js";
+
 
 
 const authStore = useAuthenticationStore();
 const router = useRouter()
 const route = useRoute()
+const parentId = ref(null)
 
+onMounted(async () => {
+  try {
+    const response = await ParentService.getParentByUserId(authStore.currentUserId);
+    parentId.value = response.id;
+    console.log("Parent ID:", parentId.value.id);
+  } catch (error) {
+    console.error("Error fetching parent:", error);
+  }
+});
 const form = ref({
   startTime: '',
   endTime: '',
@@ -24,7 +36,7 @@ const form = ref({
 const buildReservationPayload = () => {
   return {
     babysitterId: parseInt(route.query.babysitterId, 10),
-    parentId: authStore.currentUserId,
+    parentId: parentId.value,
     startTime: new Date(form.value.startTime).toISOString(),
     endTime: new Date(form.value.endTime).toISOString(),
     address: form.value.address,
@@ -311,6 +323,8 @@ const handleAgeChange = (event) => {
       </div>
     </ModalComponent>
   </div>
+
+
 </template>
 
 <style scoped>

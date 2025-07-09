@@ -38,11 +38,11 @@ const isHovered = ref(false)
         </router-link>
         <router-link to="/payment">
           <li class="sidebar-item mb-3 ml-2 p-2 flex align-items-center">
-            <i class="pi pi-credit-card mr-2"></i>
+            <i class="pi pi-credit-card  mr-2"></i>
             <span v-if="isHovered">Payments</span>
           </li>
         </router-link>
-        <router-link to="/chat">
+        <router-link to="/create-profile">
           <li class="sidebar-item mb-3 ml-2 p-2 flex align-items-center">
             <i class="pi pi-comments mr-2"></i>
             <span v-if="isHovered">Messages</span>
@@ -54,7 +54,6 @@ const isHovered = ref(false)
           <router-link
               v-if="isHovered"
               to="/reviews"
-              class="text-white"
               style="text-decoration: none"
           >
             My Reviews
@@ -77,8 +76,8 @@ const isHovered = ref(false)
         <div class="ml-2" v-if="isHovered">
           <h4 class="text-900 font-bold mb-0">{{authStore.currentUsername}}</h4>
           <p class="text-500 mb-0">
-            <i class="pi pi-map-marker mr-1"></i>
-            <span>Lima</span>
+<!--            <i class="pi pi-map-marker mr-1"></i>-->
+            <span>Online</span>
           </p>
         </div>
       </div>

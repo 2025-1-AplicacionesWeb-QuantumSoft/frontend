@@ -79,16 +79,34 @@ export const useAuthenticationStore = defineStore('authentication', {
              * @param signUpRequest - The {@link SignUpRequest} object to sign-up
              * @param router - Vue router instance
              */
-            authenticationService.signUp(signUpRequest)
-                .then(response => {
-                    let signUpResponse = new SignUpResponse(response.data.message);
-                    router.push('sign-in');
-                    console.log(signUpResponse);
-                })
-                .catch(error => {
-                    console.log(error);
-                    router.push({ name: 'sign-up' });
-                });
+            try {
+                const response = await authenticationService.signUp(signUpRequest);
+                console.log("Signed up:", response.data.message);
+
+                // 🔐 Login automático con las mismas credenciales
+                const signInRequest = { username: signUpRequest.username, password: signUpRequest.password };
+                const signInResponse = await authenticationService.signIn(signInRequest);
+
+                // Actualizas la store
+                const parsed = new SignInResponse(
+                    signInResponse.data.id,
+                    signInResponse.data.username,
+                    signInResponse.data.role,
+                    signInResponse.data.token
+                );
+
+                this.signedIn = true;
+                this.userId = parsed.id;
+                this.role = parsed.role;
+                this.username = parsed.username;
+                localStorage.setItem('token', parsed.token);
+
+                // ✅ Redirige a crear perfil
+                router.push('/create-profile');
+            } catch (error) {
+                console.log(error);
+                router.push({ name: 'sign-up' });
+            }
         },
         /**
          * Action to sign-out

@@ -50,7 +50,8 @@ export class ParentAssembler {
     static toEntityFromResponse(resource) {
 
         return new Parent(  {
-            userId: resource.id,
+            id: resource.id,
+            userId: resource.userId,
             address: resource.address,
             name: resource.name,
             phone: resource.phone,

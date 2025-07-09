@@ -2,7 +2,7 @@
 import {onMounted, ref} from 'vue';
 import {BabysitterService, ReservationService} from "@/reservations/service/reservation.service.js";
 import { useAuthenticationStore } from "@/iam/services/authentication.store";
-
+import {ParentService} from "@/registration-services/service/registration.service.js";
 
 const authStore = useAuthenticationStore();
 const reservations = ref([])
@@ -10,12 +10,21 @@ const filteredBabysitters = ref([]);
 const babysitters = ref([])
 const editingIndex = ref(null)
 const editForm = ref({})
+const parentId = ref(null);
+const babysitterId = ref(null);
 
 onMounted(async ()=>{
   try {
-    reservations.value = await ReservationService.getReservationByParentId(authStore.currentUserId);
     babysitters.value = await BabysitterService.getBabysitters();
-
+    if (authStore.role === 'babysitter') {
+      const babysitterCurrent = await BabysitterService.getBabysitterByUserId(authStore.currentUserId);
+      babysitterId.value = babysitterCurrent.id;
+      reservations.value = await ReservationService.getReservationByParentId(babysitterCurrent.id);
+    } else {
+    const parentCurrent = await ParentService.getParentByUserId(authStore.currentUserId);
+      parentId.value = parentCurrent.id;
+      reservations.value = await ReservationService.getReservationByParentId(parentCurrent.id);
+    }
 
     // Now use filteredBabysitters.value to display babysitter data
   } catch (error) {
@@ -72,14 +81,24 @@ const saveEdit = async () => {
       }
       return result
     }
+    console.log("Updating reservation with:");
+    console.log("parentId:", originalReservation.parentId);
+    console.log("babysitterId:", originalReservation.babysitterId);
+
     const updatedReservation = unwrap({
-      ...originalReservation,
+      babysitterId: originalReservation.babysitterId,
+      parentId: originalReservation.parentId,
       startTime: new Date(editForm.value.startTime).toISOString(),
       endTime: new Date(editForm.value.endTime).toISOString(),
       frequency: editForm.value.frequency,
       address: editForm.value.address,
       specialNeeds: editForm.value.specialNeeds,
-      additionalInfo: editForm.value.additionalInfo
+      additionalInfo: editForm.value.additionalInfo,
+      childName: originalReservation.childName,
+      childAge: originalReservation.childAge,
+      status: originalReservation.status?.value || 'pending',
+      notificationId: originalReservation.notificationId,
+      createdAt: originalReservation.createdAt
     });
     delete updatedReservation.id
 
@@ -137,7 +156,12 @@ const cancelReservation = async (index) => {
 <!--      <p class="reservations-subtitle">Manage your babysitting appointments with style</p>-->
     </header>
 
-    <div class="reservations-container">
+    <div v-if="reservations.length == 0" class="no-reservations">
+      <i class="icon-calendar"></i>
+      <h3>No reservations found</h3>
+      <p>You have not created any reservations yet.</p>
+    </div>
+    <div class="reservations-container" v-else>
       <div
           v-for="(reservation, index) in reservations"
           :key="reservation.id"
@@ -828,6 +852,51 @@ const cancelReservation = async (index) => {
     gap: 0.8rem;
   }
 }
+.no-reservations {
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: #f8fafc;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  margin: 3rem auto;
+  max-width: 600px;
+  animation: fadeIn 0.6s ease;
+}
+
+.no-reservations i.icon-calendar::before {
+  content: "📅";
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 1rem;
+  color: #64748b;
+}
+
+.no-reservations h3 {
+  font-size: 1.75rem;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.no-reservations p {
+  color: #6b7280;
+  font-size: 1rem;
+  max-width: 400px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 @media (max-width: 480px) {
   .actions-section {

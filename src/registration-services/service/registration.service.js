@@ -9,6 +9,11 @@ export class BabysitterService {
         console.log("Babysitters", response)
         return BabysitterAssembler.toEntitiesFromResponse(response)
     }
+    static async getBabysitterByUserId (userId) {
+        const response = await httpInstance.get(`babysitter/user/${userId}`)
+        console.log("Babysitter", response)
+        return BabysitterAssembler.toEntityFromResponse(response.data)
+    }
 
     static async createBabysitter(babysitter) {
         const response = await httpInstance.post(`babysitter`, babysitter)
@@ -24,6 +29,12 @@ export class ParentService {
         console.log("Parents", response)
         return ParentAssembler.toEntitiesFromResponse(response)
     }
+    static async getParentByUserId(userId) {
+        const response = await httpInstance.get(`parent/user/${userId}`)
+        console.log("Parent", response)
+        return ParentAssembler.toEntityFromResponse(response.data)
+    }
+
     static async createParent(parent) {
         const response = await httpInstance.post(`parent`, parent)
         console.log("Create Parent", response)

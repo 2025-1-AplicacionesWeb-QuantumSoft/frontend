@@ -80,9 +80,14 @@ export default {
         <p class="subtitle">Please fill in your profile details.</p>
       </div>
 
-      <form @submit.prevent="submitProfile">
+      <form @submit.prevent="submitProfile" class="flex flex-column">
+        <div class="input-container flex flex-wrap gap-4">
         <template v-if="role === 'babysitter'">
-          <div class="p-field" v-for="(value, key) in babysitterForm" v-if="key !== 'userId'" :key="key">
+          <div
+              class="p-field"
+              v-for="[key, value] in Object.entries(babysitterForm).filter(([k]) => !['userId', 'rating'].includes(k))"
+              :key="key"
+          >
             <label :for="key">{{ key }}</label>
             <input
                 :id="key"
@@ -95,8 +100,10 @@ export default {
           </div>
         </template>
 
+
+
         <template v-else-if="role === 'parent'">
-          <div class="p-field" v-for="(value, key) in parentForm" v-if="key !== 'userId'" :key="key">
+          <div class="p-field"  v-for="[key, value] in Object.entries(parentForm).filter(([k]) => k !== 'userId')">
             <label :for="key">{{ key }}</label>
             <input
                 :id="key"
@@ -108,7 +115,7 @@ export default {
             />
           </div>
         </template>
-
+        </div>
         <div class="p-d-flex p-jc-between">
           <pv-button
               type="submit"
@@ -148,7 +155,14 @@ export default {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(180deg); }
 }
-
+.input-container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 0 auto;
+  width: 100%;
+  justify-content: center;
+}
 .signup-card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
@@ -159,7 +173,7 @@ export default {
       0 20px 40px rgba(0, 0, 0, 0.15),
       0 0 0 1px rgba(255, 255, 255, 0.1) inset;
   width: 100%;
-  max-width: 450px;
+
   transition: all 0.3s ease;
   position: relative;
   z-index: 1;
@@ -237,7 +251,7 @@ label {
 }
 
 .p-inputText {
-  width: 100%;
+  width: 400px;
   padding: 0.8rem 1rem;
   font-size: 1rem;
   border-radius: 12px;
@@ -288,7 +302,7 @@ small.p-invalid {
 }
 
 .p-button {
-  width: 100%;
+  max-width: 800px;
   padding: 1rem;
   font-weight: bold;
   font-size: 1rem;
