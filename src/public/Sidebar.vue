@@ -66,7 +66,7 @@ const isHovered = ref(false)
         <authentication-section-component :is-hovered="isHovered"/>
       </div>
       <div class="flex">
-        <router-link to="/babysitter-profile">
+        <router-link to="/babysitter-profile"> <!-- falta para parent -->
           <img
               :src="'https://randomuser.me/api/portraits/women/' + authStore.currentUserId + '.jpg'"
               alt="User Avatar"
