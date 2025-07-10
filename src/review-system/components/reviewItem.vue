@@ -10,7 +10,15 @@ export default {
   emits: ['review-updated'],
   setup(props, { emit }) {
     const isEditing = ref(false);
-    const editableReview = ref({ ...props.profile });
+    // Asegura nombres y tipos correctos
+    const editableReview = ref({
+      Id: Number(props.profile.Id ?? props.profile.id ?? 0),
+      ParentId: Number(props.profile.ParentId ?? props.profile.parentId ?? 0),
+      BabysitterId: Number(props.profile.BabysitterId ?? props.profile.babysitterId ?? 0),
+      comment: props.profile.comment || '',
+      rating: Number(props.profile.rating || 0),
+      date: props.profile.date || ''
+    });
     const reviewService = new ReviewApiService();
 
     function onEditReview() {
@@ -19,7 +27,13 @@ export default {
 
     async function onSaveReview() {
       try {
-        await reviewService.updateReview(editableReview.value);
+        // Convierte a number antes de enviar
+        editableReview.value.Id = Number(editableReview.value.Id);
+        editableReview.value.ParentId = Number(editableReview.value.ParentId);
+        editableReview.value.BabysitterId = Number(editableReview.value.BabysitterId);
+        editableReview.value.rating = Number(editableReview.value.rating);
+
+        await reviewService.updateReview(editableReview.value.Id, editableReview.value);
         isEditing.value = false;
         emit('review-updated');
       } catch (error) {
@@ -28,7 +42,14 @@ export default {
     }
 
     function onCancelEdit() {
-      editableReview.value = { ...props.profile };
+      editableReview.value = {
+        Id: Number(props.profile.Id ?? props.profile.id ?? 0),
+        ParentId: Number(props.profile.ParentId ?? props.profile.parentId ?? 0),
+        BabysitterId: Number(props.profile.BabysitterId ?? props.profile.babysitterId ?? 0),
+        comment: props.profile.comment || '',
+        rating: Number(props.profile.rating || 0),
+        date: props.profile.date || ''
+      };
       isEditing.value = false;
     }
 
@@ -45,19 +66,19 @@ export default {
     <template #content>
       <form class="form-grid" @submit.prevent="onSaveReview">
         <label>ID de reseña</label>
-        <input type="text" v-model="editableReview.id" disabled />
+        <input type="text" v-model="editableReview.Id" disabled />
 
         <label>ID del padre</label>
-        <input type="text" v-model="editableReview.parentId" :disabled="!isEditing" />
+        <input type="number" v-model.number="editableReview.ParentId" :disabled="!isEditing" />
 
         <label>ID de niñera</label>
-        <input type="text" v-model="editableReview.babysitterId" :disabled="!isEditing" />
+        <input type="number" v-model.number="editableReview.BabysitterId" :disabled="!isEditing" />
 
         <label>Comentario</label>
         <textarea v-model="editableReview.comment" :disabled="!isEditing"></textarea>
 
         <label>Calificación</label>
-        <input type="number" v-model="editableReview.rating" :disabled="!isEditing" />
+        <input type="number" v-model.number="editableReview.rating" :disabled="!isEditing" />
 
         <label>Fecha</label>
         <input type="text" v-model="editableReview.date" :disabled="!isEditing" />
