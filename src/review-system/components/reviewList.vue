@@ -12,13 +12,13 @@ export default {
   computed: {
     normalizedReviews() {
       return this.reviews.map(r => ({
-            Id: Number(r.Id ?? r.id ?? 0),
-            ParentId: Number(r.ParentId ?? r.parentId ?? 0),
-            BabysitterId: Number(r.BabysitterId ?? r.babysitterId ?? 0),
-            comment: r.comment(''),
-            rating: Number(r.rating(0)),
-          date: r.date || ''
-    }));
+        Id: Number(r.Id ?? r.id ?? 0),
+        ParentId: Number(r.ParentId ?? r.parentId ?? 0),
+        BabysitterId: Number(r.BabysitterId ?? r.babysitterId ?? 0),
+        comment: r.comment || '',
+        rating: Number(r.rating || 0),
+        date: r.date || ''
+      }));
     }
   }
 }
