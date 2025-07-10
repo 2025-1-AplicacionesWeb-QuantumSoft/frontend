@@ -18,7 +18,7 @@ export  class PaymentApiService{
 
     async getPaymentByParentId(parentId) {
         const authStore = useAuthenticationStore();
-        const token = authStore.currentToken;  // Usamos el token de la tienda
+        const token = authStore.currentToken;
 
         try {
             // Realizamos la llamada al backend con el token
@@ -28,21 +28,17 @@ export  class PaymentApiService{
                 }
             });
 
-            // Asegurarnos de que payments sea siempre un array
             const payments = response.data?.data || response.data;
 
-            // Si payments no es un array, lo convertimos a uno
             const paymentsArray = Array.isArray(payments) ? payments : [payments];
 
             console.log("Pagos obtenidos desde API:", paymentsArray);
 
-            // Enriquecemos los pagos con la información extra de la niñera y tarjeta
             const enrichedPayments = await Promise.all(paymentsArray.map(async (payment) => {
                 let cardNumber = null;   // Número de tarjeta
                 let cardHolder = null;   // Titular de la tarjeta
                 let relatedUser = null;
 
-                // Obtener la niñera si existe el ID de reserva
                 if (payment.reservationId) {
                     try {
                         const reservationResponse = await http.get(`/reservation/${payment.reservationId}`, {
@@ -50,10 +46,7 @@ export  class PaymentApiService{
                                 Authorization: `Bearer ${token}`
                             }
                         });
-                        console.log("Reserva obtenida:", reservationResponse.data);
                         const babysitterId = reservationResponse.data.babysitterId?.value;
-                        console.log("Babysitter ID:", babysitterId);
-                        // Si hay un babysitterId, buscamos la información de la niñera
                         if (babysitterId) {
                             const babysitterResponse = await BabysitterService.getBabysitterById(babysitterId);
                             const userResponse = await http.get(`/babysitter/${babysitterResponse.id}`, {
@@ -67,13 +60,10 @@ export  class PaymentApiService{
                         console.error("Error al obtener la niñera:", e);
                     }
                 }
-
-                // Obtener el número de tarjeta si existe
                 if (payment.cardId) {
                     try {
                         const cardApiService = new CardApiService();
                         const cardResponse = await cardApiService.getCardById(payment.cardId);
-                        console.log("Card Response:", cardResponse);
 
                         if (cardResponse && cardResponse.numberCard) {
                             cardNumber = cardResponse.numberCard;
@@ -89,10 +79,8 @@ export  class PaymentApiService{
                     }
                 }
 
-                // Verifica el pago enriquecido
                 console.log("Pago enriquecido:", { ...payment, relatedUser, cardNumber, cardHolder });
 
-                // Devolver el pago enriquecido
                 return {
                     ...payment,
                     relatedUser,

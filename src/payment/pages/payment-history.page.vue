@@ -40,19 +40,14 @@ export default {
           if (parentResponse && parentResponse.id) {
             this.parentData = parentResponse;
             roleId = parentResponse.id;
-            console.log("Parent obtenido:", this.parentData);
 
-            // Llamamos al servicio para obtener los pagos enriquecidos con el token
             const paymentsResponse = await paymentApiService.getPaymentByParentId(roleId);
 
-            // Asegúrate de que los datos de la tarjeta se están pasando correctamente
             paymentsResponse.forEach(payment => {
-              console.log("Pago con tarjeta:", payment.cardNumber);  // Verifica que el número de tarjeta esté presente
+              console.log("Pago con tarjeta:", payment.cardNumber);
             });
 
-            // Mapeamos los pagos a la estructura correcta
             this.paymentListData = paymentsResponse.map(paymentData => new Payment(paymentData));
-            console.log("Payments del parent:", this.paymentListData);
             console.log("Payment con relatedUser:", this.paymentListData);
           } else {
             this.errorMessage = "No se pudo obtener la información del parent.";
