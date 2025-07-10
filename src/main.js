@@ -34,6 +34,7 @@ import '@primevue/themes'
 import 'primeicons/primeicons.css'
 import 'primeflex/primeflex.css'
 import Aura from '@primeuix/themes/aura';
+import ReviewItem from "@/review-system/components/reviewItem.vue";
 
 const app= createApp(App)
 
@@ -64,6 +65,7 @@ app
     .component("pv-dialog",Dialog)
     .component("pv-column",Column)
     .component("pv-inputText",InputText)
+    .component("pv-reviewItem",ReviewItem)
     .use(i18n)
     .use(PrimeVue, {
         // Default theme configuration
