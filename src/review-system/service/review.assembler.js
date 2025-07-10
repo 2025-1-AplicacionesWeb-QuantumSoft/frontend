@@ -11,9 +11,9 @@ export class ReviewAssembler {
 
     static toEntityFromResponse(resource) {
         return new Review({
-            id: resource.id || '',
-            parentId: resource.parentId || '',
-            babysitterId: resource.babysitterId || '',
+            Id: resource.Id || 0,
+            ParentId: resource.ParentId || 0,
+            BabysitterId: resource.BabysitterId || 0,
             comment: resource.comment || '',
             rating: resource.rating || 0,
             date: resource.date ? new Date(resource.date) : new Date(),
