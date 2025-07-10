@@ -12,18 +12,24 @@
     },
     emits:["onDelete","onEdit"],
     methods:{
+
       handleDelete() {
         this.$emit('onDelete', this.card);
       },
       handleEdit() {
         this.$emit('onEdit', this.card);
       },
-      formatExpiration(date) {
-        const regex = /^\d{2}\/\d{2}$/; // MM/YY
-        return regex.test(date) ? date : '';
-      },
+      formatExpiration(expirationDate) {
+        if (!expirationDate || !expirationDate.month || !expirationDate.year) {
+          console.log("FECHA VACÍA O INCOMPLETA:", expirationDate);
+          return "--/--";
+        }
+        return `${expirationDate.month.toString().padStart(2,'0')}/${expirationDate.year}`;
+      }
     },
+    computed:{
 
+    }
   }
 
 </script>
@@ -34,7 +40,7 @@
       <div class="card-stripe mb-3"></div>
       <div class="payment-card-content">
         <p class="field"><strong>Num:</strong> {{ card.cardNumber }}</p>
-        <p class="field"><strong>F.V.:</strong> {{ formatExpiration(card.expirationDate) }}</p>
+        <p class="field"><strong>F.V.:</strong> {{  formatExpiration(card.expirationDate) }}</p>
         <p class="card-holder">{{ card.cardHolder }}</p>
       </div>
     </template>

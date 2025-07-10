@@ -4,29 +4,27 @@ import {Babysitter} from "@/payment/model/babysitter.entity.js";
 export class Card {
     constructor({
         id="",
-        parent_id = null,
-        babysitter_id = null,
-        cardNumber="",
+        parentId = null,
+        babysitterId = null,
+        numberCard="",
         cardHolder="",
-        cvv="",
-        expirationDate="",
-
+        code =0,
+        month = 0,
+        year = 0,
                 }) {
         this.id = id;
-        this.parent_id = parent_id ? new Parent(parent_id) : null;
-        this.babysitter_id = babysitter_id ? new Babysitter(babysitter_id) : null;
-        this.cardNumber=cardNumber;
+        this.parentId = parentId ;
+        this.babysitterId = babysitterId ;
+        this.cardNumber=numberCard;
         this.cardHolder = cardHolder;
-        this.cvv = cvv;
-        this.expirationDate=expirationDate;
-
+        this.cvv = code;
+        this.expirationDate= {
+            month: month,
+            year: year,
+        };
     }
 
-    getFormattedExpirationDate(expirationDate) {
-        return new Date(expirationDate).toLocaleDateString("en-US",{
-            month: "2-digit",
-            day: "2-digit",
-            year: "2-digit",
-        });
+    getFormattedExpirationDate() {
+        return `${this.expirationDate.month.toString().padStart(2,'0')}/${this.expirationDate.year.toString().slice(-2)}`;
     }
 }

@@ -1,6 +1,9 @@
 <script>
   import {CardApiService} from "@/payment/services/card-api.service.js";
   import {Button as PvButton} from "primevue";
+  import {useAuthenticationStore} from "@/iam/services/authentication.store.js";
+  import {ParentService} from "@/registration-services/service/registration.service.js";
+  import {BabysitterService} from "@/reservations/service/reservation.service.js";
 
 
   export default {
@@ -15,14 +18,12 @@
     },
     data(){
       return{
-        user: JSON.parse(window.localStorage.getItem("user") || "{}"),
         cardForm: {
           cardNumber: "",
           cardHolder: "",
           cvv: "",
           expirationDate: "",
-        },
-        formattedExpirationDate: "",
+        }
       }
     },
     computed:{
@@ -40,7 +41,7 @@
               cardNumber: newVal.cardNumber || "",
               cardHolder: newVal.cardHolder || "",
               cvv: newVal.cvv || "",
-              expirationDate: newVal.expirationDate || "",
+              expirationDate: `${newVal.expirationDate.month.toString().padStart(2, '0')}/${newVal.expirationDate.year.toString().slice(-2)}`
             };
           }
         },
@@ -53,26 +54,57 @@
       },
 
       async onSubmit() {
-        const cardApiService = new CardApiService();
+        const authStore = useAuthenticationStore();
+        const role = authStore.role;
+        const userId = authStore.userId;
+        let roleId = null;
 
-        const card = {
-          parentId: this.user.id,
-          ...this.cardForm,
-        };
 
         try {
-          if (this.editMode) {
-            await cardApiService.updateCard(this.cardData.id, card);
-            this.$emit("update", { ...card, id: this.cardData.id });
-          } else {
-            const createCard = await cardApiService.createCard(card);
-            this.$emit("add", createCard);
+
+          if (role === "parent") {
+            const parent = await ParentService.getParentByUserId(userId);
+            roleId = parent?.id;
+          } else if (role === "babysitter") {
+            const babysitter = await BabysitterService.getBabysitterByUserId(userId);
+            roleId = babysitter?.id;
           }
+
+          if (!roleId) {
+            console.error("No se pudo obtener el id del rol correspondiente");
+            return;
+          }
+
+          const [monthStr, yearStr] = this.cardForm.expirationDate.split('/');
+          const month = parseInt(monthStr);
+          const year = parseInt(yearStr);
+
+          // construimos data para enviar
+          const cardPayload = {
+            parentId: role === "parent" ? roleId : 0,
+            babysitterId: role === "babysitter" ? roleId : 0,
+            numberCard: this.cardForm.cardNumber,
+            cardHolder: this.cardForm.cardHolder,
+            code: parseInt(this.cardForm.cvv),
+            month,
+            year
+          };
+
+          console.log("JSON ENVIADO:", JSON.stringify(cardPayload, null, 2));
+
+          const cardApiService = new CardApiService();
+
+          if (this.editMode) {
+            await cardApiService.updateCard(this.cardData.id, cardPayload);
+            this.$emit("update", { ...cardPayload, id: this.cardData.id });
+          } else {
+            const createdCard = await cardApiService.createCard(cardPayload);
+            this.$emit("add", createdCard);
+          }
+          this.onCancel();
         } catch (e) {
           console.error("Error saving card:", e);
         }
-
-        this.onCancel();
       },
     },
   }

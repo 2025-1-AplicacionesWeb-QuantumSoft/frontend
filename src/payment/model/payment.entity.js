@@ -5,28 +5,20 @@ export class Payment {
     constructor({
         id="",
         amount = "",
+        cardId = null,
         status = "",
-        created_at="",
-        reservation_id = null,
-        parent_id = null,
-        paymentMethod={}
+        createdAtDate="",
+        reservationId = null,
+        parentId = null, cardNumber = null, relatedUser = null
                 }) {
         this.id = id;
         this.amount = amount;
+        this.cardId = cardId;
         this.status = status;
-        this.created_at = created_at;
-        this.reservation_id = reservation_id;
-        this.parent_id = parent_id;
-        this.paymentMethod = paymentMethod;
-    }
-
-    getFormatedCreatedAt(){
-        return new Date(this.created_at).toLocaleDateString("en-US",{
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-            hour: "2-digit",
-            minute: "2-digit",
-        });
+        this.createdAtDate = createdAtDate;
+        this.reservationId = reservationId;
+        this.parentId = parentId;
+        this.cardNumber = cardNumber;
+        this.relatedUser = relatedUser;
     }
 }
