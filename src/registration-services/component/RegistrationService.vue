@@ -1,16 +1,23 @@
 <script>
 import { Babysitter } from "../model/babysitter.entity.js";
+import {useAuthenticationStore} from "@/iam/services/authentication.store.js";
 
 export default {
   name: "babysitter-card",
   props: {
-    profile: { type: Babysitter, required: true }
+    profile: { type: Object, required: true } // Object porque ahora puede ser parent o babysitter
   },
   data() {
     return {
       isEditing: false,
-      form: { ...this.profile }
+      form: { ...this.profile },
+      authStore: useAuthenticationStore()
     };
+  },
+  computed: {
+    currentRole() {
+      return this.authStore.currentRole; // 'babysitter' o 'parent'
+    }
   },
   watch: {
     profile: {
@@ -30,12 +37,11 @@ export default {
       this.form = { ...this.profile };
     },
     saveProfile() {
-      // Aquí podrías emitir un evento o llamar a un servicio para guardar
       this.$emit('update:profile', { ...this.form });
       this.isEditing = false;
     }
   }
-}
+};
 </script>
 
 <template>
@@ -53,18 +59,51 @@ export default {
 
       <form class="form-grid" v-if="isEditing">
         <input type="text" v-model="form.name" placeholder="Name" />
-        <input type="email" v-model="form.email" placeholder="Email" />
         <input type="text" v-model="form.phone" placeholder="Phone" />
-        <input type="text" v-model="form.location" placeholder="Location" />
-        <input type="text" v-model="form.experience" placeholder="Experience" />
+
+        <template v-if="currentRole === 'babysitter'">
+          <input type="text" v-model="form.description" placeholder="Description" />
+          <input type="text" v-model="form.languages" placeholder="Languages" />
+          <input type="text" v-model="form.location" placeholder="Location" />
+          <input type="text" v-model="form.accountBank" placeholder="Bank Account" />
+          <input type="text" v-model="form.bankName" placeholder="Bank Name" />
+          <input type="text" v-model="form.typeAccountBank" placeholder="Type of Account" />
+          <input type="text" v-model="form.dni" placeholder="DNI" />
+          <input type="text" v-model="form.experienceLevel" placeholder="Experience Level" />
+        </template>
+
+        <template v-else-if="currentRole === 'parent'">
+          <input type="text" v-model="form.address" placeholder="Address" />
+          <input type="number" v-model="form.childrenCount" placeholder="Number of Children" />
+          <input type="text" v-model="form.preferences" placeholder="Preferences" />
+          <input type="text" v-model="form.city" placeholder="City" />
+        </template>
       </form>
+
       <div v-else class="form-grid">
         <div><strong>Name:</strong> {{ profile.name }}</div>
-        <div><strong>Email:</strong> {{ profile.email }}</div>
         <div><strong>Phone:</strong> {{ profile.phone }}</div>
-        <div><strong>Location:</strong> {{ profile.location }}</div>
-        <div><strong>Experience:</strong> {{ profile.experience }}</div>
+
+        <template v-if="currentRole === 'babysitter'">
+          <div><strong>Description:</strong> {{ profile.description }}</div>
+          <div><strong>Languages:</strong> {{ profile.languages }}</div>
+          <div><strong>Location:</strong> {{ profile.location }}</div>
+          <div><strong>Bank Account:</strong> {{ profile.accountBank }}</div>
+          <div><strong>Bank Name:</strong> {{ profile.bankName }}</div>
+          <div><strong>Type of Account:</strong> {{ profile.typeAccountBank }}</div>
+          <div><strong>DNI:</strong> {{ profile.dni }}</div>
+          <div><strong>Experience Level:</strong> {{ profile.experienceLevel }}</div>
+          <div><strong>Rating:</strong> {{ profile.rating }}</div>
+        </template>
+
+        <template v-else-if="currentRole === 'parent'">
+          <div><strong>Address:</strong> {{ profile.address }}</div>
+          <div><strong>Children:</strong> {{ profile.childrenCount }}</div>
+          <div><strong>Preferences:</strong> {{ profile.preferences }}</div>
+          <div><strong>City:</strong> {{ profile.city }}</div>
+        </template>
       </div>
+
 
       <p><strong>Average Rating:</strong> {{ profile.rating }}</p>
 

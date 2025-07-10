@@ -20,6 +20,12 @@ export class BabysitterService {
         console.log("Create Babysitter", response)
         return BabysitterAssembler.toEntityFromResponse(response)
     }
+    static async UpdateBabysitter(babysitter) {
+        const response = await httpInstance.patch(`babysitter/${babysitter.id}`, babysitter)
+        console.log("Update Babysitter", response)
+        return BabysitterAssembler.toEntityFromResponse(response)
+
+    }
 }
 
 
@@ -38,6 +44,11 @@ export class ParentService {
     static async createParent(parent) {
         const response = await httpInstance.post(`parent`, parent)
         console.log("Create Parent", response)
+        return ParentAssembler.toEntityFromResponse(response)
+    }
+    static async UpdateParent(parent) {
+        const response = await httpInstance.patch(`parent/${parent.id}`, parent)
+        console.log("Update Parent", response)
         return ParentAssembler.toEntityFromResponse(response)
     }
 }

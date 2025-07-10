@@ -1,49 +1,79 @@
 <script>
-import { ref, onMounted } from 'vue';
-import RegistrationService from "@/registration-services/component/RegistrationService.vue";
-import { BabysitterService } from "@/registration-services/service/registration.service.js";
+import { ref, computed, onMounted } from 'vue';
+import { useAuthenticationStore } from "@/iam/services/authentication.store.js";
+import { ParentService, BabysitterService } from "@/registration-services/service/registration.service.js";
 
 export default {
-  name: "babysitter-profile",
-  components: {
-    RegistrationService,
-  },
+  name: "parent-profile",
   setup() {
-    const babysitter = ref(null);
+    const authStore = useAuthenticationStore();
+    const currentRole = authStore.currentRole;
+    const parentId = authStore.currentUserId;
+
+    const profile = ref(null);
     const editable = ref({});
     const editing = ref({});
+    const fields = computed(() => {
+      return currentRole === 'parent'
+          ? ['name', 'phone', 'address', 'city', 'childrenCount', 'preferences']
+          : ['name', 'phone', 'description', 'languages', 'rating', 'location', 'accountBank', 'bankName', 'typeAccountBank', 'dni', 'experienceLevel'];
+    });
     const showNewCard = ref(false);
 
     onMounted(async () => {
-      const data = await BabysitterService.getBabysitters();
-      babysitter.value = data.length > 0 ? data[0] : null;
-      editable.value = { ...babysitter.value };
+      try {
+        if (currentRole === 'parent') {
+          const data = await ParentService.getParentByUserId(parentId);
+          profile.value = data;
+          editable.value = { ...data };
+
+        } else if (currentRole === 'babysitter') {
+          const data = await BabysitterService.getBabysitterByUserId(parentId);
+          profile.value = data;
+          editable.value = { ...data };
+        }
+      } catch (e) {
+        console.error("Error loading profile:", e);
+      }
     });
 
     function toggleEdit(field) {
       editing.value[field] = !editing.value[field];
     }
 
-    function updateProfile() {
-      babysitter.value = { ...editable.value };
-      showNewCard.value = true;
+    async function updateProfile() {
+      try {
+        if (currentRole === 'parent') {
+          await ParentService.UpdateParent(editable.value);
+        } else if (currentRole === 'babysitter') {
+          await BabysitterService.UpdateBabysitter(editable.value);
+        }
+        profile.value = { ...editable.value };
+        showNewCard.value = true;
+      } catch (e) {
+        console.error("Error updating profile:", e);
+      }
     }
 
     return {
-      babysitter,
+      currentRole,
+      profile,
       editable,
       editing,
+      showNewCard,
       toggleEdit,
       updateProfile,
-      showNewCard,
+      fields
     };
-  },
+  }
 }
 </script>
 
+
+
 <template>
   <div class="profile-bg">
-    <pv-card v-if="babysitter" class="profile-card">
+    <pv-card v-if="profile" class="profile-card">
       <template #header>
         <div class="header-content">
           <img
@@ -52,7 +82,9 @@ export default {
               class="avatar"
           />
           <div>
-            <h2 class="profile-title">Perfil de Niñera</h2>
+            <h2 class="profile-title">
+              {{ currentRole === 'parent' ? 'Perfil del Tutor' : 'Perfil de Niñera' }}
+            </h2>
             <p class="subtitle">Edita y actualiza tu información</p>
           </div>
         </div>
@@ -60,15 +92,11 @@ export default {
 
       <template #content>
         <form class="profile-form">
-          <div
-              v-for="field in ['name', 'phone', 'description', 'experienceLevel', 'languages', 'rating']"
-              :key="field"
-              class="form-group"
-          >
+          <div v-for="field in fields" :key="field" class="form-group">
             <label>{{ field.charAt(0).toUpperCase() + field.slice(1) }}</label>
             <div class="input-icon-group">
               <input
-                  :type="field === 'rating' ? 'number' : 'text'"
+                  :type="field === 'childrenCount' || field === 'rating' ? 'number' : 'text'"
                   v-model="editable[field]"
                   :disabled="!editing[field]"
                   :min="field === 'rating' ? 0 : undefined"
@@ -91,27 +119,27 @@ export default {
       </template>
       <template #content>
         <ul class="updated-list">
-          <li><strong>Nombre:</strong> {{ babysitter.name }}</li>
-          <li><strong>Teléfono:</strong> {{ babysitter.phone }}</li>
-          <li><strong>Descripción:</strong> {{ babysitter.description }}</li>
-          <li><strong>Nivel de experiencia:</strong> {{ babysitter.experienceLevel }}</li>
-          <li><strong>Idiomas:</strong> {{ babysitter.languages }}</li>
-          <li><strong>Calificación:</strong> {{ babysitter.rating }}</li>
+          <li v-for="field in fields" :key="field">
+            <strong>{{ field.charAt(0).toUpperCase() + field.slice(1) }}:</strong> {{ profile[field] }}
+          </li>
         </ul>
       </template>
     </pv-card>
   </div>
 </template>
 
+
+
+
 <style scoped>
 .profile-bg {
-  min-height: 100vh;
+  height: 100vh;
   background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem 0;
+
 }
 .profile-card, .updated-card {
   background: #fff;
@@ -122,6 +150,8 @@ export default {
   width: 100%;
   max-width: 480px;
   transition: box-shadow 0.2s;
+  flex: 1;
+  overflow-y: scroll;
 }
 .profile-card:hover {
   box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.22);

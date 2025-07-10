@@ -1,9 +1,11 @@
 ﻿<script setup>
 import { useRouter } from 'vue-router'
+import {useAuthenticationStore} from "@/iam/services/authentication.store.js";
 
 const router = useRouter()
 const props = defineProps(['babysitter'])
 console.log(typeof props.babysitter.id)
+const authStore = useAuthenticationStore();
 const goToDetail = () => {
   router.push(`/babysitter/${props.babysitter.id}`)
 }

@@ -12,7 +12,7 @@ const httpInstance = axios.create({
 
 export class ReviewApiService {
     getReviews() {
-        return httpInstance.get('/reviews')
+        return httpInstance.get('/review')
             .then(response => ReviewAssembler.toEntitiesFromResponse(response.data))
             .catch(error => {
                 console.error("Error fetching reviews:", error);

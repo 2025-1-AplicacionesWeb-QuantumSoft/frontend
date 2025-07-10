@@ -1,11 +1,23 @@
 ﻿<script setup>
-import { ref } from 'vue'
+import {onMounted, ref} from 'vue'
 import authenticationSectionComponent from "@/iam/components/authentication-section.component.vue";
 import { useAuthenticationStore } from "@/iam/services/authentication.store";
+import {ParentService, BabysitterService} from "@/registration-services/service/registration.service.js";
 
 
 const authStore = useAuthenticationStore();
 const isHovered = ref(false)
+const userData = ref(null)
+
+onMounted(async () => {
+  if (authStore.currentRole === 'babysitter') {
+    userData.value = await BabysitterService.getBabysitterByUserId(authStore.currentUserId)
+  } else if (authStore.currentRole === 'parent') {
+    userData.value = await ParentService.getParentByUserId(authStore.currentUserId)
+  }
+  console.log(userData.value.id)
+})
+
 </script>
 
 <template>
@@ -42,13 +54,13 @@ const isHovered = ref(false)
             <span v-if="isHovered">Payments</span>
           </li>
         </router-link>
-        <router-link to="/payment-step">
+<!--        <router-link to="/payment-step">
           <li class="sidebar-item mb-3 ml-2 p-2 flex align-items-center">
             <i class="pi pi-comments mr-2"></i>
             <span v-if="isHovered">Messages</span>
             <span v-if="isHovered" class="ml-2 p-tag message-badge">3</span>
           </li>
-        </router-link>
+        </router-link>-->
         <li class="sidebar-item mb-3 ml-2 p-2 flex align-items-center">
           <i class="pi pi-star mr-2"></i>
           <router-link
@@ -68,13 +80,13 @@ const isHovered = ref(false)
       <div class="flex">
         <router-link to="/babysitter-profile"> <!-- falta para parent -->
           <img
-              :src="'https://randomuser.me/api/portraits/women/' + authStore.currentUserId + '.jpg'"
+              :src="'https://randomuser.me/api/portraits/women/' + 1 + '.jpg'"
               alt="User Avatar"
               class="border-circle w-3rem h-3rem user-avatar"
           />
         </router-link>
         <div class="ml-2" v-if="isHovered">
-          <h4 class="text-900 font-bold mb-0">{{authStore.currentUsername}}</h4>
+          <h4 class="text-900 font-bold mb-0">{{userData.name}}</h4>
           <p class="text-500 mb-0">
 <!--            <i class="pi pi-map-marker mr-1"></i>-->
             <span>Online</span>
