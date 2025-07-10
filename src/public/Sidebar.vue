@@ -42,7 +42,7 @@ const isHovered = ref(false)
             <span v-if="isHovered">Payments</span>
           </li>
         </router-link>
-        <router-link to="/create-profile">
+        <router-link to="/payment-step">
           <li class="sidebar-item mb-3 ml-2 p-2 flex align-items-center">
             <i class="pi pi-comments mr-2"></i>
             <span v-if="isHovered">Messages</span>

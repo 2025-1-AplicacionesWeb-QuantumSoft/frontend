@@ -23,5 +23,5 @@ export default [
         path: 'reservation-list/',
         name: 'reservations-list',
         component: () => import('@/reservations/pages/ReservationsList.vue'),
-    }
+    },
 ]

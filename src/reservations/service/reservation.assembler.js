@@ -1,6 +1,8 @@
 ﻿import {Babysitter} from "@/reservations/model/babysitter.entity.js";
 import {ReservationEntity} from "@/reservations/model/reservation.entity.js";
 import {UserEntity} from "@/reservations/model/user.entity.js";
+import {Parent} from "@/payment/model/parent.entity.js";
+import {CardEntity} from "@/reservations/model/card.entity.js";
 
 export class BabysitterAssembler {
     static toEntitiesFromResponse(response) {
@@ -68,6 +70,33 @@ export class ReservationAssembler {
         });
     }
 }
+export class CardsAssembler {
+    static toEntitiesFromResponse(response) {
+        if (response.statusText !== "OK") {
+            console.error(`${response.status}, ${response.code}, ${response.message}`);
+            return [];
+        }
+        const itemsResponse = response.data;
+        console.log("Items response", itemsResponse);
+
+        return itemsResponse.map((item) => {
+            return this.toEntityFromResponse(item);
+        });
+    }
+
+    static toEntityFromResponse(resource) {
+        return new CardEntity({
+            id: resource.id,
+            parentId: resource.parentId,
+            babysitterId: resource.babysitterId,
+            cardNumber: resource.cardNumber.number,
+            cardHolder: resource.cardHolder,
+            cvv: resource.cvv?.code ?? '',
+            expirationDate: resource.expirationDate?.date ?? ''
+        });
+    }
+}
+
 
 export class UserAssembler {
     static toEntitiesFromResponse(response) {

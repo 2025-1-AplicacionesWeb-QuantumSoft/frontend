@@ -2,7 +2,7 @@
 import {onMounted, ref} from 'vue'
 import ModalComponent from "@/reservations/components/ModalComponent.vue";
 import {useRoute, useRouter} from "vue-router";
-import {ReservationService} from "@/reservations/service/reservation.service.js";
+import {ReservationService as CardService, ReservationService} from "@/reservations/service/reservation.service.js";
 import { useAuthenticationStore } from "@/iam/services/authentication.store";
 import {ParentService} from "@/registration-services/service/registration.service.js";
 
@@ -12,12 +12,19 @@ const authStore = useAuthenticationStore();
 const router = useRouter()
 const route = useRoute()
 const parentId = ref(null)
+const selectedCardId = ref(null)
+const cards = ref([])
+const amount = ref(null);
+
 
 onMounted(async () => {
   try {
     const response = await ParentService.getParentByUserId(authStore.currentUserId);
     parentId.value = response.id;
-    console.log("Parent ID:", parentId.value.id);
+    const cardsResponse = await CardService.getCardsByParentId(parentId.value)
+    cards.value = cardsResponse
+    console.log("Parent ID:", parentId.value);
+    console.log("Cards Response:", cardsResponse)
   } catch (error) {
     console.error("Error fetching parent:", error);
   }
@@ -37,6 +44,8 @@ const buildReservationPayload = () => {
   return {
     babysitterId: parseInt(route.query.babysitterId, 10),
     parentId: parentId.value,
+    cardId: selectedCardId.value,
+    amount: parseFloat(amount.value) ,
     startTime: new Date(form.value.startTime).toISOString(),
     endTime: new Date(form.value.endTime).toISOString(),
     address: form.value.address,
@@ -50,19 +59,22 @@ const buildReservationPayload = () => {
     createdAt: new Date().toISOString()
   };
 };
+
 const submitReservation = async () => {
   try {
     const payload = buildReservationPayload();
     console.log('Creating reservation with data:', payload);
     const response = await ReservationService.createReservation(payload)
-    await router.push(`/reservation-list`)
+    await router.push(`/payment`)
   } catch (error) {
     console.error('Error creating reservation:', error);
   }
 }
 
 const showModal = ref(false)
-
+const goToAddCard = () => {
+  router.push('/payment');
+};
 const frecuencyOptions = ref([
   { label: 'One-time', value: 'one-time' },
   { label: 'Daily', value: 'daily' },
@@ -299,29 +311,64 @@ const handleAgeChange = (event) => {
     <ModalComponent :visible="showModal" @close="showModal = false">
       <div class="modal-content-wrapper">
         <div class="modal-icon">
-          <i class="icon-check"></i>
+          <i class="icon-credit-card"></i>
         </div>
-        <h2 class="modal-title">Confirm Your Reservation</h2>
-        <p class="modal-content">
-          You're about to create a new babysitting reservation. We'll start searching for
-          qualified caregivers who match your requirements immediately.
-        </p>
-        <div class="modal-actions">
-          <button
-              class="modal-cancel-button"
-              @click="showModal = false"
-          >
-            Go Back
+        <h2 class="modal-title">Select a Payment Method</h2>
+
+        <p class="modal-content">Choose a card to confirm your reservation and proceed with payment.</p>
+
+        <div v-if="cards.length > 0" class="card-list">
+          <label v-for="card in cards" :key="card.id" class="card-item">
+            <input
+                type="radio"
+                name="selectedCard"
+                :value="card.id"
+                v-model="selectedCardId"
+            />
+            <div class="card-number">**** **** **** {{ card.cardNumber.slice(-4) }}</div>
+            <div class="card-details">
+              <div class="card-holder">
+                <span class="card-label">Card Holder</span>
+                <span class="card-holder-name">{{ card.cardHolder }}</span>
+              </div>
+              <div class="card-expiry">
+                <span class="card-label">Expires</span>
+                <span class="card-expiry-date">{{ card.expirationDate }}</span>
+              </div>
+            </div>
+          </label>
+        </div>
+
+        <div v-else class="no-cards">
+          <p>No cards available. Please add a card first.</p>
+          <button class="add-card-button" @click="goToAddCard">
+            Add Card
           </button>
-          <button
-              class="modal-confirm-button"
-              @click="submitReservation"
-          >
-            Create Reservation
+        </div>
+
+        <div v-if="cards.length > 0" class="modal-actions">
+          <div class="amount-input-wrapper">
+            <label for="amount" class="amount-label">
+              💰 Payment Amount
+            </label>
+            <input
+                type="number"
+                id="amount"
+                v-model="amount"
+                class="form-control amount-input"
+                min="1"
+                placeholder="Enter amount"
+            />
+          </div>
+          <button class="modal-cancel-button" @click="showModal = false">Go Back</button>
+          <button class="modal-confirm-button" :disabled="!selectedCardId" @click="submitReservation">
+            Confirm and Create Reservation
           </button>
+
         </div>
       </div>
     </ModalComponent>
+
   </div>
 
 
@@ -773,6 +820,104 @@ textarea.form-control {
   transform: translateY(-1px);
   box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
 }
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin: 2rem 0;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.card-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+  color: white;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.5);
+}
+
+.card-item input[type="radio"] {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  transform: scale(1.3);
+  accent-color: #10b981;
+}
+
+.card-number {
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.card-details {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.card-holder,
+.card-expiry {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-label {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.card-holder-name,
+.card-expiry-date {
+  font-weight: 600;
+}
+
+.no-cards {
+  color: #64748b;
+  font-style: italic;
+  margin: 1rem 0;
+  text-align: center;
+  background: #fef2f2;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid #fecaca;
+}
+
+.add-card-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.add-card-button:hover {
+  background: linear-gradient(135deg, #059669, #047857);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
 
 /* Invalid state */
 .invalid {

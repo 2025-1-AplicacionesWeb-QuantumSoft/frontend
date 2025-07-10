@@ -1,5 +1,9 @@
 ﻿import httpInstance from '@/shared/services/http.instance.js';
-import {BabysitterAssembler, ReservationAssembler} from "@/reservations/service/reservation.assembler.js";
+import {
+    BabysitterAssembler,
+    CardsAssembler,
+    ReservationAssembler
+} from "@/reservations/service/reservation.assembler.js";
 //const API_BASE = import.meta.env.VITE_API_BASE_URL;
 //const API_BASE = 'http://localhost:3001'
 
@@ -24,12 +28,19 @@ export class BabysitterService {
 }
 
 
+
 export class ReservationService {
     static async getReservations() {
         const response = await httpInstance.get(`/reservation`)
         console.log("Reservations", response)
         return ReservationAssembler.toEntitiesFromResponse(response)
     }
+    static async getCardsByParentId(parentId) {
+        const response = await httpInstance.get(`/reservation/cards/parent/${parentId}`)
+        console.log("Cards", response)
+        return CardsAssembler.toEntitiesFromResponse(response)
+    }
+
     static async getReservationById(id) {
         const response = await httpInstance.get(`reservation/${id}`)
         console.log("Reservations", response)
